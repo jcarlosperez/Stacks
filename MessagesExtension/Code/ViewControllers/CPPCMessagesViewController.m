@@ -8,6 +8,8 @@
 
 #import "CPPCMessagesViewController.h"
 
+#import <AWSCore/AWSCore.h>
+#import <AWSCognito/AWSCognito.h>
 #import <AWSS3/AWSS3.h>
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
 
@@ -24,6 +26,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self createTemporaryUploadsFolder];
+    [self setupAWSCognito];
     
     UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     questionLabel.text = @"Which Shoes Should I Buy?";
@@ -58,6 +61,17 @@
                                                          error:&error]) {
         NSLog(@"reating 'upload' directory failed: [%@]", error);
     }
+}
+
+- (void)setupAWSCognito {
+    
+    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
+                                                          initWithRegionType:AWSRegionUSEast1
+                                                          identityPoolId:@"***REMOVED***"];
+    
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+    
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
 }
 
 #pragma mark - User Alert Controller
@@ -127,11 +141,10 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSError *error;
                 [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
-                NSLog(@"Error: %@", error);
+                if(!error) {
+                    [self createUploadWithImageAtPath:filePath withFilename:fileName];
+                }
             });
-            
-            [self createUploadWithImageAtPath:filePath withFilename:fileName];
-            
         }];
     }
     
