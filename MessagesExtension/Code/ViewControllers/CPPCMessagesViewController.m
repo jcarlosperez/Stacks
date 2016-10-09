@@ -8,7 +8,10 @@
 
 #import "CPPCMessagesViewController.h"
 
-@interface CPPCMessagesViewController ()
+#import <AWSS3/AWSS3.h>
+#import <CTAssetsPickerController/CTAssetsPickerController.h>
+
+@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate>
 @end
 
 @implementation CPPCMessagesViewController
@@ -24,14 +27,100 @@
     questionLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:questionLabel];
     
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(showAlertController:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitle:@"Show View" forState:UIControlStateNormal];
+    [button.titleLabel setTextColor:[UIColor blackColor]];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:button];
+    
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:questionLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:10]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:questionLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:-20]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:50]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:200]];
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - User Alert Controller
+
+- (void)showAlertController:(id)sender {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Available Actions"
+                                                                             message:@"Choose your action."
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    __weak CPPCMessagesViewController *weakSelf = self;
+    UIAlertAction *selectPictureAction = [UIAlertAction actionWithTitle:@"Select Pictures"
+                                                                  style:UIAlertActionStyleDefault
+                                                                handler:^(UIAlertAction *action) {
+                                                                    CPPCMessagesViewController *strongSelf = weakSelf;
+                                                                    [strongSelf selectPicturesFromLibrary];
+                                                                }];
+    [alertController addAction:selectPictureAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController
+                       animated:YES
+                     completion:nil];
+}
+
+- (void)selectPicturesFromLibrary {
+    
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            // init picker
+            CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
+            
+            // set delegate
+            picker.delegate = self;
+            
+            // Optionally present picker as a form sheet on iPad
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                picker.modalPresentationStyle = UIModalPresentationFormSheet;
+            
+            // present picker
+            [self presentViewController:picker animated:YES completion:nil];
+        });
+    }];
+}
+
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
+    
+    PHImageManager *manager = [PHImageManager defaultManager];
+    
+    __block UIImage *ima;
+    
+    for(PHAsset *asset in assets) {
+        
+        [manager requestImageForAsset:asset
+                           targetSize:PHImageManagerMaximumSize
+                          contentMode:PHImageContentModeDefault
+                              options:nil
+                        resultHandler:^void(UIImage *image, NSDictionary *info) {
+                            NSLog(@"Image: %@", image);
+                        }];
+    }
+}
+
+- (void)createUploadWithImage:(UIImage *)image {
+    
+    /*AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.body = [NSURL fileURLWithPath:filePath];
+    uploadRequest.key = fileName;
+    uploadRequest.bucket = S3BucketName;*/
+    
+}
+
+- (void)transferUploadWithRequest:(AWSS3TransferManagerUploadRequest *)request {
+    
 }
 
 #pragma mark - Conversation Handling
