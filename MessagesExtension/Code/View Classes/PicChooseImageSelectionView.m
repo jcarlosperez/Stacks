@@ -55,6 +55,7 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
 
 - (void)updateViewWithImageAtPath:(NSString *)filePath {
     
+    NSLog(@"updateViewWithImageAtPath: %@", filePath);
     [_imageAssets addObject:filePath];
     [_imageSelectionCollectionView reloadData];
 }
@@ -80,12 +81,19 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     
     //Calculate space required and add appropriate inset spacing to center the cells
-    CGFloat cellSpacing = ((UICollectionViewFlowLayout *) collectionViewLayout).minimumLineSpacing;
-    CGFloat cellWidth = ((UICollectionViewFlowLayout *) collectionViewLayout).itemSize.width;
-    NSInteger cellCount = [collectionView numberOfItemsInSection:section];
-    CGFloat inset = (collectionView.bounds.size.width - (cellCount * (cellWidth + cellSpacing))) * 0.5;
-    inset = MAX(inset, 0.0);
-    return UIEdgeInsetsMake(0.0, inset, 0.0, 0.0);
+    NSInteger cellCount = [collectionView.dataSource collectionView:collectionView numberOfItemsInSection:section];
+    if( cellCount >0 )
+    {
+        CGFloat cellWidth = ((UICollectionViewFlowLayout*)collectionViewLayout).itemSize.width+((UICollectionViewFlowLayout*)collectionViewLayout).minimumInteritemSpacing;
+        CGFloat totalCellWidth = cellWidth*cellCount;
+        CGFloat contentWidth = collectionView.frame.size.width-collectionView.contentInset.left-collectionView.contentInset.right;
+        if( totalCellWidth<contentWidth )
+        {
+            CGFloat padding = (contentWidth - totalCellWidth) / 2.0;
+            return UIEdgeInsetsMake(0, padding, 0, padding);
+        }
+    }
+    return UIEdgeInsetsZero;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
