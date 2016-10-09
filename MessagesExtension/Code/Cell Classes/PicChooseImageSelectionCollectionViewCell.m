@@ -20,16 +20,11 @@
         self.layer.masksToBounds = YES;
         
         _selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nothing"]];
+        _selectedImageView.frame = self.contentView.bounds;
         _selectedImageView.center = self.contentView.center;
-        //_selectedImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [_selectedImageView setContentMode:UIViewContentModeScaleAspectFill];
         [_selectedImageView setClipsToBounds:YES];
-        //_selectedImageView.contentMode = UIViewContentModeScaleAspectFit;
-        _selectedImageView.layer.minificationFilter = kCAFilterTrilinear;
         [self.contentView addSubview:_selectedImageView];
-        
-        //[self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_selectedImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-        //[self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_selectedImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     }
     
     return self;
