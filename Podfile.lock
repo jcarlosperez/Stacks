@@ -1,0 +1,83 @@
+PODS:
+  - AWSAutoScaling (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSCloudWatch (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSCognito (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSCognitoIdentityProvider (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSCore (2.4.10)
+  - AWSDynamoDB (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSEC2 (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSElasticLoadBalancing (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSIoT (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSKinesis (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSLambda (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSMachineLearning (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSMobileAnalytics (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSS3 (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSSES (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSSimpleDB (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSSNS (2.4.10):
+    - AWSCore (= 2.4.10)
+  - AWSSQS (2.4.10):
+    - AWSCore (= 2.4.10)
+  - CTAssetsPickerController (3.3.1):
+    - PureLayout (~> 3.0.0)
+  - PureLayout (3.0.2)
+
+DEPENDENCIES:
+  - AWSAutoScaling
+  - AWSCloudWatch
+  - AWSCognito
+  - AWSCognitoIdentityProvider
+  - AWSDynamoDB
+  - AWSEC2
+  - AWSElasticLoadBalancing
+  - AWSIoT
+  - AWSKinesis
+  - AWSLambda
+  - AWSMachineLearning
+  - AWSMobileAnalytics
+  - AWSS3
+  - AWSSES
+  - AWSSimpleDB
+  - AWSSNS
+  - AWSSQS
+  - CTAssetsPickerController (~> 3.3.0)
+
+SPEC CHECKSUMS:
+  AWSAutoScaling: 92ce0ab12e919b431e58347c4c315b05e8b4c1bf
+  AWSCloudWatch: 82a8698410964dbb5904798af6c7bc18dd266e03
+  AWSCognito: d9c6932091ceedac47e187ae04f0248505242cb0
+  AWSCognitoIdentityProvider: 4f926b675d5c56b47bf9dcaae8adbe26d676b158
+  AWSCore: c78eff928514e90075c3bd53f5ff2d9a77f8658e
+  AWSDynamoDB: 0ef93aff6b1b746d725686c1a5f7e63dad32d2d0
+  AWSEC2: 6d00522b982104a7207111b562f57263f4134f24
+  AWSElasticLoadBalancing: e3e7d31fbe6e46edfc42f8ec3e4bf0c59d1428fb
+  AWSIoT: 987e5175363dd3e3ed77360ff0173b2bd1df4722
+  AWSKinesis: db5e669c1fe0665d4654a2d80ff545656737af09
+  AWSLambda: 35da7eb9b51cdce9936ce3d3c43b811f272b0410
+  AWSMachineLearning: f30ee4cd8d5b1a487be5bc8a9721bb8c459d148b
+  AWSMobileAnalytics: e9c48abbbc42ef1806632eba008debe18f1eeeab
+  AWSS3: 46dcb199860206d72820942ab82be93597338646
+  AWSSES: db5c7585ec82da6b65ea12f08edd8f18120fd470
+  AWSSimpleDB: f3af211c495d760dd73e58fb050c311f28c9e070
+  AWSSNS: b43d0d0d2353b7eae90f2736abdf88ab5647316e
+  AWSSQS: fd946e25e02b0857fd36c8209e04fc22bebac5c6
+  CTAssetsPickerController: b1d1d50ab87cf6b8b13531de5f4530482e7e53ed
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+
+COCOAPODS: 0.39.0
