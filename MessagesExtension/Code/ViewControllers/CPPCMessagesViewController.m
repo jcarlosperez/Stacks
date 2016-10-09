@@ -195,6 +195,8 @@
             NSLog(@"Download failed: [%@]", task.error);
         } else {
             NSLog(@"Task: %@", task);
+            NSURL *downloadedFilePath = ((AWSS3TransferManagerDownloadOutput *)task.result).body;
+            NSLog(@"Download File Path: %@", downloadedFilePath);
         }
         
         return nil;
