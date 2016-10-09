@@ -13,6 +13,7 @@
 		C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14C41921DAA09F8001D2D35 /* Messages.framework */; };
 		C14C419C1DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C419B1DAA09F8001D2D35 /* Assets.xcassets */; };
 		C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */; };
+		C1C28EB71DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C28EB61DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m */; };
 		C1E146B71DAAC042001FC8A9 /* PicChooseImageSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E146B61DAAC042001FC8A9 /* PicChooseImageSelectionView.m */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,8 @@
 		C14C419D1DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C14C41A71DAA0CB3001D2D35 /* CPPCMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCMessagesViewController.h; path = Code/ViewControllers/CPPCMessagesViewController.h; sourceTree = "<group>"; };
 		C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCMessagesViewController.m; path = Code/ViewControllers/CPPCMessagesViewController.m; sourceTree = "<group>"; };
+		C1C28EB51DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PicChooseImageSelectionCollectionViewCell.h; path = "Code/Cell Classes/PicChooseImageSelectionCollectionViewCell.h"; sourceTree = "<group>"; };
+		C1C28EB61DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PicChooseImageSelectionCollectionViewCell.m; path = "Code/Cell Classes/PicChooseImageSelectionCollectionViewCell.m"; sourceTree = "<group>"; };
 		C1E146B51DAAC042001FC8A9 /* PicChooseImageSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PicChooseImageSelectionView.h; path = "Code/View Classes/PicChooseImageSelectionView.h"; sourceTree = "<group>"; };
 		C1E146B61DAAC042001FC8A9 /* PicChooseImageSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PicChooseImageSelectionView.m; path = "Code/View Classes/PicChooseImageSelectionView.m"; sourceTree = "<group>"; };
 		D46B31A159ED5E86EE1BDBE7 /* Pods-MessagesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 		C14C41941DAA09F8001D2D35 /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				C1C28EB41DAAC92C00695100 /* Cell Classes */,
 				C1E146B41DAABF6A001FC8A9 /* View Classes */,
 				C14C41A71DAA0CB3001D2D35 /* CPPCMessagesViewController.h */,
 				C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */,
@@ -127,6 +131,15 @@
 				C14C419D1DAA09F8001D2D35 /* Info.plist */,
 			);
 			path = MessagesExtension;
+			sourceTree = "<group>";
+		};
+		C1C28EB41DAAC92C00695100 /* Cell Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C1C28EB51DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.h */,
+				C1C28EB61DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m */,
+			);
+			name = "Cell Classes";
 			sourceTree = "<group>";
 		};
 		C1E146B41DAABF6A001FC8A9 /* View Classes */ = {
@@ -275,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */,
+				C1C28EB71DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m in Sources */,
 				C1E146B71DAAC042001FC8A9 /* PicChooseImageSelectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

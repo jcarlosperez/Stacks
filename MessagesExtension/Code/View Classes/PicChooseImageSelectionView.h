@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PicChooseImageSelectionView : UIView
-//- (void)updateViewWithImageAssets
+@interface PicChooseImageSelectionView : UIView <UICollectionViewDelegate, UICollectionViewDataSource>
+@property (nonatomic, strong) UICollectionView *imageSelectionCollectionView;
+- (void)updateViewWithImageAtPath:(NSString *)filePath;
 @end

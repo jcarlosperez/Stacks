@@ -56,6 +56,11 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:50]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:200]];
     
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageSelectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:questionLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageSelectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:button attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageSelectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:10]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageSelectionView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:10]];
+    
 }
 
 - (void)createNewMessageWithImage:(UIImage *)image andURL:(NSURL *)url {
@@ -184,6 +189,7 @@
                     
                     // Really I shouldn't upload now, only until user taps on send which creates the MSMessage
                     [self createUploadWithImageAtPath:filePath withFilename:fileName];
+                    [_imageSelectionView updateViewWithImageAtPath:filePath];
                 }
             });
         }];
@@ -244,7 +250,7 @@
             NSLog(@"Task Result: %@", task.result);
             
             // The key is just the filename as we set in the upload request. Hardcoded here for now
-            NSString *fileKey = @"02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg";
+            /*NSString *fileKey = @"02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg";
             
             NSString *downloadingFilePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] stringByAppendingPathComponent:fileKey];
             NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
@@ -253,7 +259,7 @@
             downloadRequest.bucket = @"picchoosebackend";
             downloadRequest.key = @"02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg";
             downloadRequest.downloadingFileURL = downloadingFileURL;
-            [self transferDownloadWithRequest:downloadRequest];
+            [self transferDownloadWithRequest:downloadRequest];*/
             
         } else if(task.error) {
             NSLog(@"Task Result: %@", task.error);
