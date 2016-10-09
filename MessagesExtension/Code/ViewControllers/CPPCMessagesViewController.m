@@ -65,9 +65,7 @@
 
 - (void)setupAWSCognito {
     
-    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
-                                                          initWithRegionType:AWSRegionUSEast1
-                                                          identityPoolId:@"***REMOVED***"];
+    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"***REMOVED***" unauthRoleArn:@"***REMOVED***" authRoleArn:nil  identityProviderManager:nil];
     
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
     
@@ -134,20 +132,37 @@
         
         [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
             
-            NSString *fileName = [[[NSProcessInfo processInfo] globallyUniqueString] stringByAppendingString:@".png"];
+            NSString *fileName = [[[NSProcessInfo processInfo] globallyUniqueString] stringByAppendingString:@".jpg"];
             NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"] stringByAppendingPathComponent:fileName];
-            NSData * imageData = UIImagePNGRepresentation(image);
+            
+            CGFloat height = image.size.height / (image.size.width/800);
+            
+            UIImage *scaledImaged = [self scaleDown:image withSize:CGSizeMake(800, height)];
+            
+            NSData * imageData = UIImageJPEGRepresentation(scaledImaged, 0.6);
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSError *error;
                 [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
                 if(!error) {
+                    
+                    // Really I shouldn't upload now, only until user taps on send which creates the MSMessage
                     [self createUploadWithImageAtPath:filePath withFilename:fileName];
                 }
             });
         }];
     }
     
+}
+
+-(UIImage*)scaleDown:(UIImage*)img withSize:(CGSize)newSize {
+    
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, YES, 0.0);
+    [img drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
 - (void)createUploadWithImageAtPath:(NSString *)path withFilename:(NSString *)fileName {
