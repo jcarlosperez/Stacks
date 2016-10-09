@@ -13,7 +13,9 @@
 #import <AWSS3/AWSS3.h>
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
 
-@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate>
+@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate> {
+    NSString *__fileName;
+}
 @property (nonatomic, strong) NSMutableArray *uploadImagePaths;
 @end
 
@@ -53,7 +55,6 @@
 
 - (void)createTemporaryUploadsFolder {
     
-    NSLog(@"Attempting to create folder with path: %@", [NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"]);
     NSError *error = nil;
     if (![[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"]
                                    withIntermediateDirectories:YES
@@ -135,10 +136,10 @@
             NSString *fileName = [[[NSProcessInfo processInfo] globallyUniqueString] stringByAppendingString:@".jpg"];
             NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"] stringByAppendingPathComponent:fileName];
             
+            __fileName = fileName;
+            
             CGFloat height = image.size.height / (image.size.width/800);
-            
             UIImage *scaledImaged = [self scaleDown:image withSize:CGSizeMake(800, height)];
-            
             NSData * imageData = UIImageJPEGRepresentation(scaledImaged, 0.6);
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -175,6 +176,26 @@
     
 }
 
+- (void)transferDownloadWithRequest:(AWSS3TransferManagerDownloadRequest *)request {
+    
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    [[transferManager download:request] continueWithBlock:^id(AWSTask *task) {
+        
+        if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]
+            && task.error.code == AWSS3TransferManagerErrorPaused) {
+            NSLog(@"Download paused.");
+        } else if (task.error) {
+            NSLog(@"Download failed: [%@]", task.error);
+        } else {
+            NSLog(@"Task: %@", task);
+        }
+        
+        return nil;
+    }];
+    
+}
+
 - (void)transferUploadWithRequest:(AWSS3TransferManagerUploadRequest *)request {
     
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
@@ -185,6 +206,13 @@
         
         if (task.result) {
             NSLog(@"Task Result: %@", task.result);
+            
+            AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+            downloadRequest.bucket = @"picchoosebackend";
+            downloadRequest.key = @"02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg";
+            downloadRequest.downloadingFileURL = [NSURL URLWithString:@"https://s3.amazonaws.com/picchoosebackend/02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg"];
+            [self transferDownloadWithRequest:downloadRequest];
+            
         } else if(task.error) {
             NSLog(@"Task Result: %@", task.error);
         }
