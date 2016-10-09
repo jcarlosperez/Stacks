@@ -25,6 +25,8 @@
         [_selectedImageView setContentMode:UIViewContentModeScaleAspectFill];
         [_selectedImageView setClipsToBounds:YES];
         [self.contentView addSubview:_selectedImageView];
+        
+        
     }
     
     return self;
