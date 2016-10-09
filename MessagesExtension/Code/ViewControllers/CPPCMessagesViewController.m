@@ -16,6 +16,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    questionLabel.text = @"Which Shoes Should I Buy?";
+    questionLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:questionLabel];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:questionLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:10]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:questionLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    
 }
 
 - (void)didReceiveMemoryWarning {
