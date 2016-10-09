@@ -26,7 +26,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self createTemporaryUploadsFolder];
+    [self createTemporaryFolders];
     [self setupAWSCognito];
     
     UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -52,11 +52,17 @@
     
 }
 
-- (void)createTemporaryUploadsFolder {
+- (void)createTemporaryFolders {
     
     // Create temp folder to store images user selects
     NSError *error = nil;
     if (![[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"]
+                                   withIntermediateDirectories:YES
+                                                    attributes:nil
+                                                         error:&error]) {
+    }
+    
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"]
                                    withIntermediateDirectories:YES
                                                     attributes:nil
                                                          error:&error]) {
@@ -207,10 +213,16 @@
         if (task.result) {
             NSLog(@"Task Result: %@", task.result);
             
+            // The key is just the filename as we set in the upload request. Hardcoded here for now
+            NSString *fileKey = @"02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg";
+            
+            NSString *downloadingFilePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] stringByAppendingPathComponent:fileKey];
+            NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+            
             AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
             downloadRequest.bucket = @"picchoosebackend";
             downloadRequest.key = @"02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg";
-            downloadRequest.downloadingFileURL = [NSURL URLWithString:@"https://s3.amazonaws.com/picchoosebackend/02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg"];
+            downloadRequest.downloadingFileURL = downloadingFileURL;
             [self transferDownloadWithRequest:downloadRequest];
             
         } else if(task.error) {
