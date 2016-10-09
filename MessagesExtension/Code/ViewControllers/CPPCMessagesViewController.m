@@ -1,19 +1,17 @@
 //
-//  MessagesViewController.m
-//  MessagesExtension
+//  CPPCMessagesViewController.m
+//  PicChoose
 //
 //  Created by Juan Carlos Perez on 10/9/16.
 //  Copyright © 2016 CP Digital Darkroom. All rights reserved.
 //
 
-#import "MessagesViewController.h"
+#import "CPPCMessagesViewController.h"
 
-
-@interface MessagesViewController ()
-
+@interface CPPCMessagesViewController ()
 @end
 
-@implementation MessagesViewController
+@implementation CPPCMessagesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

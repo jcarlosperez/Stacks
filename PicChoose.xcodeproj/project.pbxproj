@@ -10,9 +10,8 @@
 		C14C41871DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C41861DAA09F8001D2D35 /* Assets.xcassets */; };
 		C14C418E1DAA09F8001D2D35 /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14C41921DAA09F8001D2D35 /* Messages.framework */; };
-		C14C41971DAA09F8001D2D35 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14C41961DAA09F8001D2D35 /* MessagesViewController.m */; };
-		C14C419A1DAA09F8001D2D35 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C14C41981DAA09F8001D2D35 /* MainInterface.storyboard */; };
 		C14C419C1DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C419B1DAA09F8001D2D35 /* Assets.xcassets */; };
+		C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,11 +44,10 @@
 		C14C41881DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MessagesExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C14C41921DAA09F8001D2D35 /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
-		C14C41951DAA09F8001D2D35 /* MessagesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
-		C14C41961DAA09F8001D2D35 /* MessagesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
-		C14C41991DAA09F8001D2D35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		C14C419B1DAA09F8001D2D35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C14C419D1DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C14C41A71DAA0CB3001D2D35 /* CPPCMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCMessagesViewController.h; path = Code/ViewControllers/CPPCMessagesViewController.h; sourceTree = "<group>"; };
+		C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCMessagesViewController.m; path = Code/ViewControllers/CPPCMessagesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,9 +101,8 @@
 		C14C41941DAA09F8001D2D35 /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
-				C14C41951DAA09F8001D2D35 /* MessagesViewController.h */,
-				C14C41961DAA09F8001D2D35 /* MessagesViewController.m */,
-				C14C41981DAA09F8001D2D35 /* MainInterface.storyboard */,
+				C14C41A71DAA0CB3001D2D35 /* CPPCMessagesViewController.h */,
+				C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */,
 				C14C419B1DAA09F8001D2D35 /* Assets.xcassets */,
 				C14C419D1DAA09F8001D2D35 /* Info.plist */,
 			);
@@ -203,7 +200,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C14C419C1DAA09F8001D2D35 /* Assets.xcassets in Resources */,
-				C14C419A1DAA09F8001D2D35 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C14C41971DAA09F8001D2D35 /* MessagesViewController.m in Sources */,
+				C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,17 +223,6 @@
 			targetProxy = C14C418F1DAA09F8001D2D35 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		C14C41981DAA09F8001D2D35 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C14C41991DAA09F8001D2D35 /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C14C419E1DAA09F8001D2D35 /* Debug */ = {
