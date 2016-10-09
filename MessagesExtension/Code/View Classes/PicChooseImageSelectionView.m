@@ -71,7 +71,13 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
         if(indexPath.row > _imageAssets.count - 1) {
             cell.selectedImageView.image = [UIImage imageNamed:@"newImageSelection"];
         } else {
-            cell.selectedImageView.image = [UIImage imageWithContentsOfFile:_imageAssets[indexPath.row]];
+            
+            NSLog(@"Shoud show user image");
+            
+            UIImage *userImage = [UIImage imageWithContentsOfFile:_imageAssets[indexPath.row]];
+            
+            NSLog(@"User image: %@", userImage);
+            cell.selectedImageView.image = userImage;
         }
     }
     

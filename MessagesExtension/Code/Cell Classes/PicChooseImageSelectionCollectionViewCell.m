@@ -20,7 +20,7 @@
         self.layer.masksToBounds = YES;
         
         _selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nothing"]];
-        _selectedImageView.center = self.center;
+        _selectedImageView.center = self.contentView.center;
         //_selectedImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [_selectedImageView setContentMode:UIViewContentModeScaleAspectFill];
         [_selectedImageView setClipsToBounds:YES];
