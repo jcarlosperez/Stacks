@@ -16,7 +16,6 @@
 @interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate> {
     NSString *__fileName;
 }
-@property (nonatomic, strong) NSMutableArray *uploadImagePaths;
 @end
 
 @implementation CPPCMessagesViewController
@@ -55,17 +54,18 @@
 
 - (void)createTemporaryUploadsFolder {
     
+    // Create temp folder to store images user selects
     NSError *error = nil;
     if (![[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"]
                                    withIntermediateDirectories:YES
                                                     attributes:nil
                                                          error:&error]) {
-        NSLog(@"reating 'upload' directory failed: [%@]", error);
     }
 }
 
 - (void)setupAWSCognito {
     
+    // Setup Cognito credentials for user pool to use without authorization
     AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"***REMOVED***" unauthRoleArn:@"***REMOVED***" authRoleArn:nil  identityProviderManager:nil];
     
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
@@ -76,6 +76,7 @@
 #pragma mark - User Alert Controller
 
 - (void)showAlertController:(id)sender {
+    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Available Actions"
                                                                              message:@"Choose your action."
                                                                       preferredStyle:UIAlertControllerStyleActionSheet];
@@ -84,8 +85,10 @@
     UIAlertAction *selectPictureAction = [UIAlertAction actionWithTitle:@"Select Pictures"
                                                                   style:UIAlertActionStyleDefault
                                                                 handler:^(UIAlertAction *action) {
+                                                                    
                                                                     CPPCMessagesViewController *strongSelf = weakSelf;
                                                                     [strongSelf selectPicturesFromLibrary];
+                                                                    
                                                                 }];
     [alertController addAction:selectPictureAction];
     
@@ -94,9 +97,7 @@
                                                          handler:nil];
     [alertController addAction:cancelAction];
     
-    [self presentViewController:alertController
-                       animated:YES
-                     completion:nil];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)selectPicturesFromLibrary {
@@ -123,7 +124,6 @@
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
     
     NSLog(@"assetsPickerController:didFinishPickingAssets:");
-    _uploadImagePaths = [NSMutableArray new];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
     
@@ -138,6 +138,7 @@
             
             __fileName = fileName;
             
+            // Calculate scaled height
             CGFloat height = image.size.height / (image.size.width/800);
             UIImage *scaledImaged = [self scaleDown:image withSize:CGSizeMake(800, height)];
             NSData * imageData = UIImageJPEGRepresentation(scaledImaged, 0.6);
@@ -157,7 +158,6 @@
 }
 
 -(UIImage*)scaleDown:(UIImage*)img withSize:(CGSize)newSize {
-    
     
     UIGraphicsBeginImageContextWithOptions(newSize, YES, 0.0);
     [img drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
