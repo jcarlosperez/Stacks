@@ -12,6 +12,7 @@
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
 
 @interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate>
+@property (nonatomic, strong) NSMutableArray *uploadImagePaths;
 @end
 
 @implementation CPPCMessagesViewController
@@ -22,6 +23,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self createTemporaryUploadsFolder];
+    
     UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     questionLabel.text = @"Which Shoes Should I Buy?";
     questionLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -29,7 +32,7 @@
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self action:@selector(showAlertController:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"Show View" forState:UIControlStateNormal];
+    [button setTitle:@"Show Alert" forState:UIControlStateNormal];
     [button.titleLabel setTextColor:[UIColor blackColor]];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.translatesAutoresizingMaskIntoConstraints = NO;
@@ -38,11 +41,23 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:questionLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:10]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:questionLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:-20]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:-50]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:50]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:200]];
     
+}
+
+- (void)createTemporaryUploadsFolder {
+    
+    NSLog(@"Attempting to create folder with path: %@", [NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"]);
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"]
+                                   withIntermediateDirectories:YES
+                                                    attributes:nil
+                                                         error:&error]) {
+        NSLog(@"reating 'upload' directory failed: [%@]", error);
+    }
 }
 
 #pragma mark - User Alert Controller
@@ -94,33 +109,60 @@
 
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
     
-    PHImageManager *manager = [PHImageManager defaultManager];
+    NSLog(@"assetsPickerController:didFinishPickingAssets:");
+    _uploadImagePaths = [NSMutableArray new];
     
-    __block UIImage *ima;
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    PHImageManager *manager = [PHImageManager defaultManager];
     
     for(PHAsset *asset in assets) {
         
-        [manager requestImageForAsset:asset
-                           targetSize:PHImageManagerMaximumSize
-                          contentMode:PHImageContentModeDefault
-                              options:nil
-                        resultHandler:^void(UIImage *image, NSDictionary *info) {
-                            NSLog(@"Image: %@", image);
-                        }];
+        [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
+            
+            NSString *fileName = [[[NSProcessInfo processInfo] globallyUniqueString] stringByAppendingString:@".png"];
+            NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"] stringByAppendingPathComponent:fileName];
+            NSData * imageData = UIImagePNGRepresentation(image);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSError *error;
+                [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
+                NSLog(@"Error: %@", error);
+            });
+            
+            [self createUploadWithImageAtPath:filePath withFilename:fileName];
+            
+        }];
     }
+    
 }
 
-- (void)createUploadWithImage:(UIImage *)image {
+- (void)createUploadWithImageAtPath:(NSString *)path withFilename:(NSString *)fileName {
     
-    /*AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
-    uploadRequest.body = [NSURL fileURLWithPath:filePath];
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.body = [NSURL fileURLWithPath:path];
     uploadRequest.key = fileName;
-    uploadRequest.bucket = S3BucketName;*/
+    uploadRequest.bucket = @"picchoosebackend";
+    [self transferUploadWithRequest:uploadRequest];
     
 }
 
 - (void)transferUploadWithRequest:(AWSS3TransferManagerUploadRequest *)request {
     
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    //__weak CPPCMessagesViewController *weakSelf = self;
+    
+    [[transferManager upload:request] continueWithBlock:^id(AWSTask *task) {
+        
+        if (task.result) {
+            NSLog(@"Task Result: %@", task.result);
+        } else if(task.error) {
+            NSLog(@"Task Result: %@", task.error);
+        }
+        
+        return nil;
+    }];
 }
 
 #pragma mark - Conversation Handling
