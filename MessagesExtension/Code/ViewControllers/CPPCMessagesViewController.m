@@ -7,6 +7,7 @@
 //
 
 #import "CPPCMessagesViewController.h"
+#import "PicChooseImageSelectionView.h"
 
 #import <AWSCore/AWSCore.h>
 #import <AWSCognito/AWSCognito.h>
@@ -16,6 +17,7 @@
 @interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate> {
     NSString *__fileName;
 }
+@property (nonatomic, strong ) PicChooseImageSelectionView *imageSelectionView;
 @end
 
 @implementation CPPCMessagesViewController
@@ -34,9 +36,13 @@
     questionLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:questionLabel];
     
+    _imageSelectionView = [[PicChooseImageSelectionView alloc] initWithFrame:CGRectZero];
+    _imageSelectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_imageSelectionView];
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self action:@selector(showAlertController:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"Show Alert" forState:UIControlStateNormal];
+    [button setTitle:@"Send Image" forState:UIControlStateNormal];
     [button.titleLabel setTextColor:[UIColor blackColor]];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.translatesAutoresizingMaskIntoConstraints = NO;
@@ -58,7 +64,7 @@
     
     // Create the message layout
     MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-    messageLayout.subcaption = [NSString stringWithFormat:@"%@ needs your help choosing.", currentConversation.remoteParticipantIdentifiers[0]];
+    messageLayout.subcaption = [NSString stringWithFormat:@"%@ needs your help choosing.", currentConversation.localParticipantIdentifier];
     messageLayout.image = image;
     
     // Create a message setting its layout and url
