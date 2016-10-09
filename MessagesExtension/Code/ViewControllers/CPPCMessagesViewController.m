@@ -52,6 +52,28 @@
     
 }
 
+- (void)createNewMessageWithImage:(UIImage *)image andURL:(NSURL *)url {
+    
+    MSConversation *currentConversation = self.activeConversation;
+    
+    // Create the message layout
+    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+    messageLayout.subcaption = [NSString stringWithFormat:@"%@ needs your help choosing.", currentConversation.remoteParticipantIdentifiers[0]];
+    messageLayout.image = image;
+    
+    // Create a message setting its layout and url
+    MSMessage *message = [[MSMessage alloc] init];
+    message.layout = messageLayout;
+    message.URL = url;
+    [currentConversation insertMessage:message completionHandler:nil];
+    
+    // If extension is expanded animate to compact style so user can see message
+    if(self.presentationStyle == MSMessagesAppPresentationStyleExpanded) {
+        [self requestPresentationStyle:MSMessagesAppPresentationStyleCompact];
+    }
+    
+}
+
 - (void)createTemporaryFolders {
     
     // Create temp folder to store images user selects
