@@ -17,35 +17,38 @@
     
     if(self = [super initWithFrame:CGRectMake(0, 0, 600, 600)]) {
         
-        self.backgroundColor = [UIColor lightGrayColor];
+        self.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0];
         
         int imageCount;
         
         for(UIImage *image in images) {
             
-            UIImageView *imageLayer = [[UIImageView alloc] initWithFrame:CGRectMake(100, 100, 400, 400)];
+            UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 400, 400)];
+            containerView.layer.shadowColor = [UIColor blackColor].CGColor;
+            containerView.layer.shadowOffset = CGSizeMake(2, 2);
+            containerView.layer.shadowOpacity = 0.8;
+            containerView.layer.shadowRadius = 10;
+            
+            UIImageView *imageLayer = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 400, 400)];
             imageLayer.contentMode = UIViewContentModeScaleAspectFill;
             imageLayer.image = image;
             imageLayer.layer.borderColor = [UIColor whiteColor].CGColor;
             imageLayer.layer.borderWidth = 6;
             imageLayer.layer.masksToBounds = YES;
-            imageLayer.layer.shadowColor = [UIColor blackColor].CGColor;
-            imageLayer.layer.shadowOffset = CGSizeMake(2, 2);
-            imageLayer.layer.shadowOpacity = 0.8;
-            imageLayer.layer.shadowRadius = 5;
             imageLayer.layer.shouldRasterize = YES;
             imageLayer.layer.rasterizationScale = [[UIScreen mainScreen] scale];
             
+            [containerView addSubview:imageLayer];
+            [self addSubview:containerView];
+            
             if(imageCount == 1) {
-                imageLayer.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(5));
+                containerView.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(5));
 
             } else if(imageCount == 2) {
-                imageLayer.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(-5));
+                containerView.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(-5));
             }
             
             imageCount++;
-            
-            [self addSubview:imageLayer];
             
         }
     }
