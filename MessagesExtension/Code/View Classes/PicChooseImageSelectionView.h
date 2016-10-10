@@ -8,7 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class PicChooseImageSelectionView;
+@protocol PicChooseImageSelectionViewDelegate <NSObject>
+- (void)tappedAddImageCell;
+
+@end
+
 @interface PicChooseImageSelectionView : UIView <UICollectionViewDelegate, UICollectionViewDataSource>
+
+@property (nonatomic, strong) NSMutableArray *imageAssets;
 @property (nonatomic, strong) UICollectionView *imageSelectionCollectionView;
+
+@property (nonatomic, weak) id <PicChooseImageSelectionViewDelegate> delegate;
+
+- (void)updateViewWithImage:(UIImage *)image;
 - (void)updateViewWithImageAtPath:(NSString *)filePath;
 @end

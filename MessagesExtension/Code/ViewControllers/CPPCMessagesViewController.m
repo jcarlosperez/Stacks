@@ -12,7 +12,7 @@
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
 #import "CPPCServerManager.h"
 
-@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate, UITextFieldDelegate> {
+@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate, PicChooseImageSelectionViewDelegate, UITextFieldDelegate> {
     NSString *__fileName;
 }
 @property (nonatomic, strong ) PicChooseImageSelectionView *choicesCollectionView;
@@ -34,12 +34,13 @@
     [self.view addSubview:questionTextField];
     
     _choicesCollectionView = [[PicChooseImageSelectionView alloc] init];
+    _choicesCollectionView.delegate = self;
     _choicesCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_choicesCollectionView];
     
     UIButton *sendButton = [[UIButton alloc] init];
-    [sendButton addTarget:self action:@selector(showAlertController:) forControlEvents:UIControlEventTouchUpInside];
-    [sendButton setTitle:@"Send Image" forState:UIControlStateNormal];
+    [sendButton addTarget:self action:@selector(createNewMessage:) forControlEvents:UIControlEventTouchUpInside];
+    [sendButton setTitle:@"Create Message" forState:UIControlStateNormal];
     [sendButton.titleLabel setTextColor:[UIColor blackColor]];
     [sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     sendButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -63,6 +64,41 @@
                                        @"topLayoutGuide": self.topLayoutGuide,
                                        @"sendButton": sendButton,
                                        @"choicesCollectionView": _choicesCollectionView}];
+}
+
+- (void)createNewMessage:(id)sender {
+    
+    [self createNewMessageWithImage:_choicesCollectionView.imageAssets[0] andURL:[NSURL URLWithString:@"https://apple.com"]];
+}
+
+- (void)createNewMessageWithImage:(UIImage *)image andURL:(NSURL *)url {
+    
+    MSConversation *currentConversation = self.activeConversation;
+    
+    // Create the message layout
+    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+    NSString *myName = [NSString stringWithFormat:@"$%@",self.activeConversation.localParticipantIdentifier.UUIDString];
+    messageLayout.subcaption = [NSString stringWithFormat:@"%@ wants your help choosing!", [[myName componentsSeparatedByString:@" "] objectAtIndex:0]];
+    messageLayout.image = image;
+    
+    // Create a message setting its layout and url
+    MSMessage *message = [[MSMessage alloc] init];
+    message.layout = messageLayout;
+    message.URL = url;
+    [currentConversation insertMessage:message completionHandler:nil];
+    
+    // If extension is expanded animate to compact style so user can see message
+    if(self.presentationStyle == MSMessagesAppPresentationStyleExpanded) {
+        [self requestPresentationStyle:MSMessagesAppPresentationStyleCompact];
+    }
+    
+}
+
+#pragma mark - PicChoose Image Selection Delegate
+
+- (void)tappedAddImageCell {
+    
+    [self showAlertController:nil];
 }
 
 #pragma mark - User Alert Controller
@@ -125,6 +161,7 @@
         
         [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
             [[CPPCServerManager sharedInstance] uploadRawImage:image];
+            [_choicesCollectionView updateViewWithImage:image];
             
         }];
     }

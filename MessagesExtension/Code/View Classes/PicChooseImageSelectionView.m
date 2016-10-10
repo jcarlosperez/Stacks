@@ -12,7 +12,6 @@
 static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
 
 @interface PicChooseImageSelectionView () {
-    NSMutableArray *_imageAssets;
     UICollectionViewFlowLayout *_flowLayout;
 }
 
@@ -28,12 +27,13 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
         
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
         _flowLayout.itemSize = CGSizeMake(75, 75);
-        _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        _flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical; // Horizontal scrolls are forbidden
         _flowLayout.minimumInteritemSpacing = 10;
         _flowLayout.minimumLineSpacing = 10;
         
         _imageSelectionCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:_flowLayout];
         _imageSelectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+        _imageSelectionCollectionView.allowsSelection = YES;
         _imageSelectionCollectionView.backgroundColor = [UIColor clearColor];
         _imageSelectionCollectionView.delegate = self;
         _imageSelectionCollectionView.dataSource = self;
@@ -53,15 +53,20 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
     
 }
 
+- (void)updateViewWithImage:(UIImage *)image {
+    [_imageAssets addObject:image];
+    [_imageSelectionCollectionView reloadData];
+}
+
 - (void)updateViewWithImageAtPath:(NSString *)filePath {
     
-    NSLog(@"updateViewWithImageAtPath: %@", filePath);
     [_imageAssets addObject:filePath];
     [_imageSelectionCollectionView reloadData];
 }
 #pragma mark - Collection View Delegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     PicChooseImageSelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPCImageSelectionCell forIndexPath:indexPath];
     
     // If we're on the cell to be the "New Image" cell
@@ -69,12 +74,12 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
         cell.selectedImageView.image = [UIImage imageNamed:@"add"];
     } else {
         if(indexPath.row > _imageAssets.count - 1) {
-            cell.selectedImageView.image = [UIImage imageNamed:@"newImageSelection"];
+            cell.selectedImageView.image = [UIImage imageNamed:@"add"];
         } else {
             
             NSLog(@"Shoud show user image");
             
-            UIImage *userImage = [UIImage imageWithContentsOfFile:_imageAssets[indexPath.row]];
+            UIImage *userImage = _imageAssets[indexPath.row];
             
             NSLog(@"User image: %@", userImage);
             cell.selectedImageView.image = userImage;
@@ -88,13 +93,15 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
     
     //Calculate space required and add appropriate inset spacing to center the cells
     NSInteger cellCount = [collectionView.dataSource collectionView:collectionView numberOfItemsInSection:section];
-    if( cellCount >0 )
-    {
+    if( cellCount > 0 ) {
         CGFloat cellWidth = ((UICollectionViewFlowLayout*)collectionViewLayout).itemSize.width+((UICollectionViewFlowLayout*)collectionViewLayout).minimumInteritemSpacing;
         CGFloat totalCellWidth = cellWidth*cellCount;
         CGFloat contentWidth = collectionView.frame.size.width-collectionView.contentInset.left-collectionView.contentInset.right;
-        if( totalCellWidth<contentWidth )
-        {
+        
+        NSLog(@"Collection View Height: %f", collectionView.frame.size.height);
+        // IDK Why it's saying the height is the full expanded height size instead of compact style so we can center vertically
+        
+        if( totalCellWidth<contentWidth ) {
             CGFloat padding = (contentWidth - totalCellWidth) / 2.0;
             return UIEdgeInsetsMake(0, padding, 0, padding);
         }
@@ -110,6 +117,10 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    if(indexPath.row == _imageAssets.count) {
+        NSLog(@"Tapped Add Cell");
+        [_delegate tappedAddImageCell];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
