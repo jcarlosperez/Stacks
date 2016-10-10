@@ -8,6 +8,7 @@
 
 #import "CPPCMessagesViewController.h"
 #import "CPPCChoicesCollectionView.h"
+#import "CPPCChoicesPreviewView.h"
 #import "CompactConstraint.h"
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
 #import "CPPCServerManager.h"
@@ -66,9 +67,22 @@
                                        @"choicesCollectionView": _choicesCollectionView}];
 }
 
+- (UIImage *)imageFromView:(UIView *)view {
+    
+    CGSize itemSize = CGSizeMake(view.frame.size.width, view.frame.size.height);
+    UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [view.layer renderInContext:context];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
 - (void)createNewMessage:(id)sender {
     
-    [self createNewMessageWithImage:_choicesCollectionView.imageAssets[0] andURL:[NSURL URLWithString:@"https://apple.com"]];
+    CPPCChoicesPreviewView *previewView = [[CPPCChoicesPreviewView alloc] initWithImageAssets:_choicesCollectionView.imageAssets];
+    UIImage *previewImage = [self imageFromView:previewView];
+    [self createNewMessageWithImage:previewImage andURL:[NSURL URLWithString:@"https://apple.com"]];
 }
 
 - (void)createNewMessageWithImage:(UIImage *)image andURL:(NSURL *)url {

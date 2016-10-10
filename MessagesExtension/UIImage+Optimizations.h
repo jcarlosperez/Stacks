@@ -12,4 +12,6 @@
 
 - (UIImage *)scaledImageToSize:(CGSize)size;
 
+- (UIImage *)imageBorderedWithColor:(UIColor *)color borderWidth:(CGFloat)width;
+
 @end

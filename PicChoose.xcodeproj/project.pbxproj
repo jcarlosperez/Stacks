@@ -15,6 +15,7 @@
 		C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14C41921DAA09F8001D2D35 /* Messages.framework */; };
 		C14C419C1DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C419B1DAA09F8001D2D35 /* Assets.xcassets */; };
 		C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */; };
+		C16D2DB21DAC2EE000585B87 /* CPPCChoicesPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = C16D2DB11DAC2EE000585B87 /* CPPCChoicesPreviewView.m */; };
 		C1C28EB71DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C28EB61DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m */; };
 		C1E146B71DAAC042001FC8A9 /* CPPCChoicesCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E146B61DAAC042001FC8A9 /* CPPCChoicesCollectionView.m */; };
 		FD0C179899E047AD4AF45EBD /* libPods-MessagesExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */; };
@@ -64,6 +65,8 @@
 		C14C419D1DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C14C41A71DAA0CB3001D2D35 /* CPPCMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCMessagesViewController.h; path = Code/ViewControllers/CPPCMessagesViewController.h; sourceTree = "<group>"; };
 		C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCMessagesViewController.m; path = Code/ViewControllers/CPPCMessagesViewController.m; sourceTree = "<group>"; };
+		C16D2DB01DAC2EE000585B87 /* CPPCChoicesPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCChoicesPreviewView.h; path = "Code/View Classes/CPPCChoicesPreviewView.h"; sourceTree = "<group>"; };
+		C16D2DB11DAC2EE000585B87 /* CPPCChoicesPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCChoicesPreviewView.m; path = "Code/View Classes/CPPCChoicesPreviewView.m"; sourceTree = "<group>"; };
 		C1C28EB51DAAC98B00695100 /* CPPCChoicesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCChoicesCollectionViewCell.h; path = "Code/Cell Classes/CPPCChoicesCollectionViewCell.h"; sourceTree = "<group>"; };
 		C1C28EB61DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCChoicesCollectionViewCell.m; path = "Code/Cell Classes/CPPCChoicesCollectionViewCell.m"; sourceTree = "<group>"; };
 		C1E146B51DAAC042001FC8A9 /* CPPCChoicesCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCChoicesCollectionView.h; path = "Code/View Classes/CPPCChoicesCollectionView.h"; sourceTree = "<group>"; };
@@ -172,6 +175,8 @@
 			children = (
 				C1E146B51DAAC042001FC8A9 /* CPPCChoicesCollectionView.h */,
 				C1E146B61DAAC042001FC8A9 /* CPPCChoicesCollectionView.m */,
+				C16D2DB01DAC2EE000585B87 /* CPPCChoicesPreviewView.h */,
+				C16D2DB11DAC2EE000585B87 /* CPPCChoicesPreviewView.m */,
 			);
 			name = "View Classes";
 			sourceTree = "<group>";
@@ -229,12 +234,12 @@
 				TargetAttributes = {
 					C14C41821DAA09F8001D2D35 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 8V5J4G27BG;
+						DevelopmentTeam = Z3Q8LM67KV;
 						ProvisioningStyle = Automatic;
 					};
 					C14C418C1DAA09F8001D2D35 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 8V5J4G27BG;
+						DevelopmentTeam = Z3Q8LM67KV;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -347,6 +352,7 @@
 			files = (
 				C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */,
 				C1C28EB71DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m in Sources */,
+				C16D2DB21DAC2EE000585B87 /* CPPCChoicesPreviewView.m in Sources */,
 				900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */,
 				900FF1191DAB3B230028DA90 /* CPPCServerManager.m in Sources */,
 				C1E146B71DAAC042001FC8A9 /* CPPCChoicesCollectionView.m in Sources */,
@@ -457,9 +463,9 @@
 			baseConfigurationReference = A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
-				DEVELOPMENT_TEAM = 8V5J4G27BG;
+				DEVELOPMENT_TEAM = Z3Q8LM67KV;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose.MessagesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -472,9 +478,9 @@
 			baseConfigurationReference = 3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
-				DEVELOPMENT_TEAM = 8V5J4G27BG;
+				DEVELOPMENT_TEAM = Z3Q8LM67KV;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose.MessagesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -487,9 +493,9 @@
 			baseConfigurationReference = AAD9628BD66BE8E79C4D0DD9 /* Pods-PicChoose.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 8V5J4G27BG;
+				DEVELOPMENT_TEAM = Z3Q8LM67KV;
 				INFOPLIST_FILE = PicChoose/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -501,9 +507,9 @@
 			baseConfigurationReference = 74CCB977A60AFCB8F13A3CB9 /* Pods-PicChoose.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 8V5J4G27BG;
+				DEVELOPMENT_TEAM = Z3Q8LM67KV;
 				INFOPLIST_FILE = PicChoose/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
