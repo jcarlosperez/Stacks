@@ -74,7 +74,6 @@
             uploadRequest.key = fileName;
             uploadRequest.bucket = @"picchoosebackend";
             [[[AWSS3TransferManager defaultS3TransferManager] upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor] withBlock:^id _Nullable(AWSTask * _Nonnull task) {
-                NSLog(@"THE URL IS https://s3.amazonaws.com/picchoosebackend/%@", uploadRequest.key);
                 return nil;
             }];
         }

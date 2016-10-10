@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '6EBE48FB84F611CFCF9FE93EFDE9BCE0'
-               BlueprintName = 'Pods-MessagesExtension'
+               BlueprintIdentifier = 'DB79F9B1434ED7C54AEBA792D598E37B'
+               BlueprintName = 'KTCenterFlowLayout'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-MessagesExtension.a'>
+               BuildableName = 'libKTCenterFlowLayout.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

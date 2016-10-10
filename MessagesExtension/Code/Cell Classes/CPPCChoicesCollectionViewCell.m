@@ -1,14 +1,14 @@
 //
-//  PicChooseImageSelectionCollectionViewCell.m
+//  CPPCChoicesCollectionViewCell.m
 //  PicChoose
 //
 //  Created by Juan Carlos Perez on 10/9/16.
 //  Copyright © 2016 CP Digital Darkroom. All rights reserved.
 //
 
-#import "PicChooseImageSelectionCollectionViewCell.h"
+#import "CPPCChoicesCollectionViewCell.h"
 
-@implementation PicChooseImageSelectionCollectionViewCell
+@implementation CPPCChoicesCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
     

@@ -7,15 +7,15 @@
 //
 
 #import "CPPCMessagesViewController.h"
-#import "PicChooseImageSelectionView.h"
+#import "CPPCChoicesCollectionView.h"
 #import "CompactConstraint.h"
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
 #import "CPPCServerManager.h"
 
-@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate, PicChooseImageSelectionViewDelegate, UITextFieldDelegate> {
-    NSString *__fileName;
-}
-@property (nonatomic, strong ) PicChooseImageSelectionView *choicesCollectionView;
+@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate, CPPCChoicesCollectionViewDelegate, UITextFieldDelegate>
+
+@property (nonatomic, strong ) CPPCChoicesCollectionView *choicesCollectionView;
+
 @end
 
 @implementation CPPCMessagesViewController
@@ -33,8 +33,8 @@
     questionTextField.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:questionTextField];
     
-    _choicesCollectionView = [[PicChooseImageSelectionView alloc] init];
-    _choicesCollectionView.delegate = self;
+    _choicesCollectionView = [[CPPCChoicesCollectionView alloc] init];
+    _choicesCollectionView.choicesDelegate = self;
     _choicesCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_choicesCollectionView];
     
@@ -54,7 +54,7 @@
                                        @"sendButton.centerX = view.centerX",
                                        @"sendButton.height = 50",
                                        @"sendButton.width = 200",
-                                       @"choicesCollectionView.top = questionTextField.bottom",
+                                       @"choicesCollectionView.top = questionTextField.bottom+15",
                                        @"choicesCollectionView.bottom = sendButton.top",
                                        @"choicesCollectionView.left = view.left+10",
                                        @"choicesCollectionView.right = view.right-10"]
@@ -96,7 +96,7 @@
 
 #pragma mark - PicChoose Image Selection Delegate
 
-- (void)tappedAddImageCell {
+- (void)addImageCellTapped {
     
     [self showAlertController:nil];
 }

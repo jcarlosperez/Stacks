@@ -1,5 +1,5 @@
 //
-//  PicChooseImageSelectionCollectionViewCell.h
+//  CPPCChoicesCollectionViewCell.h
 //  PicChoose
 //
 //  Created by Juan Carlos Perez on 10/9/16.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PicChooseImageSelectionCollectionViewCell : UICollectionViewCell
+@interface CPPCChoicesCollectionViewCell : UICollectionViewCell
+
 @property (nonatomic, strong) UIImageView *selectedImageView;
+
 @end

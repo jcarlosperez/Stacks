@@ -109,6 +109,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>KTCenterFlowLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MessagesExtension.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -187,7 +192,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>45FB7D858C739DF1947A7EC5EB108146</key>
+		<key>6EBE48FB84F611CFCF9FE93EFDE9BCE0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -243,6 +248,11 @@
 			<true/>
 		</dict>
 		<key>CEA448DB544C9DC1E5BF682A484D03DE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DB79F9B1434ED7C54AEBA792D598E37B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

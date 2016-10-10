@@ -27,5 +27,6 @@ target 'MessagesExtension' do
     pod 'AWSSQS'
     pod 'CompactConstraint'
     pod 'CTAssetsPickerController',  '~> 3.3.0'
+    pod 'KTCenterFlowLayout'
 end
 
