@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		80FA25A75E99EBDA981E55EC /* libPods-MessagesExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A628E2218959DA5562E8ADE5 /* libPods-MessagesExtension.a */; };
+		900FF1191DAB3B230028DA90 /* CPPCServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF1181DAB3B230028DA90 /* CPPCServerManager.m */; };
+		900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */; };
+		A439E0FAFCD0A564132B3830 /* libPods-PicChoose.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D7BC64ED191C4F87ACA666 /* libPods-PicChoose.a */; };
 		C14C41871DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C41861DAA09F8001D2D35 /* Assets.xcassets */; };
 		C14C418E1DAA09F8001D2D35 /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14C41921DAA09F8001D2D35 /* Messages.framework */; };
@@ -15,6 +17,7 @@
 		C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */; };
 		C1C28EB71DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C28EB61DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m */; };
 		C1E146B71DAAC042001FC8A9 /* PicChooseImageSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E146B61DAAC042001FC8A9 /* PicChooseImageSelectionView.m */; };
+		FD0C179899E047AD4AF45EBD /* libPods-MessagesExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +45,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7314EB165FB790CAEA9B27E0 /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		A628E2218959DA5562E8ADE5 /* libPods-MessagesExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MessagesExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.release.xcconfig"; sourceTree = "<group>"; };
+		53D7BC64ED191C4F87ACA666 /* libPods-PicChoose.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PicChoose.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74CCB977A60AFCB8F13A3CB9 /* Pods-PicChoose.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicChoose.release.xcconfig"; path = "Pods/Target Support Files/Pods-PicChoose/Pods-PicChoose.release.xcconfig"; sourceTree = "<group>"; };
+		89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MessagesExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		900FF1171DAB3B230028DA90 /* CPPCServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPPCServerManager.h; sourceTree = "<group>"; };
+		900FF1181DAB3B230028DA90 /* CPPCServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPPCServerManager.m; sourceTree = "<group>"; };
+		900FF11D1DAB3EE70028DA90 /* UIImage+Optimizations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Optimizations.h"; sourceTree = "<group>"; };
+		900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Optimizations.m"; sourceTree = "<group>"; };
+		A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		AAD9628BD66BE8E79C4D0DD9 /* Pods-PicChoose.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicChoose.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PicChoose/Pods-PicChoose.debug.xcconfig"; sourceTree = "<group>"; };
 		C14C41831DAA09F8001D2D35 /* PicChoose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PicChoose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C14C41861DAA09F8001D2D35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C14C41881DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,27 +68,36 @@
 		C1C28EB61DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PicChooseImageSelectionCollectionViewCell.m; path = "Code/Cell Classes/PicChooseImageSelectionCollectionViewCell.m"; sourceTree = "<group>"; };
 		C1E146B51DAAC042001FC8A9 /* PicChooseImageSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PicChooseImageSelectionView.h; path = "Code/View Classes/PicChooseImageSelectionView.h"; sourceTree = "<group>"; };
 		C1E146B61DAAC042001FC8A9 /* PicChooseImageSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PicChooseImageSelectionView.m; path = "Code/View Classes/PicChooseImageSelectionView.m"; sourceTree = "<group>"; };
-		D46B31A159ED5E86EE1BDBE7 /* Pods-MessagesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		18E54F1CCBA1FBE64377BEF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A439E0FAFCD0A564132B3830 /* libPods-PicChoose.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C14C418A1DAA09F8001D2D35 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */,
-				80FA25A75E99EBDA981E55EC /* libPods-MessagesExtension.a in Frameworks */,
+				FD0C179899E047AD4AF45EBD /* libPods-MessagesExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		29846CE993944455E86B5559 /* Pods */ = {
+		947FD1F1A21E9CA7A7F9A403 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7314EB165FB790CAEA9B27E0 /* Pods-MessagesExtension.debug.xcconfig */,
-				D46B31A159ED5E86EE1BDBE7 /* Pods-MessagesExtension.release.xcconfig */,
+				A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */,
+				3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */,
+				AAD9628BD66BE8E79C4D0DD9 /* Pods-PicChoose.debug.xcconfig */,
+				74CCB977A60AFCB8F13A3CB9 /* Pods-PicChoose.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -89,7 +109,7 @@
 				C14C41941DAA09F8001D2D35 /* MessagesExtension */,
 				C14C41911DAA09F8001D2D35 /* Frameworks */,
 				C14C41841DAA09F8001D2D35 /* Products */,
-				29846CE993944455E86B5559 /* Pods */,
+				947FD1F1A21E9CA7A7F9A403 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,7 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				C14C41921DAA09F8001D2D35 /* Messages.framework */,
-				A628E2218959DA5562E8ADE5 /* libPods-MessagesExtension.a */,
+				89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */,
+				53D7BC64ED191C4F87ACA666 /* libPods-PicChoose.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -127,6 +148,10 @@
 				C1E146B41DAABF6A001FC8A9 /* View Classes */,
 				C14C41A71DAA0CB3001D2D35 /* CPPCMessagesViewController.h */,
 				C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */,
+				900FF11D1DAB3EE70028DA90 /* UIImage+Optimizations.h */,
+				900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */,
+				900FF1171DAB3B230028DA90 /* CPPCServerManager.h */,
+				900FF1181DAB3B230028DA90 /* CPPCServerManager.m */,
 				C14C419B1DAA09F8001D2D35 /* Assets.xcassets */,
 				C14C419D1DAA09F8001D2D35 /* Info.plist */,
 			);
@@ -158,8 +183,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C14C41A41DAA09F8001D2D35 /* Build configuration list for PBXNativeTarget "PicChoose" */;
 			buildPhases = (
+				30A3EA5C5E1C0BD8B82A8475 /* [CP] Check Pods Manifest.lock */,
 				C14C41811DAA09F8001D2D35 /* Resources */,
 				C14C41A31DAA09F8001D2D35 /* Embed App Extensions */,
+				18E54F1CCBA1FBE64377BEF0 /* Frameworks */,
+				21B042EE7F42F288F9D06185 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -175,11 +203,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C14C41A01DAA09F8001D2D35 /* Build configuration list for PBXNativeTarget "MessagesExtension" */;
 			buildPhases = (
-				1D6B575CF97F584E67BBCB6C /* Check Pods Manifest.lock */,
+				A4E48FE2619D8FE4549B5D0C /* [CP] Check Pods Manifest.lock */,
 				C14C41891DAA09F8001D2D35 /* Sources */,
 				C14C418A1DAA09F8001D2D35 /* Frameworks */,
 				C14C418B1DAA09F8001D2D35 /* Resources */,
-				BA893D387F395347B9088FCB /* Copy Pods Resources */,
+				C0BF4C4C62C353E4381E916C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,12 +229,12 @@
 				TargetAttributes = {
 					C14C41821DAA09F8001D2D35 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = Z3Q8LM67KV;
+						DevelopmentTeam = 8V5J4G27BG;
 						ProvisioningStyle = Automatic;
 					};
 					C14C418C1DAA09F8001D2D35 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = Z3Q8LM67KV;
+						DevelopmentTeam = 8V5J4G27BG;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -250,29 +278,59 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1D6B575CF97F584E67BBCB6C /* Check Pods Manifest.lock */ = {
+		21B042EE7F42F288F9D06185 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PicChoose/Pods-PicChoose-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BA893D387F395347B9088FCB /* Copy Pods Resources */ = {
+		30A3EA5C5E1C0BD8B82A8475 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A4E48FE2619D8FE4549B5D0C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C0BF4C4C62C353E4381E916C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +347,8 @@
 			files = (
 				C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */,
 				C1C28EB71DAAC98B00695100 /* PicChooseImageSelectionCollectionViewCell.m in Sources */,
+				900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */,
+				900FF1191DAB3B230028DA90 /* CPPCServerManager.m in Sources */,
 				C1E146B71DAAC042001FC8A9 /* PicChooseImageSelectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,11 +454,12 @@
 		};
 		C14C41A11DAA09F8001D2D35 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7314EB165FB790CAEA9B27E0 /* Pods-MessagesExtension.debug.xcconfig */;
+			baseConfigurationReference = A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose.MessagesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -408,11 +469,12 @@
 		};
 		C14C41A21DAA09F8001D2D35 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D46B31A159ED5E86EE1BDBE7 /* Pods-MessagesExtension.release.xcconfig */;
+			baseConfigurationReference = 3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose.MessagesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -422,10 +484,12 @@
 		};
 		C14C41A51DAA09F8001D2D35 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAD9628BD66BE8E79C4D0DD9 /* Pods-PicChoose.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = PicChoose/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -434,10 +498,12 @@
 		};
 		C14C41A61DAA09F8001D2D35 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74CCB977A60AFCB8F13A3CB9 /* Pods-PicChoose.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = PicChoose/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

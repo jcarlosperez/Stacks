@@ -130,7 +130,7 @@ NSString* const AWSInsightsBackgroundQueueKey = @"com.amazon.insights.AWSMobileA
 
 -(void)executeBackgroundTasks:(AWSBackgroundQueue*) queue
 {
-    UIApplication *app = [UIApplication sharedApplication];
+    /*UIApplication *app = [UIApplication sharedApplication];
     __block UIBackgroundTaskIdentifier task = [app beginBackgroundTaskWithExpirationHandler:^{
         [app endBackgroundTask:task];
         task = UIBackgroundTaskInvalid;
@@ -161,7 +161,7 @@ NSString* const AWSInsightsBackgroundQueueKey = @"com.amazon.insights.AWSMobileA
                 [lock unlock];
             }
         });
-    }
+    }*/
 }
 
 -(void)applicationDidEnterBackground:(NSNotification*)notification

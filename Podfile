@@ -25,6 +25,7 @@ target 'MessagesExtension' do
     pod 'AWSSimpleDB'
     pod 'AWSSNS'
     pod 'AWSSQS'
+    pod 'CompactConstraint'
     pod 'CTAssetsPickerController',  '~> 3.3.0'
 end
 

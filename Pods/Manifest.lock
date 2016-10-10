@@ -34,6 +34,7 @@ PODS:
     - AWSCore (= 2.4.10)
   - AWSSQS (2.4.10):
     - AWSCore (= 2.4.10)
+  - CompactConstraint (0.1.0)
   - CTAssetsPickerController (3.3.1):
     - PureLayout (~> 3.0.0)
   - PureLayout (3.0.2)
@@ -56,6 +57,7 @@ DEPENDENCIES:
   - AWSSimpleDB
   - AWSSNS
   - AWSSQS
+  - CompactConstraint
   - CTAssetsPickerController (~> 3.3.0)
 
 SPEC CHECKSUMS:
@@ -77,7 +79,10 @@ SPEC CHECKSUMS:
   AWSSimpleDB: f3af211c495d760dd73e58fb050c311f28c9e070
   AWSSNS: b43d0d0d2353b7eae90f2736abdf88ab5647316e
   AWSSQS: fd946e25e02b0857fd36c8209e04fc22bebac5c6
+  CompactConstraint: 562187c821afcc510536a3df799a16c25bea3d9b
   CTAssetsPickerController: b1d1d50ab87cf6b8b13531de5f4530482e7e53ed
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 30256aa0c2a6849329d3bb8f0d1c75eaeb8d0d0b
+
+COCOAPODS: 1.1.0.rc.2

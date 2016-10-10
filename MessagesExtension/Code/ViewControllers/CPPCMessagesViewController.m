@@ -8,108 +8,61 @@
 
 #import "CPPCMessagesViewController.h"
 #import "PicChooseImageSelectionView.h"
-
-#import <AWSCore/AWSCore.h>
-#import <AWSCognito/AWSCognito.h>
-#import <AWSS3/AWSS3.h>
+#import "CompactConstraint.h"
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
+#import "CPPCServerManager.h"
 
-@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate> {
+@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate, UITextFieldDelegate> {
     NSString *__fileName;
 }
-@property (nonatomic, strong ) PicChooseImageSelectionView *imageSelectionView;
+@property (nonatomic, strong ) PicChooseImageSelectionView *choicesCollectionView;
 @end
 
 @implementation CPPCMessagesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithRed:0.957 green:0.965 blue:0.969 alpha:1.00];
     
-    [self createTemporaryFolders];
-    [self setupAWSCognito];
+    UITextField *questionTextField = [[UITextField alloc] init];
+    questionTextField.delegate = self;
+    questionTextField.text = @"Which Shoes Should I Buy?";
+    questionTextField.textAlignment = NSTextAlignmentCenter;
+    questionTextField.font = [UIFont systemFontOfSize:19 weight:UIFontWeightMedium];
+    questionTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:questionTextField];
     
-    UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    questionLabel.text = @"Which Shoes Should I Buy?";
-    questionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:questionLabel];
+    _choicesCollectionView = [[PicChooseImageSelectionView alloc] init];
+    _choicesCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_choicesCollectionView];
     
-    _imageSelectionView = [[PicChooseImageSelectionView alloc] initWithFrame:CGRectZero];
-    _imageSelectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_imageSelectionView];
+    UIButton *sendButton = [[UIButton alloc] init];
+    [sendButton addTarget:self action:@selector(showAlertController:) forControlEvents:UIControlEventTouchUpInside];
+    [sendButton setTitle:@"Send Image" forState:UIControlStateNormal];
+    [sendButton.titleLabel setTextColor:[UIColor blackColor]];
+    [sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    sendButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:sendButton];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button addTarget:self action:@selector(showAlertController:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"Send Image" forState:UIControlStateNormal];
-    [button.titleLabel setTextColor:[UIColor blackColor]];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:button];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:questionLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:10]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:questionLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:-50]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:50]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:200]];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageSelectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:questionLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageSelectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:button attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageSelectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:10]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageSelectionView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:10]];
-    
-}
-
-- (void)createNewMessageWithImage:(UIImage *)image andURL:(NSURL *)url {
-    
-    MSConversation *currentConversation = self.activeConversation;
-    
-    // Create the message layout
-    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-    messageLayout.subcaption = [NSString stringWithFormat:@"%@ needs your help choosing.", currentConversation.localParticipantIdentifier];
-    messageLayout.image = image;
-    
-    // Create a message setting its layout and url
-    MSMessage *message = [[MSMessage alloc] init];
-    message.layout = messageLayout;
-    message.URL = url;
-    [currentConversation insertMessage:message completionHandler:nil];
-    
-    // If extension is expanded animate to compact style so user can see message
-    if(self.presentationStyle == MSMessagesAppPresentationStyleExpanded) {
-        [self requestPresentationStyle:MSMessagesAppPresentationStyleCompact];
-    }
-    
-}
-
-- (void)createTemporaryFolders {
-    
-    // Create temp folder to store images user selects
-    NSError *error = nil;
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"]
-                                   withIntermediateDirectories:YES
-                                                    attributes:nil
-                                                         error:&error]) {
-    }
-    
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"]
-                                   withIntermediateDirectories:YES
-                                                    attributes:nil
-                                                         error:&error]) {
-    }
-}
-
-- (void)setupAWSCognito {
-    
-    // Setup Cognito credentials for user pool to use without authorization
-    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"***REMOVED***" unauthRoleArn:@"***REMOVED***" authRoleArn:nil  identityProviderManager:nil];
-    
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
-    
-    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+    [self.view addCompactConstraints:@[@"questionTextField.centerX = view.centerX",
+                                       @"questionTextField.top = topLayoutGuide.bottom+10",
+                                       @"questionTextField.left = view.left+20",
+                                       @"questionTextField.right = view.right-20",
+                                       @"sendButton.bottom = view.bottom-50",
+                                       @"sendButton.centerX = view.centerX",
+                                       @"sendButton.height = 50",
+                                       @"sendButton.width = 200",
+                                       @"choicesCollectionView.top = questionTextField.bottom",
+                                       @"choicesCollectionView.bottom = sendButton.top",
+                                       @"choicesCollectionView.left = view.left+10",
+                                       @"choicesCollectionView.right = view.right-10"]
+                             metrics:nil
+                               views:@{@"questionTextField": questionTextField,
+                                       @"view": self.view,
+                                       @"topLayoutGuide": self.topLayoutGuide,
+                                       @"sendButton": sendButton,
+                                       @"choicesCollectionView": _choicesCollectionView}];
 }
 
 #pragma mark - User Alert Controller
@@ -171,102 +124,11 @@
     for(PHAsset *asset in assets) {
         
         [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
+            [[CPPCServerManager sharedInstance] uploadRawImage:image];
             
-            NSString *fileName = [[[NSProcessInfo processInfo] globallyUniqueString] stringByAppendingString:@".jpg"];
-            NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"] stringByAppendingPathComponent:fileName];
-            
-            __fileName = fileName;
-            
-            // Calculate scaled height
-            CGFloat height = image.size.height / (image.size.width/800);
-            UIImage *scaledImaged = [self scaleDown:image withSize:CGSizeMake(800, height)];
-            NSData * imageData = UIImageJPEGRepresentation(scaledImaged, 0.6);
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSError *error;
-                [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
-                if(!error) {
-                    
-                    // Really I shouldn't upload now, only until user taps on send which creates the MSMessage
-                    [self createUploadWithImageAtPath:filePath withFilename:fileName];
-                    [_imageSelectionView updateViewWithImageAtPath:filePath];
-                }
-            });
         }];
     }
     
-}
-
--(UIImage*)scaleDown:(UIImage*)img withSize:(CGSize)newSize {
-    
-    UIGraphicsBeginImageContextWithOptions(newSize, YES, 0.0);
-    [img drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return scaledImage;
-}
-
-- (void)createUploadWithImageAtPath:(NSString *)path withFilename:(NSString *)fileName {
-    
-    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
-    uploadRequest.body = [NSURL fileURLWithPath:path];
-    uploadRequest.key = fileName;
-    uploadRequest.bucket = @"picchoosebackend";
-    [self transferUploadWithRequest:uploadRequest];
-    
-}
-
-- (void)transferDownloadWithRequest:(AWSS3TransferManagerDownloadRequest *)request {
-    
-    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    
-    [[transferManager download:request] continueWithBlock:^id(AWSTask *task) {
-        
-        if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]
-            && task.error.code == AWSS3TransferManagerErrorPaused) {
-            NSLog(@"Download paused.");
-        } else if (task.error) {
-            NSLog(@"Download failed: [%@]", task.error);
-        } else {
-            NSLog(@"Task: %@", task);
-            NSURL *downloadedFilePath = ((AWSS3TransferManagerDownloadOutput *)task.result).body;
-            NSLog(@"Download File Path: %@", downloadedFilePath);
-        }
-        
-        return nil;
-    }];
-    
-}
-
-- (void)transferUploadWithRequest:(AWSS3TransferManagerUploadRequest *)request {
-    
-    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    
-    //__weak CPPCMessagesViewController *weakSelf = self;
-    
-    [[transferManager upload:request] continueWithBlock:^id(AWSTask *task) {
-        
-        if (task.result) {
-            NSLog(@"Task Result: %@", task.result);
-            
-            // The key is just the filename as we set in the upload request. Hardcoded here for now
-            /*NSString *fileKey = @"02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg";
-            
-            NSString *downloadingFilePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] stringByAppendingPathComponent:fileKey];
-            NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
-            
-            AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
-            downloadRequest.bucket = @"picchoosebackend";
-            downloadRequest.key = @"02DD0010-B9B8-457C-A4E5-98C77A720673-2171-0000015CF046E756.jpg";
-            downloadRequest.downloadingFileURL = downloadingFileURL;
-            [self transferDownloadWithRequest:downloadRequest];*/
-            
-        } else if(task.error) {
-            NSLog(@"Task Result: %@", task.error);
-        }
-        
-        return nil;
-    }];
 }
 
 #pragma mark - Conversation Handling
@@ -315,6 +177,12 @@
     // Called after the extension transitions to a new presentation style.
     
     // Use this method to finalize any behaviors associated with the change in presentation style.
+}
+
+#pragma mark - UITextField Delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self requestPresentationStyle:MSMessagesAppPresentationStyleExpanded];
 }
 
 @end

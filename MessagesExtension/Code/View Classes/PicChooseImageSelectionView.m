@@ -66,7 +66,7 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
     
     // If we're on the cell to be the "New Image" cell
     if(_imageAssets.count == 0) {
-        cell.selectedImageView.image = [UIImage imageNamed:@"newImageSelection"];
+        cell.selectedImageView.image = [UIImage imageNamed:@"add"];
     } else {
         if(indexPath.row > _imageAssets.count - 1) {
             cell.selectedImageView.image = [UIImage imageNamed:@"newImageSelection"];
