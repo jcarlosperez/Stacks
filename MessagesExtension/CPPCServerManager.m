@@ -11,6 +11,7 @@
 #import <AWSCognito/AWSCognito.h>
 #import <AWSS3/AWSS3.h>
 #import "UIImage+Optimizations.h"
+#import "RXPromise.h"
 
 @implementation CPPCServerManager
 
@@ -56,15 +57,16 @@
 
 #pragma mark - Class Methods
 
-- (void)uploadRawImage:(UIImage *)image {
-    NSString *fileName = [[[NSProcessInfo processInfo] globallyUniqueString] stringByAppendingString:@".jpg"];
+- (void)uploadRawImage:(UIImage *)image promise:(RXPromise *)promise {
+    NSString *uniqueString = [[NSProcessInfo processInfo] globallyUniqueString];
+    NSString *fileName = [uniqueString stringByAppendingString:@".jpg"];
     NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"] stringByAppendingPathComponent:fileName];
 
     CGFloat height = image.size.height / (image.size.width/800);
     UIImage *scaledImaged = [image scaledImageToSize:CGSizeMake(800, height)];
     NSData *imageData = UIImageJPEGRepresentation(scaledImaged, 0.6);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *error = nil;
         [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
         if (!error) {
@@ -74,6 +76,11 @@
             uploadRequest.key = fileName;
             uploadRequest.bucket = @"picchoosebackend";
             [[[AWSS3TransferManager defaultS3TransferManager] upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor] withBlock:^id _Nullable(AWSTask * _Nonnull task) {
+                if (task.error) {
+                    [promise rejectWithReason:task.error];
+                    return nil;
+                }
+                [promise fulfillWithValue:uniqueString];
                 return nil;
             }];
         }

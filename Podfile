@@ -28,5 +28,6 @@ target 'MessagesExtension' do
     pod 'CompactConstraint'
     pod 'CTAssetsPickerController',  '~> 3.3.0'
     pod 'KTCenterFlowLayout'
+    pod 'RXPromise'
 end
 

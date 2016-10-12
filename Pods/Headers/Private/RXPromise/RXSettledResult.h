@@ -1,0 +1,1 @@
+../../../RXPromise/Source/RXSettledResult.h

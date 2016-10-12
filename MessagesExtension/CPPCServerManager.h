@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class RXPromise;
+
 @interface CPPCServerManager : NSObject
 
 + (instancetype)sharedInstance;
 
-- (void)uploadRawImage:(UIImage *)image;
+- (void)uploadRawImage:(UIImage *)image promise:(RXPromise *)promise;
 
 @end
