@@ -8,19 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol CPPCChoicesCollectionViewDelegate <NSObject>
-
-- (void)addImageCellTapped;
-
-@end
-
 @interface CPPCChoicesCollectionView : UICollectionView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSMutableArray *imageAssets;
 
-@property (nonatomic, weak) id <CPPCChoicesCollectionViewDelegate> choicesDelegate;
-
 - (void)updateViewWithImage:(UIImage *)image;
+
 - (void)updateViewWithImageAtPath:(NSString *)filePath;
 
 @end

@@ -10,6 +10,8 @@
 
 @interface CPPCUtilities : NSObject
 
-+ (NSURL *)URLFromQuestion:(NSString *)question imageNames:(NSArray<NSString *>*)imageNames;
++ (NSURL *)URLFromImageNames:(NSArray<NSString *>*)imageNames;
+
++ (NSArray *)imageNamesFromURL:(NSURL *)URL;
 
 @end

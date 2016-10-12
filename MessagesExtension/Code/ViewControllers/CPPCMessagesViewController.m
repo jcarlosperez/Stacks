@@ -15,7 +15,7 @@
 #import "RXPromise.h"
 #import "CPPCUtilities.h"
 
-@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate, CPPCChoicesCollectionViewDelegate>
+@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate>
 
 @property (nonatomic, strong) CPPCChoicesCollectionView *choicesCollectionView;
 
@@ -23,6 +23,8 @@
 @property (nonatomic, strong) UIButton *libraryImageButton;
 
 @property (nonnull, strong) UILabel *stacksNameLabel;
+
+@property (strong, nonatomic) UILabel *clickAddLabel;
 
 @end
 
@@ -42,11 +44,16 @@
     
     _choicesCollectionView = [[CPPCChoicesCollectionView alloc] init];
     _choicesCollectionView.backgroundColor = [UIColor whiteColor];
-    _choicesCollectionView.choicesDelegate = self;
     _choicesCollectionView.layer.cornerRadius = 10;
     _choicesCollectionView.layer.masksToBounds = YES;
     _choicesCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_choicesCollectionView];
+    
+    _clickAddLabel = [[UILabel alloc] init];
+    _clickAddLabel.text = @"Click Library or Camera to add a picture";
+    _clickAddLabel.textAlignment = NSTextAlignmentCenter;
+    _clickAddLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_clickAddLabel];
     
     _cameraImageButton = [[UIButton alloc] init];
     _cameraImageButton.backgroundColor = [UIColor whiteColor];
@@ -89,7 +96,11 @@
                                        @"choicesCollectionView.top = stacksNameLabel.bottom+10",
                                        @"choicesCollectionView.bottom = cameraButton.top-10",
                                        @"choicesCollectionView.left = view.left+10",
-                                       @"choicesCollectionView.right = view.right-10"]
+                                       @"choicesCollectionView.right = view.right-10",
+                                       @"clickAddLabel.left = view.left",
+                                       @"clickAddLabel.right = view.right",
+                                       @"clickAddLabel.centerX = choicesCollectionView.centerX",
+                                       @"clickAddLabel.centerY = choicesCollectionView.centerY"]
                              metrics:nil
                                views:@{@"stacksNameLabel": _stacksNameLabel,
                                        @"view": self.view,
@@ -97,7 +108,8 @@
                                        @"bottomLayoutGuide": self.bottomLayoutGuide,
                                        @"cameraButton": _cameraImageButton,
                                        @"libraryButton": _libraryImageButton,
-                                       @"choicesCollectionView": _choicesCollectionView}];
+                                       @"choicesCollectionView": _choicesCollectionView,
+                                       @"clickAddLabel": _clickAddLabel}];
 }
 
 - (void)sendPressed:(UIButton *)sender {
@@ -116,7 +128,7 @@
             
             if (allUploadedImageNames.count == _choicesCollectionView.imageAssets.count) {
                 // all images are uploaded, get the url
-                NSURL *url = [CPPCUtilities URLFromQuestion:nil imageNames:allUploadedImageNames];
+                NSURL *url = [CPPCUtilities URLFromImageNames:allUploadedImageNames];
                 
                 // we have everything. make the session, message, and add it
                 MSSession *session = [[MSSession alloc] init];
@@ -136,44 +148,14 @@
 #pragma mark - MSMessages Message selection
 
 - (void)didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
-    
-    // Check if message has a URL (Only received or sent message have it) because this method is triggered a lot
-    if(message.URL) {
+    // check if message has a URL (only received or sent message have it) because this method is triggered a lot
+    if (message.URL) {
+        NSArray *imageNames = [CPPCUtilities imageNamesFromURL:message.URL];
         
-        NSURL *messageURL = [NSURL URLWithString:[[[[message.URL.absoluteString stringByRemovingPercentEncoding] stringByReplacingOccurrencesOfString:@"[" withString:@""] stringByReplacingOccurrencesOfString:@"]" withString:@""] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-        
-        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:messageURL resolvingAgainstBaseURL:NO];
-        
-        NSMutableArray *imageKeys = [NSMutableArray new];
-        
-        for(NSURLQueryItem *queryItem in [urlComponents.queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name=%@", @"pictures"]]) {
-            [imageKeys addObject:[queryItem.value stringByAppendingString:@".jpg"]];
-        }
-        
-        NSString *question = [[urlComponents.queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name=%@", @"question"]] firstObject].value;
-        
-        NSLog(@"Present question: %@ with Image Keys: %@", question, imageKeys);
-        
-        // From here we update the UI to display the stuff
     }
 }
 
 #pragma mark - PicChoose Image Selection
-
-- (void)addImageCellTapped {
-    
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
-            picker.delegate = self;
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                picker.modalPresentationStyle = UIModalPresentationFormSheet;
-            }
-            [self presentViewController:picker animated:YES completion:nil];
-        });
-    }];
-    
-}
 
 - (void)cameraImageButtonTapped:(UIButton *)button {
     
@@ -181,7 +163,6 @@
 }
 
 - (void)libraryImageButtonTapped:(UIButton *)button {
-    
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
         dispatch_async(dispatch_get_main_queue(), ^{
             CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
@@ -192,7 +173,6 @@
             [self presentViewController:picker animated:YES completion:nil];
         });
     }];
-    
 }
 
 #pragma mark - PicChoose Image Selection Delegate
@@ -202,6 +182,9 @@
     PHImageManager *manager = [PHImageManager defaultManager];
     for (PHAsset *asset in assets) {
         [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
+            [UIView animateWithDuration:0.5 animations:^{
+                _clickAddLabel.hidden = YES;
+            }];
             [_choicesCollectionView updateViewWithImage:image];
         }];
     }
