@@ -103,6 +103,31 @@
     }
 }
 
+#pragma mark - MSMessages Message selection
+
+- (void)didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
+    
+    // Check if message has a URL (Only received or sent message have it) because this method is triggered a lot
+    if(message.URL) {
+        
+        NSURL *messageURL = [NSURL URLWithString:[[[[message.URL.absoluteString stringByRemovingPercentEncoding] stringByReplacingOccurrencesOfString:@"[" withString:@""] stringByReplacingOccurrencesOfString:@"]" withString:@""] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+        
+        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:messageURL resolvingAgainstBaseURL:NO];
+        
+        NSMutableArray *imageKeys = [NSMutableArray new];
+        
+        for(NSURLQueryItem *queryItem in [urlComponents.queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name=%@", @"pictures"]]) {
+            [imageKeys addObject:[queryItem.value stringByAppendingString:@".jpg"]];
+        }
+        
+        NSString *question = [[urlComponents.queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name=%@", @"question"]] firstObject].value;
+        
+        NSLog(@"Present question: %@ with Image Keys: %@", question, imageKeys);
+        
+        // From here we update the UI to display the stuff
+    }
+}
+
 #pragma mark - PicChoose Image Selection
 
 - (void)addImageCellTapped {
