@@ -19,7 +19,10 @@
 
 @property (nonatomic, strong) CPPCChoicesCollectionView *choicesCollectionView;
 
-@property (nonnull, strong) UITextField *questionTextField;
+@property (nonatomic, strong) UIButton *cameraImageButton;
+@property (nonatomic, strong) UIButton *libraryImageButton;
+
+@property (nonnull, strong) UILabel *stacksNameLabel;
 
 @end
 
@@ -30,43 +33,70 @@
     
     self.view.backgroundColor = [UIColor colorWithRed:0.957 green:0.965 blue:0.969 alpha:1.00];
     
-    _questionTextField = [[UITextField alloc] init];
-    _questionTextField.placeholder = @"Which Shoes Should I Buy?";
-    _questionTextField.textAlignment = NSTextAlignmentCenter;
-    _questionTextField.font = [UIFont systemFontOfSize:19 weight:UIFontWeightMedium];
-    _questionTextField.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_questionTextField];
+    _stacksNameLabel = [[UILabel alloc] init];
+    _stacksNameLabel.text = @"STACKS";
+    _stacksNameLabel.textAlignment = NSTextAlignmentCenter;
+    _stacksNameLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
+    _stacksNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_stacksNameLabel];
     
     _choicesCollectionView = [[CPPCChoicesCollectionView alloc] init];
+    _choicesCollectionView.backgroundColor = [UIColor whiteColor];
     _choicesCollectionView.choicesDelegate = self;
+    _choicesCollectionView.layer.cornerRadius = 10;
+    _choicesCollectionView.layer.masksToBounds = YES;
     _choicesCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_choicesCollectionView];
     
-    UIButton *sendButton = [[UIButton alloc] init];
-    [sendButton addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [sendButton setTitle:@"Create Message" forState:UIControlStateNormal];
-    [sendButton.titleLabel setTextColor:[UIColor blackColor]];
-    [sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    sendButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:sendButton];
+    _cameraImageButton = [[UIButton alloc] init];
+    _cameraImageButton.backgroundColor = [UIColor whiteColor];
+    _cameraImageButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+    _cameraImageButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    _cameraImageButton.layer.cornerRadius = 10;
+    _cameraImageButton.layer.masksToBounds = YES;
+    [_cameraImageButton addTarget:self action:@selector(cameraImageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [_cameraImageButton setImage:[UIImage imageNamed:@"camera"] forState:UIControlStateNormal];
+    [_cameraImageButton setTitle:@"Camera" forState:UIControlStateNormal];
+    [_cameraImageButton.titleLabel setTextColor:[UIColor blackColor]];
+    [_cameraImageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _cameraImageButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_cameraImageButton];
     
-    [self.view addCompactConstraints:@[@"questionTextField.centerX = view.centerX",
-                                       @"questionTextField.top = topLayoutGuide.bottom+10",
-                                       @"questionTextField.left = view.left+20",
-                                       @"questionTextField.right = view.right-20",
-                                       @"sendButton.bottom = view.bottom-50",
-                                       @"sendButton.centerX = view.centerX",
-                                       @"sendButton.height = 50",
-                                       @"sendButton.width = 200",
-                                       @"choicesCollectionView.top = questionTextField.bottom+15",
-                                       @"choicesCollectionView.bottom = sendButton.top",
+    _libraryImageButton = [[UIButton alloc] init];
+    _libraryImageButton.backgroundColor = [UIColor whiteColor];
+    _libraryImageButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+    _libraryImageButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    _libraryImageButton.layer.cornerRadius = 10;
+    _libraryImageButton.layer.masksToBounds = YES;
+    [_libraryImageButton addTarget:self action:@selector(libraryImageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [_libraryImageButton setImage:[UIImage imageNamed:@"library"] forState:UIControlStateNormal];
+    [_libraryImageButton setTitle:@"Library" forState:UIControlStateNormal];
+    [_libraryImageButton.titleLabel setTextColor:[UIColor blackColor]];
+    [_libraryImageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _libraryImageButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_libraryImageButton];
+    
+    [self.view addCompactConstraints:@[@"stacksNameLabel.top = topLayoutGuide.bottom+10",
+                                       @"stacksNameLabel.left = view.left+20",
+                                       @"cameraButton.bottom = bottomLayoutGuide.top-10",
+                                       @"cameraButton.left = view.left+10",
+                                       @"cameraButton.width = view.width/2.2",
+                                       @"cameraButton.height = 50",
+                                       @"libraryButton.bottom = bottomLayoutGuide.top-10",
+                                       @"libraryButton.right = view.right-10",
+                                       @"libraryButton.width = view.width/2.2",
+                                       @"libraryButton.height = 50",
+                                       @"choicesCollectionView.top = stacksNameLabel.bottom+10",
+                                       @"choicesCollectionView.bottom = cameraButton.top-10",
                                        @"choicesCollectionView.left = view.left+10",
                                        @"choicesCollectionView.right = view.right-10"]
                              metrics:nil
-                               views:@{@"questionTextField": _questionTextField,
+                               views:@{@"stacksNameLabel": _stacksNameLabel,
                                        @"view": self.view,
                                        @"topLayoutGuide": self.topLayoutGuide,
-                                       @"sendButton": sendButton,
+                                       @"bottomLayoutGuide": self.bottomLayoutGuide,
+                                       @"cameraButton": _cameraImageButton,
+                                       @"libraryButton": _libraryImageButton,
                                        @"choicesCollectionView": _choicesCollectionView}];
 }
 
@@ -86,7 +116,7 @@
             
             if (allUploadedImageNames.count == _choicesCollectionView.imageAssets.count) {
                 // all images are uploaded, get the url
-                NSURL *url = [CPPCUtilities URLFromQuestion:_questionTextField.text imageNames:allUploadedImageNames];
+                NSURL *url = [CPPCUtilities URLFromQuestion:nil imageNames:allUploadedImageNames];
                 
                 // we have everything. make the session, message, and add it
                 MSSession *session = [[MSSession alloc] init];
@@ -131,6 +161,7 @@
 #pragma mark - PicChoose Image Selection
 
 - (void)addImageCellTapped {
+    
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
         dispatch_async(dispatch_get_main_queue(), ^{
             CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
@@ -141,6 +172,27 @@
             [self presentViewController:picker animated:YES completion:nil];
         });
     }];
+    
+}
+
+- (void)cameraImageButtonTapped:(UIButton *)button {
+    
+    // Maybe do a small capture view like Apple does when selecting images to send
+}
+
+- (void)libraryImageButtonTapped:(UIButton *)button {
+    
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
+            picker.delegate = self;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                picker.modalPresentationStyle = UIModalPresentationFormSheet;
+            }
+            [self presentViewController:picker animated:YES completion:nil];
+        });
+    }];
+    
 }
 
 #pragma mark - PicChoose Image Selection Delegate

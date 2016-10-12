@@ -15,6 +15,7 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
 @implementation CPPCChoicesCollectionView
 
 - (instancetype)init {
+    
     KTCenterFlowLayout *flowLayout = [[KTCenterFlowLayout alloc] init];
     flowLayout.itemSize = CGSizeMake(75, 75);
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
