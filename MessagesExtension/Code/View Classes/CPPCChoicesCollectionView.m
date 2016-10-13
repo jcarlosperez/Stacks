@@ -15,9 +15,8 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
 
 - (instancetype)init {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake(75, 75);
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    flowLayout.minimumInteritemSpacing = 10;
+    flowLayout.minimumInteritemSpacing = -16;
     flowLayout.minimumLineSpacing = 10;
     
     if (self = [super initWithFrame:CGRectZero collectionViewLayout:flowLayout]) {
@@ -53,6 +52,10 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _imageAssets.count;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(self.frame.size.height/1.06, self.frame.size.height/1.06);
 }
 
 @end
