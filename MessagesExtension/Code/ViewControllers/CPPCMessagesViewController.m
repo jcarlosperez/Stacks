@@ -7,6 +7,7 @@
 //
 
 #import "CPPCMessagesViewController.h"
+#import "CPPCCameraView.h"
 #import "CPPCChoicesCollectionView.h"
 #import "CompactConstraint.h"
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
@@ -15,8 +16,11 @@
 #import "RXPromise.h"
 #import "CPPCUtilities.h"
 
-@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate>
+@interface CPPCMessagesViewController () <CPPCCameraViewDelegate, CTAssetsPickerControllerDelegate> {
+    BOOL _presentingCameraView;
+}
 
+@property (nonatomic, strong) CPPCCameraView *cameraView;
 @property (nonatomic, strong) CPPCChoicesCollectionView *choicesCollectionView;
 
 @property (nonatomic, strong) UIButton *cameraImageButton;
@@ -112,6 +116,13 @@
                                        @"clickAddLabel": _clickAddLabel}];
 }
 
+- (void)viewDidLayoutSubviews {
+    
+    [super viewDidLayoutSubviews];
+    
+    [_cameraView updatePreviewLayer];
+}
+
 - (void)sendPressed:(UIButton *)sender {
     // prep all the other stuff
     UIImage *previewImage = [UIImage previewImageFromSelectedImages:_choicesCollectionView.imageAssets];
@@ -145,6 +156,75 @@
     }
 }
 
+#pragma mark - CPCCCameraViewDelegate
+
+- (void)didCaptureNewImage:(UIImage *)image {
+    
+    [_choicesCollectionView updateViewWithImage:image];
+}
+
+#pragma mark - MSMessagesAppViewController Delegate Methods
+
+- (void)didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
+    NSLog(@"didStartSendingMessage");
+}
+
+- (void)didTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle {
+    NSLog(@"didTransitionToPresentationStyle:");
+}
+
+- (void)willTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle {
+    
+    if(presentationStyle == MSMessagesAppPresentationStyleCompact) {
+        
+        if(_presentingCameraView) {
+            
+            for(NSLayoutConstraint *constraint in self.view.constraints) {
+                
+                if((constraint.firstItem == _choicesCollectionView) && (constraint.firstAttribute == NSLayoutAttributeBottom)) {
+                    [self.view removeConstraint:constraint];
+                    
+                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraImageButton attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
+                } else if((constraint.firstItem == _choicesCollectionView) && (constraint.firstAttribute == NSLayoutAttributeHeight)) {
+                    [self.view removeConstraint:constraint];
+                }
+            }
+            
+            _presentingCameraView = NO;
+            [_cameraView removeFromSuperview];
+            _cameraView = nil;
+        }
+    }
+    
+    if(presentationStyle == MSMessagesAppPresentationStyleExpanded) {
+        
+        if(_presentingCameraView) {
+            
+            _cameraView = [[CPPCCameraView alloc] initWithFrame:CGRectZero];
+            _cameraView.delegate = self;
+            _cameraView.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.view addSubview:_cameraView];
+            
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeBottom multiplier:1 constant:20]];
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:20]];
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:-20]];
+            
+            for(NSLayoutConstraint *constraint in self.view.constraints) {
+                
+                if((constraint.firstItem == _choicesCollectionView) && (constraint.firstAttribute == NSLayoutAttributeBottom)) {
+                    NSLog(@"Remove Bottom Constraint");
+                    [self.view removeConstraint:constraint];
+                    
+                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraView attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
+                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraImageButton attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
+                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:100]];
+                }
+            }
+            
+        }
+    }
+}
+
 #pragma mark - MSMessages Message selection
 
 - (void)didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
@@ -158,8 +238,8 @@
 #pragma mark - PicChoose Image Selection
 
 - (void)cameraImageButtonTapped:(UIButton *)button {
-    
-    // Maybe do a small capture view like Apple does when selecting images to send
+    _presentingCameraView = YES;
+    [self requestPresentationStyle:MSMessagesAppPresentationStyleExpanded];
 }
 
 - (void)libraryImageButtonTapped:(UIButton *)button {

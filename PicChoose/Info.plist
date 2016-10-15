@@ -22,8 +22,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Stacks needs access to you your camera to take new images to send to your friends.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>PicChoose needs access to your photo library to be able to send the image you choose to your friends.</string>
+	<string>Stacks needs access to your photo library to be able to send the image you choose to your friends.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
