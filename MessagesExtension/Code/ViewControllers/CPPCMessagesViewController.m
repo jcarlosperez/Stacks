@@ -9,6 +9,7 @@
 #import "CPPCMessagesViewController.h"
 #import "CPPCCameraView.h"
 #import "CPPCChoicesCollectionView.h"
+#import "CPPCSelectionCollectionView.h"
 #import "CompactConstraint.h"
 #import <CTAssetsPickerController/CTAssetsPickerController.h>
 #import "CPPCServerManager.h"
@@ -18,13 +19,16 @@
 
 @interface CPPCMessagesViewController () <CPPCCameraViewDelegate, CTAssetsPickerControllerDelegate> {
     BOOL _presentingCameraView;
+    BOOL _presentingSelectionView;
 }
 
 @property (nonatomic, strong) CPPCCameraView *cameraView;
 @property (nonatomic, strong) CPPCChoicesCollectionView *choicesCollectionView;
+@property (nonatomic, strong) CPPCSelectionCollectionView *selectionCollectionView;
 
 @property (nonatomic, strong) UIButton *cameraImageButton;
 @property (nonatomic, strong) UIButton *libraryImageButton;
+@property (nonatomic, strong) UIButton *createMessageButton;
 
 @property (nonnull, strong) UILabel *stacksNameLabel;
 
@@ -46,10 +50,23 @@
     _stacksNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_stacksNameLabel];
     
+    _createMessageButton = [[UIButton alloc] init];
+    _createMessageButton.enabled = NO;
+    _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
+    [_createMessageButton addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [_createMessageButton setTitle:@"Select New Images" forState:UIControlStateDisabled];
+    [_createMessageButton setTitle:@"Create Message Stack" forState:UIControlStateNormal];
+    [_createMessageButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
+    [_createMessageButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    [_createMessageButton setTitleColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.42 alpha:1.0] forState:UIControlStateHighlighted];
+    _createMessageButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_createMessageButton];
+    
     _choicesCollectionView = [[CPPCChoicesCollectionView alloc] init];
     _choicesCollectionView.backgroundColor = [UIColor whiteColor];
     _choicesCollectionView.layer.cornerRadius = 10;
     _choicesCollectionView.layer.masksToBounds = YES;
+    _choicesCollectionView.scrollEnabled = NO;
     _choicesCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_choicesCollectionView];
     
@@ -87,8 +104,12 @@
     _libraryImageButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_libraryImageButton];
     
-    [self.view addCompactConstraints:@[@"stacksNameLabel.top = topLayoutGuide.bottom+13",
+    [self.view addCompactConstraints:@[@"stacksNameLabel.top = topLayoutGuide.bottom+10",
                                        @"stacksNameLabel.left = view.left+20",
+                                       @"stacksNameLabel.height = 16",
+                                       @"createMessageButton.top = topLayoutGuide.bottom+10",
+                                       @"createMessageButton.bottom = stacksNameLabel.bottom",
+                                       @"createMessageButton.right = view.right-20",
                                        @"cameraButton.bottom = bottomLayoutGuide.top-10",
                                        @"cameraButton.left = view.left+20",
                                        @"cameraButton.width = view.width/2.28",
@@ -97,8 +118,8 @@
                                        @"libraryButton.right = view.right-20",
                                        @"libraryButton.width = view.width/2.28",
                                        @"libraryButton.height = 50",
-                                       @"choicesCollectionView.top = stacksNameLabel.bottom+20",
-                                       @"choicesCollectionView.bottom = cameraButton.top-10",
+                                       @"choicesCollectionView.top = stacksNameLabel.bottom+10",
+                                       @"choicesCollectionView.bottom = cameraButton.top-4",
                                        @"choicesCollectionView.left = view.left+20",
                                        @"choicesCollectionView.right = view.right-20",
                                        @"clickAddLabel.left = view.left",
@@ -113,7 +134,8 @@
                                        @"cameraButton": _cameraImageButton,
                                        @"libraryButton": _libraryImageButton,
                                        @"choicesCollectionView": _choicesCollectionView,
-                                       @"clickAddLabel": _clickAddLabel}];
+                                       @"clickAddLabel": _clickAddLabel,
+                                       @"createMessageButton" : _createMessageButton}];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -152,6 +174,7 @@
             }
             return nil;
         }, nil);
+        
         [[CPPCServerManager sharedInstance] uploadRawImage:image promise:promise];
     }
 }
@@ -160,13 +183,30 @@
 
 - (void)didCaptureNewImage:(UIImage *)image {
     
+    _createMessageButton.enabled = YES;
+    _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.5 animations:^{
+            _clickAddLabel.hidden = YES;
+        }];
+    });
+    
     [_choicesCollectionView updateViewWithImage:image];
 }
 
 #pragma mark - MSMessagesAppViewController Delegate Methods
 
 - (void)didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
-    NSLog(@"didStartSendingMessage");
+    _choicesCollectionView.imageAssets = nil;
+    _choicesCollectionView.imageAssets = [NSMutableArray new];
+    [_choicesCollectionView reloadData];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.5 animations:^{
+            _clickAddLabel.hidden = NO;
+        }];
+    });
 }
 
 - (void)didTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle {
@@ -184,15 +224,33 @@
                 if((constraint.firstItem == _choicesCollectionView) && (constraint.firstAttribute == NSLayoutAttributeBottom)) {
                     [self.view removeConstraint:constraint];
                     
-                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraImageButton attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
+                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraImageButton attribute:NSLayoutAttributeTop multiplier:1 constant:-4]];
+                    
                 } else if((constraint.firstItem == _choicesCollectionView) && (constraint.firstAttribute == NSLayoutAttributeHeight)) {
+                    
                     [self.view removeConstraint:constraint];
                 }
+                
+                [self.view updateConstraints];
+                [super updateViewConstraints];
             }
             
             _presentingCameraView = NO;
             [_cameraView removeFromSuperview];
             _cameraView = nil;
+        }
+        
+        if(_presentingSelectionView) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIView animateWithDuration:0.5 animations:^{
+                    _choicesCollectionView.hidden = NO;
+                }];
+            });
+            
+            _presentingSelectionView = NO;
+            [_selectionCollectionView removeFromSuperview];
+            _selectionCollectionView = nil;
         }
     }
     
@@ -212,15 +270,31 @@
             for(NSLayoutConstraint *constraint in self.view.constraints) {
                 
                 if((constraint.firstItem == _choicesCollectionView) && (constraint.firstAttribute == NSLayoutAttributeBottom)) {
-                    NSLog(@"Remove Bottom Constraint");
+                    
                     [self.view removeConstraint:constraint];
                     
                     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraView attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
                     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraImageButton attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
-                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:100]];
+                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:90]];
                 }
+                
+                [self.view updateConstraints];
+                [super updateViewConstraints];
             }
+        }
+        
+        if(_presentingSelectionView) {
             
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_selectionCollectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeTop multiplier:1 constant:20]];
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_selectionCollectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_selectionCollectionView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_selectionCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIView animateWithDuration:0.5 animations:^{
+                    _choicesCollectionView.hidden = YES;
+                }];
+            });
         }
     }
 }
@@ -230,7 +304,19 @@
 - (void)didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
     // check if message has a URL (only received or sent message have it) because this method is triggered a lot
     if (message.URL) {
+        
         NSArray *imageNames = [CPPCUtilities imageNamesFromURL:message.URL];
+        
+        _presentingSelectionView = YES;
+        
+        _selectionCollectionView = [[CPPCSelectionCollectionView alloc] init];
+        _selectionCollectionView.backgroundColor = [UIColor whiteColor];
+        _selectionCollectionView.choiceImageKeys = imageNames;
+        _selectionCollectionView.layer.cornerRadius = 10;
+        _selectionCollectionView.layer.masksToBounds = YES;
+        _selectionCollectionView.scrollEnabled = YES;
+        _selectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addSubview:_selectionCollectionView];
         
     }
 }
@@ -258,6 +344,10 @@
 #pragma mark - PicChoose Image Selection Delegate
 
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
+    
+    _createMessageButton.enabled = YES;
+    _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
+    
     [picker dismissViewControllerAnimated:YES completion:nil];
     PHImageManager *manager = [PHImageManager defaultManager];
     for (PHAsset *asset in assets) {

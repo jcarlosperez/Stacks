@@ -16,6 +16,8 @@
 		C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14C41921DAA09F8001D2D35 /* Messages.framework */; };
 		C14C419C1DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C419B1DAA09F8001D2D35 /* Assets.xcassets */; };
 		C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */; };
+		C1AFDBC21DBE8A1600173444 /* CPPCSelectionCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AFDBC11DBE8A1600173444 /* CPPCSelectionCollectionView.m */; };
+		C1AFDBC51DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AFDBC41DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m */; };
 		C1C28EB71DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C28EB61DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m */; };
 		C1DE29C91DB28D16008BA251 /* CPPCCameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DE29C81DB28D16008BA251 /* CPPCCameraView.m */; };
 		C1E146B71DAAC042001FC8A9 /* CPPCChoicesCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E146B61DAAC042001FC8A9 /* CPPCChoicesCollectionView.m */; };
@@ -68,6 +70,10 @@
 		C14C419D1DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C14C41A71DAA0CB3001D2D35 /* CPPCMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCMessagesViewController.h; path = Code/ViewControllers/CPPCMessagesViewController.h; sourceTree = "<group>"; };
 		C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCMessagesViewController.m; path = Code/ViewControllers/CPPCMessagesViewController.m; sourceTree = "<group>"; };
+		C1AFDBC01DBE8A1600173444 /* CPPCSelectionCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCSelectionCollectionView.h; path = "Code/View Classes/CPPCSelectionCollectionView.h"; sourceTree = "<group>"; };
+		C1AFDBC11DBE8A1600173444 /* CPPCSelectionCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCSelectionCollectionView.m; path = "Code/View Classes/CPPCSelectionCollectionView.m"; sourceTree = "<group>"; };
+		C1AFDBC31DBE8AB200173444 /* CPPCSelectionCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCSelectionCollectionViewCell.h; path = "Code/Cell Classes/CPPCSelectionCollectionViewCell.h"; sourceTree = "<group>"; };
+		C1AFDBC41DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCSelectionCollectionViewCell.m; path = "Code/Cell Classes/CPPCSelectionCollectionViewCell.m"; sourceTree = "<group>"; };
 		C1C28EB51DAAC98B00695100 /* CPPCChoicesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCChoicesCollectionViewCell.h; path = "Code/Cell Classes/CPPCChoicesCollectionViewCell.h"; sourceTree = "<group>"; };
 		C1C28EB61DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCChoicesCollectionViewCell.m; path = "Code/Cell Classes/CPPCChoicesCollectionViewCell.m"; sourceTree = "<group>"; };
 		C1DE29C71DB28D16008BA251 /* CPPCCameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCCameraView.h; path = "Code/View Classes/CPPCCameraView.h"; sourceTree = "<group>"; };
@@ -171,6 +177,8 @@
 			children = (
 				C1C28EB51DAAC98B00695100 /* CPPCChoicesCollectionViewCell.h */,
 				C1C28EB61DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m */,
+				C1AFDBC31DBE8AB200173444 /* CPPCSelectionCollectionViewCell.h */,
+				C1AFDBC41DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m */,
 			);
 			name = "Cell Classes";
 			sourceTree = "<group>";
@@ -178,10 +186,12 @@
 		C1E146B41DAABF6A001FC8A9 /* View Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C1E146B51DAAC042001FC8A9 /* CPPCChoicesCollectionView.h */,
-				C1E146B61DAAC042001FC8A9 /* CPPCChoicesCollectionView.m */,
 				C1DE29C71DB28D16008BA251 /* CPPCCameraView.h */,
 				C1DE29C81DB28D16008BA251 /* CPPCCameraView.m */,
+				C1E146B51DAAC042001FC8A9 /* CPPCChoicesCollectionView.h */,
+				C1E146B61DAAC042001FC8A9 /* CPPCChoicesCollectionView.m */,
+				C1AFDBC01DBE8A1600173444 /* CPPCSelectionCollectionView.h */,
+				C1AFDBC11DBE8A1600173444 /* CPPCSelectionCollectionView.m */,
 			);
 			name = "View Classes";
 			sourceTree = "<group>";
@@ -356,8 +366,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */,
+				C1AFDBC51DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m in Sources */,
 				C1C28EB71DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m in Sources */,
 				9000EE581DAD9D7C00CE17E5 /* CPPCUtilities.m in Sources */,
+				C1AFDBC21DBE8A1600173444 /* CPPCSelectionCollectionView.m in Sources */,
 				900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */,
 				C1DE29C91DB28D16008BA251 /* CPPCCameraView.m in Sources */,
 				900FF1191DAB3B230028DA90 /* CPPCServerManager.m in Sources */,

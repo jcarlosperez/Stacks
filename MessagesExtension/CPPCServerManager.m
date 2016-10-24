@@ -7,9 +7,6 @@
 //
 
 #import "CPPCServerManager.h"
-#import <AWSCore/AWSCore.h>
-#import <AWSCognito/AWSCognito.h>
-#import <AWSS3/AWSS3.h>
 #import "UIImage+Optimizations.h"
 #import "RXPromise.h"
 
@@ -46,10 +43,10 @@
         if (error) {
             NSLog(@"Error creating upload folder: %@", error);
         }
-    
+        
         [[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
-            NSLog(@"Error creating upload folder: %@", error);
+            NSLog(@"Error creating download folder: %@", error);
         }
     }
     return self;
@@ -57,14 +54,48 @@
 
 #pragma mark - Class Methods
 
+- (void)downloadImageWithKey:(NSString *)imageKey withSuccessBlock:(void (^)(AWSTask *))successBlock failureBlock:(void (^)(NSError *))failureBlock {
+    
+    NSString *fileKey = [NSString stringWithFormat:@"%@.jpg", imageKey];
+    
+    NSString *downloadingFilePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] stringByAppendingPathComponent:fileKey];
+    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+    
+    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+    downloadRequest.bucket = @"picchoosebackend";
+    downloadRequest.key = fileKey;
+    downloadRequest.downloadingFileURL = downloadingFileURL;
+    
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    [[transferManager download:downloadRequest] continueWithBlock:^id(AWSTask *task) {
+        
+        if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]
+            && task.error.code == AWSS3TransferManagerErrorPaused) {
+            NSLog(@"Download paused.");
+        } else if (task.error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureBlock(task.error);
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                successBlock(task);
+            });
+        }
+        
+        return nil;
+    }];
+}
+
 - (void)uploadRawImage:(UIImage *)image promise:(RXPromise *)promise {
     NSString *uniqueString = [[NSProcessInfo processInfo] globallyUniqueString];
     NSString *fileName = [uniqueString stringByAppendingString:@".jpg"];
     NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"] stringByAppendingPathComponent:fileName];
 
-    CGFloat height = image.size.height / (image.size.width/800);
-    UIImage *scaledImaged = [image scaledImageToSize:CGSizeMake(800, height)];
-    NSData *imageData = UIImageJPEGRepresentation(scaledImaged, 0.6);
+    CGFloat height = image.size.height / (image.size.width/500);
+    UIImage *scaledImaged = [image scaledImageToSize:CGSizeMake(500, height)];
+    NSData *imageData = UIImageJPEGRepresentation(scaledImaged, 0.4);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *error = nil;
