@@ -24,13 +24,23 @@
         _choiceImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:_choiceImageView];
         
+        _ratingView = [[CPPCImageRatingView alloc] initWithFrame:CGRectZero];
+        _ratingView.editable = YES;
+        _ratingView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addSubview:_ratingView];
+        
         [self.contentView addCompactConstraints:@[@"choiceImageView.height = view.width - 20",
                                                   @"choiceImageView.width = view.width - 20",
                                                   @"choiceImageView.centerX = view.centerX",
-                                                  @"choiceImageView.centerY = view.centerY"
+                                                  @"choiceImageView.centerY = view.centerY",
+                                                  @"ratingView.top = choiceImageView.bottom+5",
+                                                  @"ratingView.right = choiceImageView.right-5",
+                                                  @"ratingView.height = 50",
+                                                  @"ratingView.width = 100"
                                                   ]
                                         metrics:nil
                                           views:@{@"choiceImageView": _choiceImageView,
+                                                  @"ratingView" : _ratingView,
                                                   @"view": self.contentView}];
     }
     return self;

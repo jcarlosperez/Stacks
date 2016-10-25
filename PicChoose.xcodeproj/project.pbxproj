@@ -19,6 +19,7 @@
 		C1AFDBC21DBE8A1600173444 /* CPPCSelectionCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AFDBC11DBE8A1600173444 /* CPPCSelectionCollectionView.m */; };
 		C1AFDBC51DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AFDBC41DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m */; };
 		C1C28EB71DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C28EB61DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m */; };
+		C1D68A011DBED25900C17B8A /* CPPCImageRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D68A001DBED25900C17B8A /* CPPCImageRatingView.m */; };
 		C1DE29C91DB28D16008BA251 /* CPPCCameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DE29C81DB28D16008BA251 /* CPPCCameraView.m */; };
 		C1E146B71DAAC042001FC8A9 /* CPPCChoicesCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E146B61DAAC042001FC8A9 /* CPPCChoicesCollectionView.m */; };
 		FD0C179899E047AD4AF45EBD /* libPods-MessagesExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */; };
@@ -76,6 +77,8 @@
 		C1AFDBC41DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCSelectionCollectionViewCell.m; path = "Code/Cell Classes/CPPCSelectionCollectionViewCell.m"; sourceTree = "<group>"; };
 		C1C28EB51DAAC98B00695100 /* CPPCChoicesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCChoicesCollectionViewCell.h; path = "Code/Cell Classes/CPPCChoicesCollectionViewCell.h"; sourceTree = "<group>"; };
 		C1C28EB61DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCChoicesCollectionViewCell.m; path = "Code/Cell Classes/CPPCChoicesCollectionViewCell.m"; sourceTree = "<group>"; };
+		C1D689FF1DBED25900C17B8A /* CPPCImageRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCImageRatingView.h; path = "Code/View Classes/CPPCImageRatingView.h"; sourceTree = "<group>"; };
+		C1D68A001DBED25900C17B8A /* CPPCImageRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCImageRatingView.m; path = "Code/View Classes/CPPCImageRatingView.m"; sourceTree = "<group>"; };
 		C1DE29C71DB28D16008BA251 /* CPPCCameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCCameraView.h; path = "Code/View Classes/CPPCCameraView.h"; sourceTree = "<group>"; };
 		C1DE29C81DB28D16008BA251 /* CPPCCameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCCameraView.m; path = "Code/View Classes/CPPCCameraView.m"; sourceTree = "<group>"; };
 		C1E146B51DAAC042001FC8A9 /* CPPCChoicesCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCChoicesCollectionView.h; path = "Code/View Classes/CPPCChoicesCollectionView.h"; sourceTree = "<group>"; };
@@ -190,6 +193,8 @@
 				C1DE29C81DB28D16008BA251 /* CPPCCameraView.m */,
 				C1E146B51DAAC042001FC8A9 /* CPPCChoicesCollectionView.h */,
 				C1E146B61DAAC042001FC8A9 /* CPPCChoicesCollectionView.m */,
+				C1D689FF1DBED25900C17B8A /* CPPCImageRatingView.h */,
+				C1D68A001DBED25900C17B8A /* CPPCImageRatingView.m */,
 				C1AFDBC01DBE8A1600173444 /* CPPCSelectionCollectionView.h */,
 				C1AFDBC11DBE8A1600173444 /* CPPCSelectionCollectionView.m */,
 			);
@@ -372,6 +377,7 @@
 				C1AFDBC21DBE8A1600173444 /* CPPCSelectionCollectionView.m in Sources */,
 				900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */,
 				C1DE29C91DB28D16008BA251 /* CPPCCameraView.m in Sources */,
+				C1D68A011DBED25900C17B8A /* CPPCImageRatingView.m in Sources */,
 				900FF1191DAB3B230028DA90 /* CPPCServerManager.m in Sources */,
 				C1E146B71DAAC042001FC8A9 /* CPPCChoicesCollectionView.m in Sources */,
 			);

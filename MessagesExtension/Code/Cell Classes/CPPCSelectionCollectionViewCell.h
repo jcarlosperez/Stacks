@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "CPPCImageRatingView.h"
+
 @interface CPPCSelectionCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *choiceImageView;
+
+@property (nonatomic, strong) CPPCImageRatingView *ratingView;
 
 @end
