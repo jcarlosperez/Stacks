@@ -12,6 +12,7 @@
 @implementation CPPCSelectionCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
+    
     if (self = [super initWithFrame:frame]) {
         
         _choiceImageView = [[UIImageView alloc] init];
@@ -25,6 +26,7 @@
         [self.contentView addSubview:_choiceImageView];
         
         _ratingView = [[CPPCImageRatingView alloc] initWithFrame:CGRectZero];
+        _ratingView.delegate = self;
         _ratingView.editable = YES;
         _ratingView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:_ratingView];
@@ -44,6 +46,10 @@
                                                   @"view": self.contentView}];
     }
     return self;
+}
+
+- (void)rateView:(CPPCImageRatingView *)rateView changedToNewRate:(NSNumber *)rate {
+    
 }
 
 @end

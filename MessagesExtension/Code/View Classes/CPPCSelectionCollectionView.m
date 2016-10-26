@@ -6,11 +6,15 @@
 //  Copyright © 2016 CP Digital Darkroom. All rights reserved.
 //
 
+#import "CPPCImageRatingView.h"
 #import "CPPCSelectionCollectionView.h"
 #import "CPPCSelectionCollectionViewCell.h"
 #import "CPPCServerManager.h"
 
 static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
+
+@interface CPPCSelectionCollectionView () <CPPCImageRatingDelegate>
+@end
 
 @implementation CPPCSelectionCollectionView
 
@@ -50,6 +54,12 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     }
 }
 
+#pragma mark - CPPCRatingDelegate
+
+- (void)rateView:(CPPCImageRatingView *)rateView changedToNewRate:(NSNumber *)rate {
+    NSLog(@"Do something I guess");
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -58,6 +68,7 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     NSString *imagePath = [NSString stringWithFormat:@"%@/%@.jpg", [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"], _choiceImageKeys[indexPath.row]];
     cell.choiceImageView.image = [UIImage imageWithContentsOfFile:imagePath];
     cell.choiceImageView.backgroundColor = [UIColor greenColor];
+    cell.ratingView.delegate = self;
     
     return cell;
 }

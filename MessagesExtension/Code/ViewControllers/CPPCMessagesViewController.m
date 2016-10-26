@@ -188,7 +188,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.5 animations:^{
-            _clickAddLabel.hidden = YES;
+            _clickAddLabel.alpha = 0;
         }];
     });
     
@@ -204,7 +204,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.5 animations:^{
-            _clickAddLabel.hidden = NO;
+            _clickAddLabel.alpha = 1;
         }];
     });
 }
@@ -235,6 +235,9 @@
                 [super updateViewConstraints];
             }
             
+            [_createMessageButton setTitle:@"Select New Images" forState:UIControlStateDisabled];
+            [_createMessageButton setTitle:@"Create Message Stack" forState:UIControlStateNormal];
+            
             _presentingCameraView = NO;
             [_cameraView removeFromSuperview];
             _cameraView = nil;
@@ -244,7 +247,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIView animateWithDuration:0.5 animations:^{
-                    _choicesCollectionView.hidden = NO;
+                    _choicesCollectionView.alpha = 1;
                 }];
             });
             
@@ -262,6 +265,9 @@
             _cameraView.delegate = self;
             _cameraView.translatesAutoresizingMaskIntoConstraints = NO;
             [self.view addSubview:_cameraView];
+            
+            [_createMessageButton setTitle:@"Rate the Images" forState:UIControlStateDisabled];
+            [_createMessageButton setTitle:@"Create Message Stack" forState:UIControlStateNormal];
             
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeBottom multiplier:1 constant:20]];
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:20]];
@@ -292,7 +298,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIView animateWithDuration:0.5 animations:^{
-                    _choicesCollectionView.hidden = YES;
+                    _choicesCollectionView.alpha = 0;
                 }];
             });
         }
@@ -353,7 +359,7 @@
     for (PHAsset *asset in assets) {
         [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
             [UIView animateWithDuration:0.5 animations:^{
-                _clickAddLabel.hidden = YES;
+                _clickAddLabel.alpha = 0;
             }];
             [_choicesCollectionView updateViewWithImage:image];
         }];
