@@ -17,6 +17,9 @@
 #import "RXPromise.h"
 #import "CPPCUtilities.h"
 
+#define kMessageCreation 1
+#define kResponseCreation 2
+
 @interface CPPCMessagesViewController () <CPPCCameraViewDelegate, CTAssetsPickerControllerDelegate> {
     BOOL _presentingCameraView;
     BOOL _presentingSelectionView;
@@ -52,6 +55,7 @@
     
     _createMessageButton = [[UIButton alloc] init];
     _createMessageButton.enabled = NO;
+    _createMessageButton.tag = kMessageCreation;
     _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
     [_createMessageButton addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
     [_createMessageButton setTitle:@"Select New Images" forState:UIControlStateDisabled];
@@ -142,11 +146,22 @@
     
     [super viewDidLayoutSubviews];
     
-    [_cameraView updatePreviewLayer];
+    if(_cameraView) {
+        [_cameraView updatePreviewLayer];
+    }
+    
+    if(_selectionCollectionView) {
+        UIEdgeInsets insets = _selectionCollectionView.contentInset;
+        CGFloat value = (self.view.frame.size.width - ((UICollectionViewFlowLayout *)_selectionCollectionView.collectionViewLayout).itemSize.width) * 0.5;
+        insets.left = value;
+        insets.right = value;
+        _selectionCollectionView.contentInset = insets;
+        _selectionCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
+    }
 }
 
-- (void)sendPressed:(UIButton *)sender {
-    // prep all the other stuff
+- (void)createNewMessageFromImageStack {
+    
     UIImage *previewImage = [UIImage previewImageFromSelectedImages:_choicesCollectionView.imageAssets];
     MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
     messageLayout.subcaption = [NSString stringWithFormat:@"$%@ wants your help choosing!", self.activeConversation.localParticipantIdentifier];
@@ -179,6 +194,29 @@
     }
 }
 
+- (void)createResponseForExistingConversation {
+    
+    UIImage *previewImage = [UIImage new];
+    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+    messageLayout.subcaption = @"Responding";
+    messageLayout.image = previewImage;
+    
+    MSMessage *message = [[MSMessage alloc] initWithSession:self.activeConversation.selectedMessage.session];
+    message.layout = messageLayout;
+    message.URL = [NSURL URLWithString:@"http://apple.com"];
+    message.summaryText = @"Choose an option";
+    [self.activeConversation insertMessage:message completionHandler:nil];
+}
+
+- (void)sendPressed:(UIButton *)sender {
+    
+    if(sender.tag == kMessageCreation) {
+        [self createNewMessageFromImageStack];
+    } else if(sender.tag == kResponseCreation) {
+        [self createResponseForExistingConversation];
+    }
+}
+
 #pragma mark - CPCCCameraViewDelegate
 
 - (void)didCaptureNewImage:(UIImage *)image {
@@ -193,6 +231,14 @@
     });
     
     [_choicesCollectionView updateViewWithImage:image];
+}
+
+#pragma mark - CPPCRateSelectionDelegate
+
+- (void)imageHasBeenRated {
+    _createMessageButton.enabled = YES;
+    _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
+    
 }
 
 #pragma mark - MSMessagesAppViewController Delegate Methods
@@ -210,7 +256,31 @@
 }
 
 - (void)didTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle {
-    NSLog(@"didTransitionToPresentationStyle:");
+}
+
+- (void)willBecomeActiveWithConversation:(MSConversation *)conversation {
+    
+    MSMessage *message = conversation.selectedMessage;
+    
+    if(message) {
+        
+        if (message.URL) {
+            
+            NSArray *imageNames = [CPPCUtilities imageNamesFromURL:message.URL];
+            
+            _presentingSelectionView = YES;
+            
+            _selectionCollectionView = [[CPPCSelectionCollectionView alloc] init];
+            _selectionCollectionView.backgroundColor = [UIColor whiteColor];
+            _selectionCollectionView.choiceImageKeys = imageNames;
+            _selectionCollectionView.layer.cornerRadius = 10;
+            _selectionCollectionView.layer.masksToBounds = YES;
+            _selectionCollectionView.scrollEnabled = YES;
+            _selectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.view addSubview:_selectionCollectionView];
+            
+        }
+    }
 }
 
 - (void)willTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle {
@@ -266,9 +336,6 @@
             _cameraView.translatesAutoresizingMaskIntoConstraints = NO;
             [self.view addSubview:_cameraView];
             
-            [_createMessageButton setTitle:@"Rate the Images" forState:UIControlStateDisabled];
-            [_createMessageButton setTitle:@"Create Message Stack" forState:UIControlStateNormal];
-            
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeBottom multiplier:1 constant:20]];
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:20]];
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:-20]];
@@ -290,6 +357,10 @@
         }
         
         if(_presentingSelectionView) {
+            
+            [_createMessageButton setTitle:@"Rate the Images To Continue" forState:UIControlStateDisabled];
+            [_createMessageButton setTitle:@"Send Response" forState:UIControlStateNormal];
+            _createMessageButton.tag = kResponseCreation;
             
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_selectionCollectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeTop multiplier:1 constant:20]];
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_selectionCollectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];

@@ -11,6 +11,7 @@
 		900FF1191DAB3B230028DA90 /* CPPCServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF1181DAB3B230028DA90 /* CPPCServerManager.m */; };
 		900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */; };
 		A439E0FAFCD0A564132B3830 /* libPods-PicChoose.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D7BC64ED191C4F87ACA666 /* libPods-PicChoose.a */; };
+		C13405901DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C134058F1DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.m */; };
 		C14C41871DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C41861DAA09F8001D2D35 /* Assets.xcassets */; };
 		C14C418E1DAA09F8001D2D35 /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14C41921DAA09F8001D2D35 /* Messages.framework */; };
@@ -62,6 +63,8 @@
 		900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Optimizations.m"; sourceTree = "<group>"; };
 		A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		AAD9628BD66BE8E79C4D0DD9 /* Pods-PicChoose.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicChoose.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PicChoose/Pods-PicChoose.debug.xcconfig"; sourceTree = "<group>"; };
+		C134058E1DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCCenterPagedCollectionViewLayout.h; path = "Code/Cell Classes/CPPCCenterPagedCollectionViewLayout.h"; sourceTree = "<group>"; };
+		C134058F1DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPCCenterPagedCollectionViewLayout.m; path = "Code/Cell Classes/CPPCCenterPagedCollectionViewLayout.m"; sourceTree = "<group>"; };
 		C14C41831DAA09F8001D2D35 /* PicChoose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PicChoose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C14C41861DAA09F8001D2D35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C14C41881DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 		C1C28EB41DAAC92C00695100 /* Cell Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C134058E1DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.h */,
+				C134058F1DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.m */,
 				C1C28EB51DAAC98B00695100 /* CPPCChoicesCollectionViewCell.h */,
 				C1C28EB61DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m */,
 				C1AFDBC31DBE8AB200173444 /* CPPCSelectionCollectionViewCell.h */,
@@ -370,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C13405901DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.m in Sources */,
 				C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */,
 				C1AFDBC51DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m in Sources */,
 				C1C28EB71DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m in Sources */,
