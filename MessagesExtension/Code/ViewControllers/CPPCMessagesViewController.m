@@ -7,7 +7,7 @@
 //
 
 #import "CPPCMessagesViewController.h"
-#import "CPPCCameraView.h"
+#import "CPPCCameraViewController.h"
 #import "CPPCChoicesCollectionView.h"
 #import "CPPCSelectionCollectionView.h"
 #import "CompactConstraint.h"
@@ -20,12 +20,12 @@
 #define kMessageCreation 1
 #define kResponseCreation 2
 
-@interface CPPCMessagesViewController () <CPPCCameraViewDelegate, CTAssetsPickerControllerDelegate> {
+@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate> {
     BOOL _presentingCameraView;
     BOOL _presentingSelectionView;
 }
 
-@property (nonatomic, strong) CPPCCameraView *cameraView;
+@property (nonatomic, strong) CPPCCameraViewController *cameraViewController;
 @property (nonatomic, strong) CPPCChoicesCollectionView *choicesCollectionView;
 @property (nonatomic, strong) CPPCSelectionCollectionView *selectionCollectionView;
 
@@ -146,9 +146,9 @@
     
     [super viewDidLayoutSubviews];
     
-    if(_cameraView) {
-        [_cameraView updatePreviewLayer];
-    }
+    /*if(_cameraView) {
+     [_cameraView updatePreviewLayer];
+     }*/
     
     if(_selectionCollectionView) {
         UIEdgeInsets insets = _selectionCollectionView.contentInset;
@@ -158,6 +158,19 @@
         _selectionCollectionView.contentInset = insets;
         _selectionCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
     }
+}
+
+- (void)handleNewImageSelected:(UIImage *)image {
+    _createMessageButton.enabled = YES;
+    _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.5 animations:^{
+            _clickAddLabel.alpha = 0;
+        }];
+    });
+    
+    [_choicesCollectionView updateViewWithImage:image];
 }
 
 - (void)createNewMessageFromImageStack {
@@ -215,22 +228,6 @@
     } else if(sender.tag == kResponseCreation) {
         [self createResponseForExistingConversation];
     }
-}
-
-#pragma mark - CPCCCameraViewDelegate
-
-- (void)didCaptureNewImage:(UIImage *)image {
-    
-    _createMessageButton.enabled = YES;
-    _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:0.5 animations:^{
-            _clickAddLabel.alpha = 0;
-        }];
-    });
-    
-    [_choicesCollectionView updateViewWithImage:image];
 }
 
 #pragma mark - CPPCRateSelectionDelegate
@@ -309,8 +306,8 @@
             [_createMessageButton setTitle:@"Create Message Stack" forState:UIControlStateNormal];
             
             _presentingCameraView = NO;
-            [_cameraView removeFromSuperview];
-            _cameraView = nil;
+            [_cameraViewController.view removeFromSuperview];
+            _cameraViewController = nil;
         }
         
         if(_presentingSelectionView) {
@@ -331,14 +328,19 @@
         
         if(_presentingCameraView) {
             
-            _cameraView = [[CPPCCameraView alloc] initWithFrame:CGRectZero];
-            _cameraView.delegate = self;
-            _cameraView.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.view addSubview:_cameraView];
+            _cameraViewController = [[CPPCCameraViewController alloc] init];
+            _cameraViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.view addSubview:_cameraViewController.view];
+            [_cameraViewController didMoveToParentViewController:self];
             
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeBottom multiplier:1 constant:20]];
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:20]];
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:-20]];
+            __weak typeof(self) weakSelf = self;
+            _cameraViewController.imageCaptured = ^(UIImage *image) {
+                [weakSelf handleNewImageSelected:image];
+            };
+            
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraViewController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_choicesCollectionView attribute:NSLayoutAttributeBottom multiplier:1 constant:20]];
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraViewController.view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:20]];
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraViewController.view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:-20]];
             
             for(NSLayoutConstraint *constraint in self.view.constraints) {
                 
@@ -346,8 +348,8 @@
                     
                     [self.view removeConstraint:constraint];
                     
-                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraView attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
-                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraImageButton attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
+                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraViewController.view attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
+                    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cameraViewController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_cameraImageButton attribute:NSLayoutAttributeTop multiplier:1 constant:-20]];
                     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_choicesCollectionView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:90]];
                 }
                 
@@ -429,10 +431,7 @@
     PHImageManager *manager = [PHImageManager defaultManager];
     for (PHAsset *asset in assets) {
         [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
-            [UIView animateWithDuration:0.5 animations:^{
-                _clickAddLabel.alpha = 0;
-            }];
-            [_choicesCollectionView updateViewWithImage:image];
+            [self handleNewImageSelected:image];
         }];
     }
 }
