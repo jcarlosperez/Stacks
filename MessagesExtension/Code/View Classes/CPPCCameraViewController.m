@@ -9,6 +9,7 @@
 #import "CPPCCameraViewController.h"
 #import "CompactConstraint.h"
 #import "CPPCCameraImagePreviewsViewController.h"
+#import "CPPCUtilities.h"
 
 @interface CPPCCameraViewController () <AVCapturePhotoCaptureDelegate>
 
@@ -23,6 +24,8 @@
 @property (nonatomic, strong) AVCapturePhotoSettings *photoSettings;
 
 @property (nonatomic, strong) UIButton *captureTrigger;
+
+@property (nonatomic, strong) CPPCCameraImagePreviewsViewController *previewsViewController;
 
 @end
 
@@ -45,6 +48,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.userInteractionEnabled = YES;
+    self.view.exclusiveTouch = NO;
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.layer.cornerRadius = 10;
@@ -78,10 +84,10 @@
                                                views:@{@"captureTrigger": _captureTrigger,
                                                        @"livePreviewContainerView": _livePreviewContainerView}];
     
-    CPPCCameraImagePreviewsViewController *previewsViewController = [[CPPCCameraImagePreviewsViewController alloc] init];
-    previewsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:previewsViewController.view];
-    [previewsViewController didMoveToParentViewController:self];
+    _previewsViewController = [[CPPCCameraImagePreviewsViewController alloc] init];
+    _previewsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_previewsViewController.view];
+    [_previewsViewController didMoveToParentViewController:self];
     
     [self.view addCompactConstraints:@[@"livePreviewContainerView.left = view.left+10",
                                        @"livePreviewContainerView.top = view.top+10",
@@ -93,13 +99,19 @@
                                        @"previewsViewController.bottom = livePreviewContainerView.bottom-6"]
                              metrics:nil
                                views:@{@"livePreviewContainerView": _livePreviewContainerView,
-                                       @"previewsViewController": previewsViewController.view,
+                                       @"previewsViewController": _previewsViewController.view,
                                        @"view": self.view}];
     
     UITapGestureRecognizer *switchCameraPositionRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchCameraTriggered:)];
     switchCameraPositionRecognizer.numberOfTapsRequired = 2;
     [_livePreviewContainerView addGestureRecognizer:switchCameraPositionRecognizer];
+    
+    UITapGestureRecognizer *subviewImageSelectionRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageSelectionRecognizer:)];
+    subviewImageSelectionRecognizer.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:subviewImageSelectionRecognizer];
+    [subviewImageSelectionRecognizer requireGestureRecognizerToFail:switchCameraPositionRecognizer];
 }
+
 
 
 - (void)viewWillLayoutSubviews {
@@ -115,6 +127,16 @@
     
     [_captureSession removeInput:input];
     [_captureSession addInput:[AVCaptureDeviceInput deviceInputWithDevice:discoverySession.devices[0] error:nil]];
+}
+
+- (void)imageSelectionRecognizer:(UIGestureRecognizer *)recognizer {
+    CGPoint tappedPoint = [recognizer locationInView:self.view];
+    if (CGRectContainsPoint(_previewsViewController.view.frame, tappedPoint)) {
+        NSInteger correctIndex = [_previewsViewController indexForTappedPoint:tappedPoint] - 1;
+        [CPPCUtilities recentImageNumberFromRecent:correctIndex completionBlock:^(UIImage *image) {
+            _imageCaptured(image);
+        }];
+    }
 }
 
 #pragma mark - Shutter handling

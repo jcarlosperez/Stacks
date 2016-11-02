@@ -10,4 +10,6 @@
 
 @interface CPPCCameraImagePreviewsViewController : UIViewController
 
+- (NSInteger)indexForTappedPoint:(CGPoint)point;
+
 @end

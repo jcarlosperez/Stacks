@@ -8,14 +8,9 @@
 
 #import "CPPCCameraImagePreviewsViewController.h"
 #import "CompactConstraint.h"
+#import "CPPCUtilities.h"
 
-#import <Photos/Photos.h>
-
-@import AssetsLibrary;
-
-@interface CPPCCameraImagePreviewsViewController () {
-    int nextPhotoIndex;
-}
+@interface CPPCCameraImagePreviewsViewController () <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIImageView *imageView1, *imageView2, *imageView3;
 
@@ -25,17 +20,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.userInteractionEnabled = YES;
 
     _imageView1 = [[UIImageView alloc] init];
     _imageView1.translatesAutoresizingMaskIntoConstraints = NO;
     _imageView1.layer.cornerRadius = 10;
     _imageView1.layer.masksToBounds = YES;
+    _imageView1.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:_imageView1];
 
     _imageView2 = [[UIImageView alloc] init];
     _imageView2.translatesAutoresizingMaskIntoConstraints = NO;
     _imageView2.layer.cornerRadius = 10;
     _imageView2.layer.masksToBounds = YES;
+    _imageView2.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:_imageView2];
 
     _imageView3 = [[UIImageView alloc] init];
@@ -43,60 +42,10 @@
     _imageView3.layer.cornerRadius = 10;
     _imageView3.layer.masksToBounds = YES;
     _imageView3.userInteractionEnabled = YES;
+    _imageView3.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:_imageView3];
-
-    _imageView1.backgroundColor = [UIColor redColor];
-    _imageView2.backgroundColor = [UIColor blueColor];
-    _imageView3.backgroundColor = [UIColor purpleColor];
     
-    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageViewTap:)];
-    tapG1.numberOfTapsRequired = 1;
-    [_imageView1 addGestureRecognizer:tapG1];
-    
-    UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageViewTap:)];
-    tapG2.numberOfTapsRequired = 1;
-    [_imageView2 addGestureRecognizer:tapG2];
-    
-    UITapGestureRecognizer *tapG3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageViewTap:)];
-    tapG3.numberOfTapsRequired = 1;
-    [_imageView3 addGestureRecognizer:tapG3];
-    
-    nextPhotoIndex = 3;
-    
-    [self updateImageView:_imageView1 withRecentImageAtPath:0];
-    [self updateImageView:_imageView2 withRecentImageAtPath:1];
-    [self updateImageView:_imageView3 withRecentImageAtPath:2];
-
-}
-
-- (void)handleImageViewTap:(UITapGestureRecognizer *)recognizer {
-    
-    [self updateImageView:(UIImageView *)recognizer.view withRecentImageAtPath:nextPhotoIndex];
-    nextPhotoIndex++;
-    
-    NSLog(@"Something is not working right");
-    
-}
-
--(void)updateImageView:(UIImageView *)imageView withRecentImageAtPath:(int)index {
-    
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc]init];
-    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    options.synchronous = YES;
-    
-    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc]init];
-    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    
-    PHFetchResult *photos = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
-    
-    if (photos) {
-        // 500x500 is the smallet you can do without it being pixelated
-        [[PHImageManager defaultManager] requestImageForAsset:[photos objectAtIndex:index] targetSize:CGSizeMake(500, 500) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
-            imageView.image = result;
-            imageView.contentMode = UIViewContentModeScaleAspectFill;
-        }];
-    }
-    
+    [self loadInImages];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -119,6 +68,38 @@
                                        @"imageView2": _imageView2,
                                        @"imageView3": _imageView3,
                                        @"view": self.view}];
+}
+
+#pragma mark - Loading methods for images
+
+- (void)loadInImages {
+    [CPPCUtilities recentImageNumberFromRecent:0 completionBlock:^(UIImage *image) {
+        _imageView1.image = image;
+    }];
+    
+    [CPPCUtilities recentImageNumberFromRecent:1 completionBlock:^(UIImage *image) {
+        _imageView2.image = image;
+    }];
+    
+    [CPPCUtilities recentImageNumberFromRecent:2 completionBlock:^(UIImage *image) {
+        _imageView3.image = image;
+    }];
+}
+
+#pragma mark - Gesture recognition
+
+- (NSInteger)indexForTappedPoint:(CGPoint)point {
+    CGRect imageView1Frame = [self.view.superview convertRect:_imageView1.frame fromView:self.view];
+    CGRect imageView2Frame = [self.view.superview convertRect:_imageView2.frame fromView:self.view];
+    CGRect imageView3Frame = [self.view.superview convertRect:_imageView3.frame fromView:self.view];
+    if (CGRectContainsPoint(imageView1Frame, point)) {
+        return 1;
+    } else if (CGRectContainsPoint(imageView2Frame, point)) {
+        return 2;
+    } else if (CGRectContainsPoint(imageView3Frame, point)) {
+        return 3;
+    }
+    return 0;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -7,6 +7,9 @@
 //
 
 #import "CPPCUtilities.h"
+#import <Photos/Photos.h>
+
+@import AssetsLibrary;
 
 @implementation CPPCUtilities
 
@@ -32,6 +35,24 @@
     NSString *imageNames = [query stringByReplacingOccurrencesOfString:@"pictures[]=" withString:@""];
     NSArray *imageNamesParsed = [imageNames componentsSeparatedByString:@"&"];
     return imageNamesParsed;
+}
+
++ (void)recentImageNumberFromRecent:(NSInteger)imageNumber completionBlock:(void (^)(UIImage *image))completionBlock {
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc]init];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    options.synchronous = YES;
+    
+    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc]init];
+    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    
+    PHFetchResult *photos = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+    
+    if (photos) {
+        // 500x500 is the smallest you can do without it being pixelated
+        [[PHImageManager defaultManager] requestImageForAsset:[photos objectAtIndex:imageNumber] targetSize:CGSizeMake(500, 500) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
+            completionBlock(result);
+        }];
+    }
 }
 
 @end

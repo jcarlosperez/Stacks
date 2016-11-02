@@ -264,12 +264,12 @@
 				TargetAttributes = {
 					C14C41821DAA09F8001D2D35 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = Z3Q8LM67KV;
+						DevelopmentTeam = 8V5J4G27BG;
 						ProvisioningStyle = Automatic;
 					};
 					C14C418C1DAA09F8001D2D35 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = Z3Q8LM67KV;
+						DevelopmentTeam = 8V5J4G27BG;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -499,7 +499,7 @@
 			baseConfigurationReference = A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -514,7 +514,7 @@
 			baseConfigurationReference = 3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -529,7 +529,7 @@
 			baseConfigurationReference = AAD9628BD66BE8E79C4D0DD9 /* Pods-PicChoose.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = PicChoose/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose;
@@ -543,7 +543,7 @@
 			baseConfigurationReference = 74CCB977A60AFCB8F13A3CB9 /* Pods-PicChoose.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = PicChoose/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.PicChoose;

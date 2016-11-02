@@ -6,12 +6,14 @@
 //  Copyright © 2016 CP Digital Darkroom. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface CPPCUtilities : NSObject
 
 + (NSURL *)URLFromImageNames:(NSArray<NSString *>*)imageNames;
 
 + (NSArray *)imageNamesFromURL:(NSURL *)URL;
+
++ (void)recentImageNumberFromRecent:(NSInteger)imageNumber completionBlock:(void (^)(UIImage *image))completionBlock;
 
 @end
