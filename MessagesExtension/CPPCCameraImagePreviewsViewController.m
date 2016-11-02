@@ -9,7 +9,13 @@
 #import "CPPCCameraImagePreviewsViewController.h"
 #import "CompactConstraint.h"
 
-@interface CPPCCameraImagePreviewsViewController ()
+#import <Photos/Photos.h>
+
+@import AssetsLibrary;
+
+@interface CPPCCameraImagePreviewsViewController () {
+    int nextPhotoIndex;
+}
 
 @property (strong, nonatomic) UIImageView *imageView1, *imageView2, *imageView3;
 
@@ -36,12 +42,61 @@
     _imageView3.translatesAutoresizingMaskIntoConstraints = NO;
     _imageView3.layer.cornerRadius = 10;
     _imageView3.layer.masksToBounds = YES;
+    _imageView3.userInteractionEnabled = YES;
     [self.view addSubview:_imageView3];
 
     _imageView1.backgroundColor = [UIColor redColor];
     _imageView2.backgroundColor = [UIColor blueColor];
     _imageView3.backgroundColor = [UIColor purpleColor];
+    
+    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageViewTap:)];
+    tapG1.numberOfTapsRequired = 1;
+    [_imageView1 addGestureRecognizer:tapG1];
+    
+    UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageViewTap:)];
+    tapG2.numberOfTapsRequired = 1;
+    [_imageView2 addGestureRecognizer:tapG2];
+    
+    UITapGestureRecognizer *tapG3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageViewTap:)];
+    tapG3.numberOfTapsRequired = 1;
+    [_imageView3 addGestureRecognizer:tapG3];
+    
+    nextPhotoIndex = 3;
+    
+    [self updateImageView:_imageView1 withRecentImageAtPath:0];
+    [self updateImageView:_imageView2 withRecentImageAtPath:1];
+    [self updateImageView:_imageView3 withRecentImageAtPath:2];
 
+}
+
+- (void)handleImageViewTap:(UITapGestureRecognizer *)recognizer {
+    
+    [self updateImageView:(UIImageView *)recognizer.view withRecentImageAtPath:nextPhotoIndex];
+    nextPhotoIndex++;
+    
+    NSLog(@"Something is not working right");
+    
+}
+
+-(void)updateImageView:(UIImageView *)imageView withRecentImageAtPath:(int)index {
+    
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc]init];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    options.synchronous = YES;
+    
+    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc]init];
+    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    
+    PHFetchResult *photos = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+    
+    if (photos) {
+        // 500x500 is the smallet you can do without it being pixelated
+        [[PHImageManager defaultManager] requestImageForAsset:[photos objectAtIndex:index] targetSize:CGSizeMake(500, 500) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
+            imageView.image = result;
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+        }];
+    }
+    
 }
 
 - (void)viewWillLayoutSubviews {
