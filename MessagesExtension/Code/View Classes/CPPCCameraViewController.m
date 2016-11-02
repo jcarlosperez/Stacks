@@ -8,6 +8,7 @@
 
 #import "CPPCCameraViewController.h"
 #import "CompactConstraint.h"
+#import "CPPCCameraImagePreviewsViewController.h"
 
 @interface CPPCCameraViewController () <AVCapturePhotoCaptureDelegate>
 
@@ -77,12 +78,22 @@
                                                views:@{@"captureTrigger": _captureTrigger,
                                                        @"livePreviewContainerView": _livePreviewContainerView}];
     
+    CPPCCameraImagePreviewsViewController *previewsViewController = [[CPPCCameraImagePreviewsViewController alloc] init];
+    previewsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:previewsViewController.view];
+    [previewsViewController didMoveToParentViewController:self];
+    
     [self.view addCompactConstraints:@[@"livePreviewContainerView.left = view.left+10",
                                        @"livePreviewContainerView.top = view.top+10",
                                        @"livePreviewContainerView.width = 240",
-                                       @"livePreviewContainerView.height = self.height-20"]
+                                       @"livePreviewContainerView.height = self.height-20",
+                                       @"previewsViewController.left = livePreviewContainerView.right+10",
+                                       @"previewsViewController.top = livePreviewContainerView.top+6",
+                                       @"previewsViewController.right = view.right-10",
+                                       @"previewsViewController.bottom = livePreviewContainerView.bottom-6"]
                              metrics:nil
                                views:@{@"livePreviewContainerView": _livePreviewContainerView,
+                                       @"previewsViewController": previewsViewController.view,
                                        @"view": self.view}];
     
     UITapGestureRecognizer *switchCameraPositionRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchCameraTriggered:)];
