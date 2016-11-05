@@ -10,24 +10,31 @@
 #import "CPPCSelectionCollectionView.h"
 #import "CPPCSelectionCollectionViewCell.h"
 #import "CPPCServerManager.h"
+#import "CPPCCarouselFlowLayout.h"
+#import "RXPromise.h"
 
 static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 
 @interface CPPCSelectionCollectionView () <CPPCImageRatingDelegate> {
     CGSize cellSize;
 }
+
+@property (strong, nonatomic) NSArray *fileURLs;
+
 @end
 
 @implementation CPPCSelectionCollectionView
 
 - (instancetype)init {
     
-    cellSize = CGSizeMake(self.frame.size.width, self.frame.size.width + 50);
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    CPPCCarouselFlowLayout *flowLayout = [[CPPCCarouselFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.minimumLineSpacing = 0;
+    flowLayout.sideItemAlpha = 0.6;
+    flowLayout.sideItemScale = 0.8;
+    flowLayout.spacing = 10;
+    flowLayout.spacingMode = FixedMode;
+    flowLayout.visibleOffset = 40;
     
     if (self = [super initWithFrame:CGRectZero collectionViewLayout:flowLayout]) {
         
@@ -44,22 +51,26 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 }
 
 - (void)setChoiceImageKeys:(NSArray *)choiceImageKeys {
-    
     _choiceImageKeys = choiceImageKeys;
     
-    for(NSString *imageKey in choiceImageKeys) {
         
-        if(![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"], imageKey]]) {
+        RXPromise *promise = [[RXPromise alloc] init];
+        promise.thenOnMain(^id(id result) {
+            _fileURLs = result;
+            [self reloadData];
             
-            [[CPPCServerManager sharedInstance] downloadImageWithKey:imageKey withSuccessBlock:^(AWSTask *responseTask) {
-                
-            } failureBlock:^(NSError *error) {
-                NSLog(@"Failure: %@", error);
-            }];
+            return nil;
+        }, ^id(NSError *error) {
+            NSLog(@"THE ERROR IS %@", error);
             
-        }
-    }
+            return nil;
+        });
+        
+    [[CPPCServerManager sharedInstance] downloadImagesWithImageKeys:_choiceImageKeys promise:promise];
+    
+    
 }
+
 
 #pragma mark - CPPCRatingDelegate
 
@@ -68,34 +79,29 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 }
 
 #pragma mark - scrollview delegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(_choiceImageKeys.count > 0) {
-        const CGFloat centerX = self.center.x;
-        
-        for(UICollectionViewCell * cell in [self visibleCells]) {
-            CGPoint pos = [cell convertPoint:CGPointZero toView:self];
-            pos.x += cellSize.width/2.0f;
-            CGFloat distance = fabs(centerX - pos.x);
-            CGFloat scale = 1.0f - (distance/centerX)*0.1f;
-            [cell setTransform:CGAffineTransformMakeScale(scale, scale)];
-        }
-    }
-}
+/*        let layout = self.collectionView.collectionViewLayout as! UPCarouselFlowLayout
+ let pageSide = (layout.scrollDirection == .horizontal) ? self.pageSize.width : self.pageSize.height
+ let offset = (layout.scrollDirection == .horizontal) ? scrollView.contentOffset.x : scrollView.contentOffset.y
+ currentPage = Int(floor((offset - pageSide / 2) / pageSide) + 1)*/
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     
     CGFloat movingX = velocity.x * scrollView.frame.size.width;
     CGFloat newOffsetX = scrollView.contentOffset.x + movingX;
     
-    if(newOffsetX < 0) {
-        newOffsetX = 0;
-    } else if(newOffsetX > cellSize.width * (_choiceImageKeys.count-1)) {
-        newOffsetX = cellSize.width * (_choiceImageKeys.count-1);
+    CPPCCarouselFlowLayout *carouselFlowLayout = (CPPCCarouselFlowLayout *)self.collectionViewLayout;
+    
+    CGSize pageSize = carouselFlowLayout.itemSize;
+    if (carouselFlowLayout.scrollDirection == UICollectionViewScrollDirectionHorizontal) {
+        pageSize.width += carouselFlowLayout.minimumLineSpacing;
     } else {
-        NSUInteger newPage = newOffsetX/cellSize.width + ((int)newOffsetX%(int)cellSize.width > cellSize.width/2.0f ? 1 : 0);
-        newOffsetX = newPage*cellSize.width;
+        pageSize.height += carouselFlowLayout.minimumLineSpacing;
     }
+    
+    
+        NSUInteger newPage = floor((scrollView.contentOffset.x - pageSize.width / 2) / pageSize.width) + 1;
+        newOffsetX = newPage*pageSize.width;
+    
     
     NSLog(@"New Offset: %f", newOffsetX);
     targetContentOffset->x = newOffsetX;
@@ -105,9 +111,10 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CPPCSelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPCChoiceSelectionCell forIndexPath:indexPath];
-    
-    NSString *imagePath = [NSString stringWithFormat:@"%@/%@.jpg", [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"], _choiceImageKeys[indexPath.row]];
-    cell.choiceImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+   
+    //NSLog(@"we atually got ere %@", _choiceImageKeys[indexPath.row]);
+    NSString *fileURL = _fileURLs[indexPath.row];
+    cell.choiceImageView.image = [UIImage imageWithContentsOfFile:fileURL];
     cell.choiceImageView.backgroundColor = [UIColor greenColor];
     cell.ratingView.delegate = self;
     
@@ -115,12 +122,11 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSLog(@"%@ the thing is ", _fileURLs);
     return _choiceImageKeys.count;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return cellSize;
-}
+
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     CGFloat gap = (self.frame.size.width - cellSize.width)/2.0f;
     return UIEdgeInsetsMake(0, gap, 0, gap);
@@ -131,4 +137,9 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(self.frame.size.width, self.frame.size.width + 50);
+}
+
 @end

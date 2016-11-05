@@ -9,6 +9,7 @@
 #import "CPPCServerManager.h"
 #import "UIImage+Optimizations.h"
 #import "RXPromise.h"
+#import "CPPCUtilities.h"
 
 @implementation CPPCServerManager
 
@@ -54,38 +55,30 @@
 
 #pragma mark - Class Methods
 
-- (void)downloadImageWithKey:(NSString *)imageKey withSuccessBlock:(void (^)(AWSTask *))successBlock failureBlock:(void (^)(NSError *))failureBlock {
-    
-    NSString *fileKey = [NSString stringWithFormat:@"%@.jpg", imageKey];
-    
-    NSString *downloadingFilePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] stringByAppendingPathComponent:fileKey];
-    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
-    
-    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
-    downloadRequest.bucket = @"picchoosebackend";
-    downloadRequest.key = fileKey;
-    downloadRequest.downloadingFileURL = downloadingFileURL;
-    
-    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    
-    [[transferManager download:downloadRequest] continueWithBlock:^id(AWSTask *task) {
+- (void)downloadImagesWithImageKeys:(NSArray<NSString *>*)imageKeys promise:(RXPromise *)promise  {
+    NSMutableArray *imageFileURLs = [NSMutableArray array];
+    for (NSString *imageKey in imageKeys) {
+        NSString *fullImageName = [imageKey stringByAppendingString:@".jpg"];
+        NSString *localFileString = [CPPCUtilities localFileURLFromImageName:fullImageName];
         
-        if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]
-            && task.error.code == AWSS3TransferManagerErrorPaused) {
-            NSLog(@"Download paused.");
-        } else if (task.error) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                failureBlock(task.error);
-            });
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                successBlock(task);
-            });
-        }
+        AWSS3TransferManagerDownloadRequest *downloadRequest = [[AWSS3TransferManagerDownloadRequest alloc] init];
+        downloadRequest.bucket = @"picchoosebackend";
+        downloadRequest.key = fullImageName;
+        downloadRequest.downloadingFileURL = [NSURL fileURLWithPath:localFileString];
         
-        return nil;
-    }];
+        AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+        
+        [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor] withBlock:^id _Nullable(AWSTask * _Nonnull task) {
+            if (task.result) {
+                [imageFileURLs addObject:localFileString];
+            } else if (task.error) {
+                [promise rejectWithReason:task.error];
+                return nil;
+            }
+            return nil;
+        }];
+    }
+    [promise fulfillWithValue:imageFileURLs];
 }
 
 - (void)uploadRawImage:(UIImage *)image promise:(RXPromise *)promise {

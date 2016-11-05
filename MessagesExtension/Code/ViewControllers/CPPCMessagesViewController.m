@@ -145,11 +145,7 @@
 - (void)viewDidLayoutSubviews {
     
     [super viewDidLayoutSubviews];
-    
-    /*if(_cameraView) {
-     [_cameraView updatePreviewLayer];
-     }*/
-    
+
     if(_selectionCollectionView) {
         UIEdgeInsets insets = _selectionCollectionView.contentInset;
         CGFloat value = (self.view.frame.size.width - ((UICollectionViewFlowLayout *)_selectionCollectionView.collectionViewLayout).itemSize.width) * 0.5;
@@ -263,13 +259,11 @@
         
         if (message.URL) {
             
-            NSArray *imageNames = [CPPCUtilities imageNamesFromURL:message.URL];
-            
             _presentingSelectionView = YES;
             
             _selectionCollectionView = [[CPPCSelectionCollectionView alloc] init];
             _selectionCollectionView.backgroundColor = [UIColor whiteColor];
-            _selectionCollectionView.choiceImageKeys = imageNames;
+            _selectionCollectionView.choiceImageKeys = [CPPCUtilities imageNamesFromURL:message.URL];
             _selectionCollectionView.layer.cornerRadius = 10;
             _selectionCollectionView.layer.masksToBounds = YES;
             _selectionCollectionView.scrollEnabled = YES;
@@ -383,7 +377,6 @@
 - (void)didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
     // check if message has a URL (only received or sent message have it) because this method is triggered a lot
     if (message.URL) {
-        
         NSArray *imageNames = [CPPCUtilities imageNamesFromURL:message.URL];
         
         _presentingSelectionView = YES;
@@ -394,6 +387,7 @@
         _selectionCollectionView.layer.cornerRadius = 10;
         _selectionCollectionView.layer.masksToBounds = YES;
         _selectionCollectionView.scrollEnabled = YES;
+        _selectionCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
         _selectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addSubview:_selectionCollectionView];
         

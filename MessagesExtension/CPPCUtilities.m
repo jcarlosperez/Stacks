@@ -55,4 +55,8 @@
     }
 }
 
++ (NSString *)localFileURLFromImageName:(NSString *)imageName {
+    return [[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] stringByAppendingPathComponent:imageName];
+}
+
 @end

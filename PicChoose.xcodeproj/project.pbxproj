@@ -11,6 +11,8 @@
 		9005C3C41DC93E4200CA6945 /* CPPCCameraImagePreviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9005C3C31DC93E4200CA6945 /* CPPCCameraImagePreviewsViewController.m */; };
 		900FF1191DAB3B230028DA90 /* CPPCServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF1181DAB3B230028DA90 /* CPPCServerManager.m */; };
 		900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */; };
+		903658161DCBDF3600D63EC6 /* CPPCStackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 903658151DCBDF3600D63EC6 /* CPPCStackManager.m */; };
+		903658191DCD264500D63EC6 /* CPPCCarouselFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 903658181DCD264500D63EC6 /* CPPCCarouselFlowLayout.m */; };
 		A439E0FAFCD0A564132B3830 /* libPods-PicChoose.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D7BC64ED191C4F87ACA666 /* libPods-PicChoose.a */; };
 		C13405901DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C134058F1DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.m */; };
 		C14C41871DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C41861DAA09F8001D2D35 /* Assets.xcassets */; };
@@ -64,6 +66,10 @@
 		900FF1181DAB3B230028DA90 /* CPPCServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPPCServerManager.m; sourceTree = "<group>"; };
 		900FF11D1DAB3EE70028DA90 /* UIImage+Optimizations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Optimizations.h"; sourceTree = "<group>"; };
 		900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Optimizations.m"; sourceTree = "<group>"; };
+		903658141DCBDF3600D63EC6 /* CPPCStackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPPCStackManager.h; sourceTree = "<group>"; };
+		903658151DCBDF3600D63EC6 /* CPPCStackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPPCStackManager.m; sourceTree = "<group>"; };
+		903658171DCD264500D63EC6 /* CPPCCarouselFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPPCCarouselFlowLayout.h; sourceTree = "<group>"; };
+		903658181DCD264500D63EC6 /* CPPCCarouselFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPPCCarouselFlowLayout.m; sourceTree = "<group>"; };
 		A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		AAD9628BD66BE8E79C4D0DD9 /* Pods-PicChoose.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicChoose.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PicChoose/Pods-PicChoose.debug.xcconfig"; sourceTree = "<group>"; };
 		C134058E1DC122A80080A082 /* CPPCCenterPagedCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPCCenterPagedCollectionViewLayout.h; path = "Code/Cell Classes/CPPCCenterPagedCollectionViewLayout.h"; sourceTree = "<group>"; };
@@ -169,6 +175,8 @@
 				C1E146B41DAABF6A001FC8A9 /* View Classes */,
 				C14C41A71DAA0CB3001D2D35 /* CPPCMessagesViewController.h */,
 				C14C41A81DAA0CB3001D2D35 /* CPPCMessagesViewController.m */,
+				903658141DCBDF3600D63EC6 /* CPPCStackManager.h */,
+				903658151DCBDF3600D63EC6 /* CPPCStackManager.m */,
 				900FF11D1DAB3EE70028DA90 /* UIImage+Optimizations.h */,
 				900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */,
 				900FF1171DAB3B230028DA90 /* CPPCServerManager.h */,
@@ -207,6 +215,8 @@
 				C1D68A001DBED25900C17B8A /* CPPCImageRatingView.m */,
 				C1AFDBC01DBE8A1600173444 /* CPPCSelectionCollectionView.h */,
 				C1AFDBC11DBE8A1600173444 /* CPPCSelectionCollectionView.m */,
+				903658171DCD264500D63EC6 /* CPPCCarouselFlowLayout.h */,
+				903658181DCD264500D63EC6 /* CPPCCarouselFlowLayout.m */,
 			);
 			name = "View Classes";
 			sourceTree = "<group>";
@@ -384,12 +394,14 @@
 				C14C41A91DAA0CB3001D2D35 /* CPPCMessagesViewController.m in Sources */,
 				C1AFDBC51DBE8AB200173444 /* CPPCSelectionCollectionViewCell.m in Sources */,
 				C1C28EB71DAAC98B00695100 /* CPPCChoicesCollectionViewCell.m in Sources */,
+				903658161DCBDF3600D63EC6 /* CPPCStackManager.m in Sources */,
 				9000EE581DAD9D7C00CE17E5 /* CPPCUtilities.m in Sources */,
 				C1AFDBC21DBE8A1600173444 /* CPPCSelectionCollectionView.m in Sources */,
 				900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */,
 				C1DE29C91DB28D16008BA251 /* CPPCCameraViewController.m in Sources */,
 				9005C3C41DC93E4200CA6945 /* CPPCCameraImagePreviewsViewController.m in Sources */,
 				C1D68A011DBED25900C17B8A /* CPPCImageRatingView.m in Sources */,
+				903658191DCD264500D63EC6 /* CPPCCarouselFlowLayout.m in Sources */,
 				900FF1191DAB3B230028DA90 /* CPPCServerManager.m in Sources */,
 				C1E146B71DAAC042001FC8A9 /* CPPCChoicesCollectionView.m in Sources */,
 			);

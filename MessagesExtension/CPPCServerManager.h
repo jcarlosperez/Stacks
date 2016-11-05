@@ -17,7 +17,8 @@
 
 + (instancetype)sharedInstance;
 
-- (void)downloadImageWithKey:(NSString *)imageKey withSuccessBlock:(void (^)(AWSTask *responseTask))successBlock failureBlock:(void (^)(NSError *error))failureBlock;
+- (void)downloadImagesWithImageKeys:(NSArray<NSString *>*)imageKeys promise:(RXPromise *)promise;
+
 
 - (void)uploadRawImage:(UIImage *)image promise:(RXPromise *)promise;
 
