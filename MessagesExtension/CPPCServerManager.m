@@ -81,6 +81,40 @@
     [promise fulfillWithValue:imageFileURLs];
 }
 
+- (void)downloadImageWithKey:(NSString *)imageKey withSuccessBlock:(void (^)(AWSTask *))successBlock failureBlock:(void (^)(NSError *))failureBlock {
+    
+    NSString *fileKey = [NSString stringWithFormat:@"%@.jpg", imageKey];
+    
+    NSString *downloadingFilePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] stringByAppendingPathComponent:fileKey];
+    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+    
+    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+    downloadRequest.bucket = @"picchoosebackend";
+    downloadRequest.key = fileKey;
+    downloadRequest.downloadingFileURL = downloadingFileURL;
+    
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    [[transferManager download:downloadRequest] continueWithBlock:^id(AWSTask *task) {
+        
+        if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]
+            && task.error.code == AWSS3TransferManagerErrorPaused) {
+            NSLog(@"Download paused.");
+        } else if (task.error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureBlock(task.error);
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                successBlock(task);
+            });
+        }
+        
+        return nil;
+    }];
+}
+
 - (void)uploadRawImage:(UIImage *)image promise:(RXPromise *)promise {
     NSString *uniqueString = [[NSProcessInfo processInfo] globallyUniqueString];
     NSString *fileName = [uniqueString stringByAppendingString:@".jpg"];

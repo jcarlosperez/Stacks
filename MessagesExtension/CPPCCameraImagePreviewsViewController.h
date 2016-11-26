@@ -12,4 +12,6 @@
 
 - (NSInteger)indexForTappedPoint:(CGPoint)point;
 
+- (void)updateImageAtIndexWithNextAvailableImage:(int)index;
+
 @end

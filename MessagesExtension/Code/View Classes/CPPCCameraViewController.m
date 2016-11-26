@@ -133,15 +133,19 @@
     CGPoint tappedPoint = [recognizer locationInView:self.view];
     if (CGRectContainsPoint(_previewsViewController.view.frame, tappedPoint)) {
         NSInteger correctIndex = [_previewsViewController indexForTappedPoint:tappedPoint] - 1;
+        
         [CPPCUtilities recentImageNumberFromRecent:correctIndex completionBlock:^(UIImage *image) {
             _imageCaptured(image);
         }];
+        
+        [_previewsViewController updateImageAtIndexWithNextAvailableImage:(int)correctIndex + 1];
     }
 }
 
 #pragma mark - Shutter handling
 
 - (void)triggerShutter:(UIButton *)button {
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [_capturePhotoOutput capturePhotoWithSettings:[AVCapturePhotoSettings photoSettingsFromPhotoSettings:_photoSettings] delegate:self];
     });

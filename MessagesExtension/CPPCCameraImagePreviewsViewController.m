@@ -10,7 +10,9 @@
 #import "CompactConstraint.h"
 #import "CPPCUtilities.h"
 
-@interface CPPCCameraImagePreviewsViewController () <UIGestureRecognizerDelegate>
+@interface CPPCCameraImagePreviewsViewController () <UIGestureRecognizerDelegate> {
+    int nextImageIndex;
+}
 
 @property (strong, nonatomic) UIImageView *imageView1, *imageView2, *imageView3;
 
@@ -45,6 +47,8 @@
     _imageView3.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:_imageView3];
     
+    nextImageIndex = 3;
+    
     [self loadInImages];
 }
 
@@ -70,9 +74,67 @@
                                        @"view": self.view}];
 }
 
+- (void)updateImageAtIndexWithNextAvailableImage:(int)index {
+    
+    if(index == 1) {
+        [self loadInImageForAtIndex:nextImageIndex forImageView:_imageView1];
+    } else if(index == 2) {
+        [self loadInImageForAtIndex:nextImageIndex forImageView:_imageView2];
+    } else if(index == 3) {
+        [self loadInImageForAtIndex:nextImageIndex forImageView:_imageView3];
+    }
+    
+    nextImageIndex ++;
+}
+
 #pragma mark - Loading methods for images
 
+- (void)loadInImageForAtIndex:(int)index forImageView:(UIImageView *)imageView {
+    
+    [CPPCUtilities recentImageNumberFromRecent:index completionBlock:^(UIImage *image) {
+        imageView.image = image;
+        
+        ////*
+        //
+        // We have two options for this transition between images. We can do a dissolve/fade with this code
+        //
+        ////*/
+        
+        /*
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.3f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionFade;
+        [imageView.layer addAnimation:transition forKey:nil];
+        */
+        
+        ////*
+        //
+        // Or we do a little bouncy animation as shown here
+        //
+        ////*/
+        
+        CGAffineTransform expansiveTransform = CGAffineTransformMakeScale(1.15, 1.15);
+        
+        [UIView transitionWithView:imageView
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            imageView.image = image;
+                            imageView.transform = expansiveTransform;
+                        } completion:^(BOOL finished) {
+                            
+                            [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.30 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                imageView.transform = CGAffineTransformIdentity;
+                            } completion:nil];
+                            
+                        }];
+        
+    }];
+}
+
 - (void)loadInImages {
+    
     [CPPCUtilities recentImageNumberFromRecent:0 completionBlock:^(UIImage *image) {
         _imageView1.image = image;
     }];
