@@ -77,11 +77,11 @@
 - (void)updateImageAtIndexWithNextAvailableImage:(int)index {
     
     if(index == 1) {
-        [self loadInImageForAtIndex:nextImageIndex forImageView:_imageView1];
+        [self loadInImageForIndex:nextImageIndex forImageView:_imageView1];
     } else if(index == 2) {
-        [self loadInImageForAtIndex:nextImageIndex forImageView:_imageView2];
+        [self loadInImageForIndex:nextImageIndex forImageView:_imageView2];
     } else if(index == 3) {
-        [self loadInImageForAtIndex:nextImageIndex forImageView:_imageView3];
+        [self loadInImageForIndex:nextImageIndex forImageView:_imageView3];
     }
     
     nextImageIndex ++;
@@ -89,7 +89,7 @@
 
 #pragma mark - Loading methods for images
 
-- (void)loadInImageForAtIndex:(int)index forImageView:(UIImageView *)imageView {
+- (void)loadInImageForIndex:(int)index forImageView:(UIImageView *)imageView {
     
     [CPPCUtilities recentImageNumberFromRecent:index completionBlock:^(UIImage *image) {
         imageView.image = image;
