@@ -128,42 +128,6 @@ NSString* const AWSInsightsBackgroundQueueKey = @"com.amazon.insights.AWSMobileA
     [[NSNotificationCenter defaultCenter] removeObserver:observer];
 }
 
--(void)executeBackgroundTasks:(AWSBackgroundQueue*) queue
-{
-    UIApplication *app = [UIApplication sharedApplication];
-    __block UIBackgroundTaskIdentifier task = [app beginBackgroundTaskWithExpirationHandler:^{
-        [app endBackgroundTask:task];
-        task = UIBackgroundTaskInvalid;
-    }];
-    // Start the long-running task and return immediately.
-    __block NSUInteger blockCount = [queue count];
-    if(blockCount == 0)
-        return;
-    
-    NSRecursiveLock *lock = [[NSRecursiveLock alloc] init];
-    for(AWSBackgroundBlock block in queue)
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            // execute the block and then clean up
-            block();
-            [lock lock];
-            @try
-            {
-                blockCount--;
-                if(blockCount == 0)
-                {
-                    [app endBackgroundTask:task];
-                    task = UIBackgroundTaskInvalid;
-                }
-            }
-            @finally
-            {
-                [lock unlock];
-            }
-        });
-    }
-}
-
 -(void)applicationDidEnterBackground:(NSNotification*)notification
 {
     // create an empty Background queue

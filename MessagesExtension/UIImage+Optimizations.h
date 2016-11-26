@@ -14,6 +14,6 @@
 
 - (UIImage *)imageBorderedWithColor:(UIColor *)color borderWidth:(CGFloat)width;
 
-+ (UIImage *)previewImageFromSelectedImages:(NSArray <UIImage *>*)images;
++ (UIImage *)imageFromView:(UIView *)view;
 
 @end

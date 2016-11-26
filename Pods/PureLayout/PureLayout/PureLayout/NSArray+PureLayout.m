@@ -395,50 +395,7 @@
             NSAssert(nil, @"Not a valid ALAxis.");
             return nil;
     }
-#if TARGET_OS_IPHONE
-#   if !defined(PURELAYOUT_APP_EXTENSIONS)
-    BOOL isRightToLeftLayout = [[UIApplication sharedApplication] userInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
-#   else
-    // App Extensions may not access -[UIApplication sharedApplication]; fall back to checking the bundle's preferred localization character direction
-    BOOL isRightToLeftLayout = [NSLocale characterDirectionForLanguage:[[NSBundle mainBundle] preferredLocalizations][0]] == NSLocaleLanguageDirectionRightToLeft;
-#   endif /* !defined(PURELAYOUT_APP_EXTENSIONS) */
-#else
-    BOOL isRightToLeftLayout = [[NSApplication sharedApplication] userInterfaceLayoutDirection] == NSUserInterfaceLayoutDirectionRightToLeft;
-#endif /* TARGET_OS_IPHONE */
-    BOOL shouldFlipOrder = isRightToLeftLayout && (axis != ALAxisVertical); // imitate the effect of leading/trailing when distributing horizontally
-    
-    __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
-    PL__NSArray_of(ALView *) *views = [self al_copyViewsOnly];
-    NSUInteger numberOfViews = [views count];
-    ALView *commonSuperview = [views al_commonSuperviewOfViews];
-    ALView *previousView = nil;
-    for (NSUInteger i = 0; i < numberOfViews; i++) {
-        ALView *view = shouldFlipOrder ? views[numberOfViews - i - 1] : views[i];
-        view.translatesAutoresizingMaskIntoConstraints = NO;
-        [constraints addObject:[view autoSetDimension:fixedDimension toSize:size]];
-        CGFloat multiplier, constant;
-        if (shouldSpaceInsets) {
-            multiplier = (i * 2.0 + 2.0) / (numberOfViews + 1.0);
-            constant = (multiplier - 1.0) * size / 2.0;
-        } else {
-            multiplier = (i * 2.0) / (numberOfViews - 1.0);
-            constant = (-multiplier + 1.0) * size / 2.0;
-        }
-        // If the multiplier is very close to 0, set it to the minimum value to prevent the second item in the constraint from being lost. Filed as rdar://19168380
-        if (fabs(multiplier) < kMULTIPLIER_MIN_VALUE) {
-            multiplier = kMULTIPLIER_MIN_VALUE;
-        }
-        NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:view attribute:attribute relatedBy:NSLayoutRelationEqual toItem:commonSuperview attribute:attribute multiplier:multiplier constant:constant];
-        [constraint autoInstall];
-        [constraints addObject:constraint];
-        if (previousView) {
-            [constraints addObject:[view al_alignAttribute:alignment toView:previousView forAxis:axis]];
-        }
-        previousView = view;
-    }
-    return constraints;
 }
-
 #pragma mark Internal Helper Methods
 
 /**

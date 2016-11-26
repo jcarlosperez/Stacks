@@ -16,6 +16,7 @@
 #import "UIImage+Optimizations.h"
 #import "RXPromise.h"
 #import "CPPCUtilities.h"
+#import "CPPCStackManager.h"
 
 #define kMessageCreation 1
 #define kResponseCreation 2
@@ -40,6 +41,15 @@
 @end
 
 @implementation CPPCMessagesViewController
+
+- (instancetype)init {
+    if (self = [super init]) {
+        [[NSNotificationCenter defaultCenter] addObserverForName:CPPCImageChangeNotificationName object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            [_choicesCollectionView reloadData];
+        }];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -145,7 +155,7 @@
 - (void)viewDidLayoutSubviews {
     
     [super viewDidLayoutSubviews];
-
+    
     if(_selectionCollectionView) {
         UIEdgeInsets insets = _selectionCollectionView.contentInset;
         CGFloat value = (self.view.frame.size.width - ((UICollectionViewFlowLayout *)_selectionCollectionView.collectionViewLayout).itemSize.width) * 0.5;
@@ -166,41 +176,38 @@
         }];
     });
     
-    [_choicesCollectionView updateViewWithImage:image];
+    [[CPPCStackManager sharedInstance] addImage:image];
 }
 
 - (void)createNewMessageFromImageStack {
     
-    UIImage *previewImage = [UIImage previewImageFromSelectedImages:_choicesCollectionView.imageAssets];
     MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
     messageLayout.subcaption = [NSString stringWithFormat:@"$%@ wants your help choosing!", self.activeConversation.localParticipantIdentifier];
-    messageLayout.image = previewImage;
+    messageLayout.image = [CPPCStackManager sharedInstance].previewImage;
     
-    NSMutableArray *allUploadedImageNames = [NSMutableArray array];
-    for (UIImage *image in _choicesCollectionView.imageAssets) {
-        RXPromise *promise = [[RXPromise alloc] init];
-        promise.thenOnMain(^id(id result) {
-            NSString *fileName = (NSString *)result;
-            [allUploadedImageNames addObject:fileName];
-            
-            if (allUploadedImageNames.count == _choicesCollectionView.imageAssets.count) {
-                // all images are uploaded, get the url
-                NSURL *url = [CPPCUtilities URLFromImageNames:allUploadedImageNames];
-                
-                // we have everything. make the session, message, and add it
-                MSSession *session = [[MSSession alloc] init];
-                
-                MSMessage *message = [[MSMessage alloc] initWithSession:session];
-                message.layout = messageLayout;
-                message.URL = url;
-                message.summaryText = @"Choose an option";
-                [self.activeConversation insertMessage:message completionHandler:nil];
-            }
+    RXPromise *promise = [[RXPromise alloc] init];
+    promise.thenOnMain(^id(id result) {
+        if (((NSArray *)result).count == [CPPCStackManager sharedInstance].images.count) {
+            NSLog(@"error");
             return nil;
-        }, nil);
+        }
         
-        [[CPPCServerManager sharedInstance] uploadRawImage:image promise:promise];
-    }
+        NSURL *url = [CPPCUtilities URLFromImageNames:result];
+        
+        // we have everything. make the session, message, and add it
+        
+        MSSession *session = [[MSSession alloc] init];
+        
+        MSMessage *message = [[MSMessage alloc] initWithSession:session];
+        message.layout = messageLayout;
+        message.URL = url;
+        message.summaryText = @"Choose an option";
+        [self.activeConversation insertMessage:message completionHandler:nil];
+        
+        return nil;
+    }, nil);
+    
+    [[CPPCServerManager sharedInstance] uploadRawImages:[CPPCStackManager sharedInstance].images promise:promise];
 }
 
 - (void)createResponseForExistingConversation {
@@ -237,10 +244,8 @@
 #pragma mark - MSMessagesAppViewController Delegate Methods
 
 - (void)didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
-    _choicesCollectionView.imageAssets = nil;
-    _choicesCollectionView.imageAssets = [NSMutableArray new];
-    [_choicesCollectionView reloadData];
-    
+    [[CPPCStackManager sharedInstance] removeAllImages];
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.5 animations:^{
             _clickAddLabel.alpha = 1;
@@ -424,7 +429,7 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     PHImageManager *manager = [PHImageManager defaultManager];
     for (PHAsset *asset in assets) {
-        [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
+        [manager requestImageForAsset:asset targetSize:CGSizeMake(500, 500) contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
             [self handleNewImageSelected:image];
         }];
     }

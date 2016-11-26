@@ -10,10 +10,4 @@
 
 @interface CPPCChoicesCollectionView : UICollectionView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) NSMutableArray *imageAssets;
-
-- (void)updateViewWithImage:(UIImage *)image;
-
-- (void)updateViewWithImageAtPath:(NSString *)filePath;
-
 @end

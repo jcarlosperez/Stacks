@@ -8,134 +8,317 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>0</integer>
 		</dict>
 		<key>AWSCloudWatch.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>AWSCognito.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 		<key>AWSCognitoIdentityProvider.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>AWSCore.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>AWSDynamoDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>AWSEC2.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>AWSElasticLoadBalancing.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>AWSIoT.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>AWSKinesis.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 		<key>AWSLambda.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>10</integer>
 		</dict>
 		<key>AWSMachineLearning.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>11</integer>
 		</dict>
 		<key>AWSMobileAnalytics.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>12</integer>
 		</dict>
 		<key>AWSS3.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>13</integer>
 		</dict>
 		<key>AWSSES.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>14</integer>
 		</dict>
 		<key>AWSSNS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>16</integer>
 		</dict>
 		<key>AWSSQS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>17</integer>
 		</dict>
 		<key>AWSSimpleDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>15</integer>
 		</dict>
 		<key>CTAssetsPickerController-CTAssetsPickerController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>20</integer>
 		</dict>
 		<key>CTAssetsPickerController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>19</integer>
 		</dict>
 		<key>CompactConstraint.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>18</integer>
 		</dict>
 		<key>KTCenterFlowLayout.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>21</integer>
 		</dict>
 		<key>Pods-MessagesExtension.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>22</integer>
 		</dict>
 		<key>Pods-PicChoose.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>23</integer>
 		</dict>
 		<key>PureLayout.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>24</integer>
 		</dict>
 		<key>RXPromise.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>25</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict/>
+	<dict>
+		<key>00FCAD8CA385A053003DB1DC74032714</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0810156E9176171B757EA2C05610F40F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0F9A2D7ABF58C656069152D697DDFA2B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1C38E98BEF937AED79BDE7E463CD5878</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1E0E391DDFD80715D5D46398B1FDF76E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1E59FF416153BEE6629B160426C42772</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>217C513C087CFC2C52F8DF0ECC59173F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2C7B34EC3A628033A244CF7A1508AB8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2D310970C4909D8D4AB3B2D5CBB431D3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2D9BF97CCAB8403D3298E64423E7C7D7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>37DA8823B6E71A919A969C9729B2EC00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4187A5DFAC146115CF5D283EB9A121C4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>41CB259773DB27FC90329DAC2116B71D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>748C8B3AB8BC06217C07552A9EF3229D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>752C15C5550C13D37EA2BDA7AA6FC2C5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7ADA487BF6E8CAB86345E2A90CDBBD89</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>804261A06290158536F3DA96881178B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8CA69378F60A83BDE57D053E45D6E7DB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>901219B486CAC9F641B6BB4B7D5EB031</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A5D74149151C19435FBED7862908B355</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A7628E7B5C124D69C475747960A62A0E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ABB86C28639C7AAD6EF20377352DFAE3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B05430D5F057D8F5E616DAFB92E2F72C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B1A08D9295C51CAC3C25D4C824BDCEFD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CEA448DB544C9DC1E5BF682A484D03DE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DB79F9B1434ED7C54AEBA792D598E37B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>

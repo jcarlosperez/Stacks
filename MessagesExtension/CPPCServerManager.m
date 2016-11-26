@@ -30,16 +30,13 @@
 - (instancetype)init {
     if (self = [super init]) {
         
-        // create instance of aws object to later upload pictures
         AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"***REMOVED***" unauthRoleArn:@"***REMOVED***" authRoleArn:nil  identityProviderManager:nil];
         
         AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
         
         [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
         
-        // create folders so we can temporarily store them before upload
         NSError *error = nil;
-        
         [[NSFileManager defaultManager] createDirectoryAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"] withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
             NSLog(@"Error creating upload folder: %@", error);
@@ -115,34 +112,46 @@
     }];
 }
 
-- (void)uploadRawImage:(UIImage *)image promise:(RXPromise *)promise {
-    NSString *uniqueString = [[NSProcessInfo processInfo] globallyUniqueString];
-    NSString *fileName = [uniqueString stringByAppendingString:@".jpg"];
-    NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"] stringByAppendingPathComponent:fileName];
-
-    CGFloat height = image.size.height / (image.size.width/500);
-    UIImage *scaledImaged = [image scaledImageToSize:CGSizeMake(500, height)];
-    NSData *imageData = UIImageJPEGRepresentation(scaledImaged, 0.4);
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *error = nil;
-        [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
-        if (!error) {
-            // enough prep... actually upload the image now
+- (void)uploadRawImages:(NSArray<UIImage *>*)images promise:(RXPromise *)promise {
+    NSMutableArray *imageURLs = [NSMutableArray array];
+    for (UIImage *image in images) {
+        NSString *imageName = [[NSProcessInfo processInfo] globallyUniqueString];
+        NSString *imagePath = [NSString stringWithFormat:@"%@/%@.jpg", self.class.temporaryUploadFilePath, imageName];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.2);
+            
+            NSError *error = nil;
+            [imageData writeToFile:imagePath options:NSDataWritingAtomic error:&error];
+            if (error) {
+                [promise rejectWithReason:error];
+                return;
+            }
             AWSS3TransferManagerUploadRequest *uploadRequest = [[AWSS3TransferManagerUploadRequest alloc] init];
-            uploadRequest.body = [NSURL fileURLWithPath:filePath];
-            uploadRequest.key = fileName;
+            uploadRequest.body = [NSURL fileURLWithPath:imagePath];
+            uploadRequest.key = imageName;
             uploadRequest.bucket = @"picchoosebackend";
             [[[AWSS3TransferManager defaultS3TransferManager] upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor] withBlock:^id _Nullable(AWSTask * _Nonnull task) {
-                if (task.error) {
-                    [promise rejectWithReason:task.error];
-                    return nil;
+                if (task.result) {
+                    [imageURLs addObject:imageName];
+                } else {
+                    [promise rejectWithReason:task.error
+                     ];
                 }
-                [promise fulfillWithValue:uniqueString];
                 return nil;
             }];
-        }
-    });
+        });
+    }
+    [promise fulfillWithValue:imageURLs];
+
+}
+
++ (NSString *)temporaryDownloadFilePath {
+    return [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"];
+}
+
++ (NSString *)temporaryUploadFilePath {
+    return [NSTemporaryDirectory() stringByAppendingPathComponent:@"upload"];
 }
 
 @end

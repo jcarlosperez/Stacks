@@ -21,7 +21,6 @@
 
 - (void)downloadImagesWithImageKeys:(NSArray<NSString *>*)imageKeys promise:(RXPromise *)promise;
 
-
-- (void)uploadRawImage:(UIImage *)image promise:(RXPromise *)promise;
+- (void)uploadRawImages:(NSArray<UIImage *>*)images promise:(RXPromise *)promise;
 
 @end

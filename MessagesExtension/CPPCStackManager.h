@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+static NSNotificationName const CPPCImageChangeNotificationName = @"CPPCImageChangeNotificationName";
+
 @interface CPPCStackManager : NSObject
 
 + (instancetype)sharedInstance;
 
 - (void)addImage:(UIImage *)image;
+
+- (NSArray *)images;
+
+- (UIImage *)previewImage;
+
+- (void)removeAllImages;
 
 @end
