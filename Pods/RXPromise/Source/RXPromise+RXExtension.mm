@@ -237,4 +237,29 @@ namespace {
     return promise;
 }
 
+
+
+
+#pragma mark - iOS Specific
+
+#if defined(TARGET_OS_IOS) && TARGET_OS_IOS
+
+- (void) makeBackgroundTaskWithName:(NSString*)taskName {
+    
+    UIBackgroundTaskIdentifier backgroundTaskIdentifier =
+    [[UIApplication sharedApplication] beginBackgroundTaskWithName:taskName
+                                                 expirationHandler:^{
+                                                     [[self root] cancelWithReason:@"Background execution time expired"];
+                                                 }];
+    self.thenOn(dispatch_get_main_queue(), ^id(id result) {
+        [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskIdentifier];
+        return nil;
+    }, ^id(NSError* error) {
+        [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskIdentifier];
+        return nil;
+    });
+}
+
+#endif
+
 @end
