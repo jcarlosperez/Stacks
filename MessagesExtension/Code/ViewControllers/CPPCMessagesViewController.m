@@ -187,13 +187,7 @@
     
     RXPromise *promise = [[RXPromise alloc] init];
     promise.thenOnMain(^id(id result) {
-        if (((NSArray *)result).count == [CPPCStackManager sharedInstance].images.count) {
-            NSLog(@"error");
-            return nil;
-        }
-        
         NSURL *url = [CPPCUtilities URLFromImageNames:result];
-        
         // we have everything. make the session, message, and add it
         
         MSSession *session = [[MSSession alloc] init];
@@ -383,7 +377,6 @@
     // check if message has a URL (only received or sent message have it) because this method is triggered a lot
     if (message.URL) {
         NSArray *imageNames = [CPPCUtilities imageNamesFromURL:message.URL];
-        
         _presentingSelectionView = YES;
         
         _selectionCollectionView = [[CPPCSelectionCollectionView alloc] init];
@@ -422,14 +415,18 @@
 #pragma mark - PicChoose Image Selection Delegate
 
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
-    
     _createMessageButton.enabled = YES;
     _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
     PHImageManager *manager = [PHImageManager defaultManager];
+    
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.synchronous = YES;
+    options.resizeMode = PHImageRequestOptionsResizeModeExact;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
     for (PHAsset *asset in assets) {
-        [manager requestImageForAsset:asset targetSize:CGSizeMake(500, 500) contentMode:PHImageContentModeDefault options:nil resultHandler:^void(UIImage *image, NSDictionary *info) {
+        [manager requestImageForAsset:asset targetSize:CGSizeMake(1000, 1000) contentMode:PHImageContentModeDefault options:options resultHandler:^void(UIImage *image, NSDictionary *info) {
             [self handleNewImageSelected:image];
         }];
     }

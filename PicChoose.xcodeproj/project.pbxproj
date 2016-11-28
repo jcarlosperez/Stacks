@@ -134,7 +134,6 @@
 			children = (
 				C14C41851DAA09F8001D2D35 /* PicChoose */,
 				C14C41941DAA09F8001D2D35 /* MessagesExtension */,
-				C14C41911DAA09F8001D2D35 /* Frameworks */,
 				C14C41841DAA09F8001D2D35 /* Products */,
 				947FD1F1A21E9CA7A7F9A403 /* Pods */,
 			);
@@ -166,6 +165,7 @@
 				53D7BC64ED191C4F87ACA666 /* libPods-PicChoose.a */,
 			);
 			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		C14C41941DAA09F8001D2D35 /* MessagesExtension */ = {
@@ -184,6 +184,7 @@
 				9000EE561DAD9D7C00CE17E5 /* CPPCUtilities.h */,
 				9000EE571DAD9D7C00CE17E5 /* CPPCUtilities.m */,
 				C14C419B1DAA09F8001D2D35 /* Assets.xcassets */,
+				C14C41911DAA09F8001D2D35 /* Frameworks */,
 				C14C419D1DAA09F8001D2D35 /* Info.plist */,
 			);
 			path = MessagesExtension;

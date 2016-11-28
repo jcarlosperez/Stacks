@@ -16,6 +16,4 @@
 
 + (void)recentImageNumberFromRecent:(NSInteger)imageNumber completionBlock:(void (^)(UIImage *image))completionBlock;
 
-+ (NSString *)localFileURLFromImageName:(NSString *)imageName;
-
 @end

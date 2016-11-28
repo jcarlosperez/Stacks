@@ -40,7 +40,7 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     if (self = [super initWithFrame:CGRectZero collectionViewLayout:_flowLayout]) {
         
         _choiceImageKeys = [NSMutableArray array];
-        
+        _fileURLs = [NSArray array];
         self.delegate = self;
         self.dataSource = self;
         self.scrollEnabled = YES;
@@ -52,21 +52,25 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 }
 
 - (void)setChoiceImageKeys:(NSArray *)choiceImageKeys {
-    
+    NSLog(@"The choice image keys are %@", choiceImageKeys);
     _choiceImageKeys = choiceImageKeys;
     
-    for(NSString *imageKey in choiceImageKeys) {
-        
-        if(![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"], imageKey]]) {
-            
-            [[CPPCServerManager sharedInstance] downloadImageWithKey:imageKey withSuccessBlock:^(AWSTask *responseTask) {
-                
-            } failureBlock:^(NSError *error) {
-                NSLog(@"Failure: %@", error);
-            }];
-            
-        }
-    }
+    
+    //if(![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"], imageKey]]) {
+    
+    RXPromise *promise = [[RXPromise alloc] init];
+    promise.thenOnMain(^id(id result) {
+        NSLog(@"THE RESULT I RECIEVED IS %@", result);
+        _fileURLs = result;
+
+        [self reloadData];
+        NSLog(@"HELLO HELLO HELLO \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n %@", _fileURLs);
+        return nil;
+    }, nil);
+    
+    [[CPPCServerManager sharedInstance] downloadImagesWithImageKeys:choiceImageKeys promise:promise];
+    
+    
 }
 
 
@@ -117,9 +121,10 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CPPCSelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPCChoiceSelectionCell forIndexPath:indexPath];
     
-    NSString *imagePath = [NSString stringWithFormat:@"%@/%@.jpg", [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"], _choiceImageKeys[indexPath.row]];
-    cell.choiceImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-    cell.choiceImageView.backgroundColor = [UIColor greenColor];
+   
+    NSURL *imageURL = _fileURLs[indexPath.row];
+    cell.choiceImageView.image = [UIImage imageWithContentsOfFile:imageURL];
+    //cell.choiceImageView.backgroundColor = [UIColor greenColor];
     cell.ratingView.delegate = self;
     
     return cell;
@@ -127,7 +132,7 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSLog(@"%@ the thing is ", _fileURLs);
-    return _choiceImageKeys.count;
+    return _fileURLs.count;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {

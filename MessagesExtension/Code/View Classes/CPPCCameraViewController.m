@@ -33,6 +33,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
+        
         _photoSettings = [AVCapturePhotoSettings photoSettingsWithFormat:@{AVVideoCodecKey: AVVideoCodecJPEG}];
         
         _captureSession = [[AVCaptureSession alloc] init];
