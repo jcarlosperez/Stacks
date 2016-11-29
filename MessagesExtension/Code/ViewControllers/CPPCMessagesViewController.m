@@ -85,7 +85,7 @@
     [self.view addSubview:_choicesCollectionView];
     
     _clickAddLabel = [[UILabel alloc] init];
-    _clickAddLabel.text = @"Click Library or Camera to add a picture";
+    _clickAddLabel.text = @"Tap Library or Camera to add a picture";
     _clickAddLabel.textAlignment = NSTextAlignmentCenter;
     _clickAddLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_clickAddLabel];
@@ -392,7 +392,6 @@
         _selectionCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
         _selectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addSubview:_selectionCollectionView];
-        
     }
 }
 

@@ -33,9 +33,9 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     _flowLayout.sideItemAlpha = 0.6;
     _flowLayout.sideItemScale = 0.8;
-    _flowLayout.spacing = -10;
+    _flowLayout.spacing = -20;
     _flowLayout.spacingMode = OverlapMode;
-    _flowLayout.visibleOffset = 20;
+    _flowLayout.visibleOffset = -40;
     
     if (self = [super initWithFrame:CGRectZero collectionViewLayout:_flowLayout]) {
         
@@ -64,6 +64,7 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
         _fileURLs = result;
 
         [self reloadData];
+        [self setContentOffset:CGPointMake(0, 0)];
         NSLog(@"HELLO HELLO HELLO \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n %@", _fileURLs);
         return nil;
     }, nil);
@@ -110,7 +111,7 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     
     [super layoutSubviews];
     if(self.frame.size.width > 0){
-        cellSize = CGSizeMake(self.frame.size.width-60, self.frame.size.width-60);
+        cellSize = CGSizeMake(self.frame.size.width-60, self.frame.size.width-40);
         _flowLayout.itemSize = cellSize;
     }
     

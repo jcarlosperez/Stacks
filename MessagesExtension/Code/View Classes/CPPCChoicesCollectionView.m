@@ -31,7 +31,6 @@ static NSString *const kPCImageSelectionCell = @"CPSSFeaturedPlaylistCell";
 
 - (void)updateCellWithActivityIndicators:(BOOL)indicators {
     
-    NSLog(@"Visible Cells: %@", self.visibleCells);
     for(CPPCChoicesCollectionViewCell *cell in self.visibleCells) {
         
         if(indicators) {

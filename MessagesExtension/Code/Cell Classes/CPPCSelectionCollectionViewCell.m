@@ -35,7 +35,7 @@
         [self.contentView addCompactConstraints:@[@"choiceImageView.height = view.width - 20",
                                                   @"choiceImageView.width = view.width - 20",
                                                   @"choiceImageView.centerX = view.centerX",
-                                                  @"choiceImageView.centerY = view.centerY",
+                                                  @"choiceImageView.centerY = view.centerY-10",
                                                   @"ratingView.top = choiceImageView.bottom+5",
                                                   @"ratingView.right = choiceImageView.right-5",
                                                   @"ratingView.height = 50",
