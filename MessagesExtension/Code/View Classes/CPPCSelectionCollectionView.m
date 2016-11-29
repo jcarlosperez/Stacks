@@ -10,6 +10,7 @@
 #import "CPPCSelectionCollectionView.h"
 #import "CPPCSelectionCollectionViewCell.h"
 #import "CPPCServerManager.h"
+#import "CPPCStackManager.h"
 #import "CPPCCarouselFlowLayout.h"
 #import "RXPromise.h"
 
@@ -38,7 +39,9 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     
     if (self = [super initWithFrame:CGRectZero collectionViewLayout:_flowLayout]) {
         
-        _choiceImageKeys = [NSMutableArray array];
+        //_choiceImageKeys = [NSMutableArray array];
+        [CPPCStackManager sharedInstance].imageKeys = [NSMutableArray array];
+        [CPPCStackManager sharedInstance].imageRatings = [NSMutableDictionary dictionary];
         _fileURLs = [NSArray array];
         self.delegate = self;
         self.dataSource = self;
@@ -52,7 +55,7 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 
 - (void)setChoiceImageKeys:(NSArray *)choiceImageKeys {
     NSLog(@"The choice image keys are %@", choiceImageKeys);
-    _choiceImageKeys = choiceImageKeys;
+    [[CPPCStackManager sharedInstance] setImageKeys:[choiceImageKeys mutableCopy]];
     
     
     //if(![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"], imageKey]]) {
@@ -73,10 +76,38 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     
 }
 
+- (void)updateWithImageKeys:(NSArray *)keys andRatings:(NSDictionary *)ratings {
+    
+    NSLog(@"Keys: %@", keys);
+    NSLog(@"Ratings: %@", ratings);
+    
+    [[CPPCStackManager sharedInstance] setImageKeys:[keys mutableCopy]];
+    [[CPPCStackManager sharedInstance] setImageRatings:[ratings mutableCopy]];
+    
+    
+    //if(![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", [NSTemporaryDirectory() stringByAppendingPathComponent:@"download"], imageKey]]) {
+    
+    RXPromise *promise = [[RXPromise alloc] init];
+    promise.thenOnMain(^id(id result) {
+        NSLog(@"THE RESULT I RECIEVED IS %@", result);
+        _fileURLs = result;
+        
+        [self reloadData];
+        [self setContentOffset:CGPointMake(0, 0)];
+        NSLog(@"HELLO HELLO HELLO \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n %@", _fileURLs);
+        return nil;
+    }, nil);
+    
+    [[CPPCServerManager sharedInstance] downloadImagesWithImageKeys:keys promise:promise];
+}
 
 #pragma mark - CPPCRatingDelegate
 
 - (void)rateView:(CPPCImageRatingView *)rateView changedToNewRate:(NSNumber *)rate {
+    
+    int ratedImage = (int)rateView.tag;
+    [[CPPCStackManager sharedInstance].imageRatings setValue:rate forKey:[NSString stringWithFormat:@"image%d", ratedImage]];
+    
     if (self.selectionDelegate && [self.selectionDelegate respondsToSelector:@selector(imageHasBeenRated)]) {
         [self.selectionDelegate performSelector:@selector(imageHasBeenRated) withObject:nil];
     }
@@ -128,6 +159,11 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     cell.choiceImageView.image = [UIImage imageWithContentsOfFile:imageURL];
     //cell.choiceImageView.backgroundColor = [UIColor greenColor];
     cell.ratingView.delegate = self;
+    cell.ratingView.tag = [indexPath row];
+    
+    if([[CPPCStackManager sharedInstance].imageRatings objectForKey:[NSString stringWithFormat:@"image%d", (int)indexPath.row]]) {
+        [cell.ratingView setRate:(int)[[CPPCStackManager sharedInstance].imageRatings objectForKey:[NSString stringWithFormat:@"image%d", (int)indexPath.row]]];
+    }
     
     return cell;
 }

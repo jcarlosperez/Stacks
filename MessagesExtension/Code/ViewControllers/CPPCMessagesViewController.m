@@ -22,6 +22,7 @@
 #define kResponseCreation 2
 
 @interface CPPCMessagesViewController () <CPPCRatingDelegate, CTAssetsPickerControllerDelegate> {
+    BOOL _hasRatedAnImage;
     BOOL _presentingCameraView;
     BOOL _presentingSelectionView;
 }
@@ -210,17 +211,18 @@
 
 - (void)createResponseForExistingConversation {
     
-    UIImage *previewImage = [UIImage new];
     MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
     messageLayout.subcaption = [NSString stringWithFormat:@"$%@ rated your image Stack!", self.activeConversation.localParticipantIdentifier];
-    messageLayout.image = previewImage;
+    messageLayout.image = [CPPCStackManager sharedInstance].responseImage;
+    
+    NSURL *url = [CPPCUtilities URLFromImageNames:[CPPCStackManager sharedInstance].imageKeys andRatings:[CPPCStackManager sharedInstance].imageRatings];
+    
+    NSLog(@"URL is: %@", url);
     
     MSMessage *message = [[MSMessage alloc] initWithSession:self.activeConversation.selectedMessage.session];
-    NSLog(@"Does previous message URL still exist? %@", message.URL);
-    // No it doesn't, shit, we'll need to come up with a way to send url again with ratings attached, too tired, probably simple but want sleep
     message.layout = messageLayout;
-    message.URL = [NSURL URLWithString:@"http://apple.com"];
-    message.summaryText = @"Choose an option";
+    message.URL = url;
+    message.summaryText = @"Rated images and responded";
     [self.activeConversation insertMessage:message completionHandler:nil];
 }
 
@@ -268,13 +270,15 @@
             
             _selectionCollectionView = [[CPPCSelectionCollectionView alloc] init];
             _selectionCollectionView.backgroundColor = [UIColor whiteColor];
-            _selectionCollectionView.choiceImageKeys = [CPPCUtilities imageNamesFromURL:message.URL];
+            //_selectionCollectionView.choiceImageKeys = [CPPCUtilities imageNamesFromURL:message.URL];
             _selectionCollectionView.layer.cornerRadius = 10;
             _selectionCollectionView.layer.masksToBounds = YES;
             _selectionCollectionView.scrollEnabled = YES;
             _selectionCollectionView.selectionDelegate = self;
             _selectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
             [self.view addSubview:_selectionCollectionView];
+            
+            [_selectionCollectionView updateWithImageKeys:[CPPCUtilities imageNamesFromURL:message.URL] andRatings:[CPPCUtilities ratingsFromURL:message.URL]];
             
         }
     }
@@ -383,12 +387,12 @@
 - (void)didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation {
     // check if message has a URL (only received or sent message have it) because this method is triggered a lot
     if (message.URL) {
-        NSArray *imageNames = [CPPCUtilities imageNamesFromURL:message.URL];
+        
         _presentingSelectionView = YES;
         
         _selectionCollectionView = [[CPPCSelectionCollectionView alloc] init];
         _selectionCollectionView.backgroundColor = [UIColor whiteColor];
-        _selectionCollectionView.choiceImageKeys = imageNames;
+        //_selectionCollectionView.choiceImageKeys = [CPPCUtilities imageNamesFromURL:message.URL];
         _selectionCollectionView.layer.cornerRadius = 10;
         _selectionCollectionView.layer.masksToBounds = YES;
         _selectionCollectionView.scrollEnabled = YES;
@@ -396,6 +400,8 @@
         _selectionCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
         _selectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addSubview:_selectionCollectionView];
+        
+        [_selectionCollectionView updateWithImageKeys:[CPPCUtilities imageNamesFromURL:message.URL] andRatings:[CPPCUtilities ratingsFromURL:message.URL]];
     }
 }
 

@@ -12,9 +12,11 @@
 
 @interface CPPCSelectionCollectionView : UICollectionView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) NSArray *choiceImageKeys;
+//@property (nonatomic, strong) NSArray *choiceImageKeys;
 
 @property (nonatomic, assign) NSObject<CPPCRatingDelegate> *selectionDelegate;
+
+- (void)updateWithImageKeys:(NSArray *)keys andRatings:(NSDictionary *)ratings;
 
 @end
 

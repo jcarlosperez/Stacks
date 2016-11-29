@@ -24,7 +24,7 @@
 
 - (CPPCImageRatingView *)initWithFrame:(CGRect)frame;
 - (CPPCImageRatingView *)initWithFrame:(CGRect)rect fullImage:(UIImage *)fullImage emptyImage:(UIImage *)emptyImage;
-
+- (void)setRate:(CGFloat)rate;
 @end
 
 @protocol CPPCImageRatingDelegate

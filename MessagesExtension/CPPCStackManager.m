@@ -79,6 +79,39 @@
     return [UIImage imageFromView:backgroundView];
 }
 
+- (UIImage *)responseImage {
+    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 600, 600)];
+    backgroundView.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0];
+    for (int i = 0; i < 3; i++) {
+        
+        UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 400, 400)];
+        containerView.layer.shadowColor = [UIColor blackColor].CGColor;
+        containerView.layer.shadowOffset = CGSizeMake(2, 2);
+        containerView.layer.shadowOpacity = 0.8;
+        containerView.layer.shadowRadius = 10;
+        
+        UIImageView *imageLayer = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 400, 400)];
+        imageLayer.contentMode = UIViewContentModeScaleAspectFill;
+        imageLayer.image = [UIImage imageNamed:@"responseImage"];
+        imageLayer.layer.borderColor = [UIColor whiteColor].CGColor;
+        imageLayer.layer.borderWidth = 6;
+        imageLayer.layer.masksToBounds = YES;
+        imageLayer.layer.shouldRasterize = YES;
+        imageLayer.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+        
+        [containerView addSubview:imageLayer];
+        [backgroundView addSubview:containerView];
+        
+        if (i == 0) {
+            containerView.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(5));
+        } else if (i == 1) {
+            containerView.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(-5));
+        }
+        
+    }
+    return [UIImage imageFromView:backgroundView];
+}
+
 - (void)removeAllImages {
     [_images removeAllObjects];
     [self modificationMade];

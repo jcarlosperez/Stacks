@@ -12,7 +12,11 @@
 
 + (NSURL *)URLFromImageNames:(NSArray<NSString *>*)imageNames;
 
++ (NSURL *)URLFromImageNames:(NSArray<NSString *>*)imageNames andRatings:(NSDictionary *)ratings;
+
 + (NSArray *)imageNamesFromURL:(NSURL *)URL;
+
++ (NSDictionary *)ratingsFromURL:(NSURL *)URL;
 
 + (void)recentImageNumberFromRecent:(NSInteger)imageNumber completionBlock:(void (^)(UIImage *image))completionBlock;
 

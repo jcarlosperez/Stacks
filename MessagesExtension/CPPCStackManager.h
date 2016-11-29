@@ -12,6 +12,9 @@ static NSNotificationName const CPPCImageChangeNotificationName = @"CPPCImageCha
 
 @interface CPPCStackManager : NSObject
 
+@property (nonatomic, strong) NSMutableArray *imageKeys;
+@property (nonatomic, strong) NSMutableDictionary *imageRatings;
+
 + (instancetype)sharedInstance;
 
 - (void)addImage:(UIImage *)image;
@@ -19,6 +22,8 @@ static NSNotificationName const CPPCImageChangeNotificationName = @"CPPCImageCha
 - (NSArray *)images;
 
 - (UIImage *)previewImage;
+
+- (UIImage *)responseImage;
 
 - (void)removeAllImages;
 
