@@ -187,6 +187,9 @@
     
     RXPromise *promise = [[RXPromise alloc] init];
     promise.thenOnMain(^id(id result) {
+        
+        [_choicesCollectionView updateCellWithActivityIndicators:NO];
+        
         NSURL *url = [CPPCUtilities URLFromImageNames:result];
         // we have everything. make the session, message, and add it
         
@@ -201,6 +204,7 @@
         return nil;
     }, nil);
     
+    [_choicesCollectionView updateCellWithActivityIndicators:YES];
     [[CPPCServerManager sharedInstance] uploadRawImages:[CPPCStackManager sharedInstance].images promise:promise];
 }
 

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CPPCChoicesCollectionView : UICollectionView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-
+- (void)updateCellWithActivityIndicators:(BOOL)indicators;
 @end
