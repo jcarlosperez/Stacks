@@ -15,8 +15,6 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        self.backgroundColor = [UIColor redColor];
-        
         _choiceImageView = [[UIImageView alloc] init];
         _choiceImageView.backgroundColor = [UIColor clearColor];
         _choiceImageView.image = [UIImage imageNamed:@"library"];

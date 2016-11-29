@@ -34,8 +34,7 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     _flowLayout.sideItemAlpha = 0.6;
     _flowLayout.sideItemScale = 0.8;
     _flowLayout.spacing = -20;
-    _flowLayout.spacingMode = OverlapMode;
-    _flowLayout.visibleOffset = -40;
+    _flowLayout.spacingMode = FixedMode;
     
     if (self = [super initWithFrame:CGRectZero collectionViewLayout:_flowLayout]) {
         
@@ -78,7 +77,9 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 #pragma mark - CPPCRatingDelegate
 
 - (void)rateView:(CPPCImageRatingView *)rateView changedToNewRate:(NSNumber *)rate {
-    
+    if (self.selectionDelegate && [self.selectionDelegate respondsToSelector:@selector(imageHasBeenRated)]) {
+        [self.selectionDelegate performSelector:@selector(imageHasBeenRated) withObject:nil];
+    }
 }
 
 #pragma mark - scrollview delegate
@@ -141,7 +142,7 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     return UIEdgeInsetsMake(0, gap, 0, gap);
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
+    return -20;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;

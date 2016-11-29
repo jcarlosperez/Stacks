@@ -8,8 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CPPCRatingDelegate;
+
 @interface CPPCSelectionCollectionView : UICollectionView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSArray *choiceImageKeys;
+
+@property (nonatomic, assign) NSObject<CPPCRatingDelegate> *selectionDelegate;
+
+@end
+
+@protocol CPPCRatingDelegate
+
+- (void)imageHasBeenRated;
 
 @end

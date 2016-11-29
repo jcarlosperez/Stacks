@@ -21,7 +21,7 @@
 #define kMessageCreation 1
 #define kResponseCreation 2
 
-@interface CPPCMessagesViewController () <CTAssetsPickerControllerDelegate> {
+@interface CPPCMessagesViewController () <CPPCRatingDelegate, CTAssetsPickerControllerDelegate> {
     BOOL _presentingCameraView;
     BOOL _presentingSelectionView;
 }
@@ -270,6 +270,7 @@
             _selectionCollectionView.layer.cornerRadius = 10;
             _selectionCollectionView.layer.masksToBounds = YES;
             _selectionCollectionView.scrollEnabled = YES;
+            _selectionCollectionView.selectionDelegate = self;
             _selectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
             [self.view addSubview:_selectionCollectionView];
             
@@ -389,6 +390,7 @@
         _selectionCollectionView.layer.cornerRadius = 10;
         _selectionCollectionView.layer.masksToBounds = YES;
         _selectionCollectionView.scrollEnabled = YES;
+        _selectionCollectionView.selectionDelegate = self;
         _selectionCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
         _selectionCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addSubview:_selectionCollectionView];

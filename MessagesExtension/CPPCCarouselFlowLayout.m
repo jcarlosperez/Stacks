@@ -46,7 +46,7 @@
     
     
     CGFloat side = isHorizontal ? self.itemSize.width : self.itemSize.height;
-    CGFloat scaledItemOffset = (side -side * self.sideItemScale) / 2;
+    CGFloat scaledItemOffset = (side - (side * self.sideItemScale)) / 2;
     
     if(self.spacingMode == FixedMode) {
         self.minimumLineSpacing = _spacing - scaledItemOffset;
