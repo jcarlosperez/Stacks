@@ -212,10 +212,12 @@
     
     UIImage *previewImage = [UIImage new];
     MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-    messageLayout.subcaption = @"Responding";
+    messageLayout.subcaption = [NSString stringWithFormat:@"$%@ rated your image Stack!", self.activeConversation.localParticipantIdentifier];
     messageLayout.image = previewImage;
     
     MSMessage *message = [[MSMessage alloc] initWithSession:self.activeConversation.selectedMessage.session];
+    NSLog(@"Does previous message URL still exist? %@", message.URL);
+    // No it doesn't, shit, we'll need to come up with a way to send url again with ratings attached, too tired, probably simple but want sleep
     message.layout = messageLayout;
     message.URL = [NSURL URLWithString:@"http://apple.com"];
     message.summaryText = @"Choose an option";
