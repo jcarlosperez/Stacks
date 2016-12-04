@@ -8,6 +8,7 @@
 
 #import "CPPCUtilities.h"
 #import <Photos/Photos.h>
+#import "CPPCStackManager.h"
 
 @import AssetsLibrary;
 
@@ -31,74 +32,60 @@
 }
 
 + (NSURL *)URLFromImageNames:(NSArray<NSString *>*)imageNames andRatings:(NSDictionary *)ratings {
-    
-    // make a string with all the image names in this format: image1,image2,image3
-    NSMutableString *imageNamesString = [NSMutableString string];
+    NSString *preRatingsURLString = [self URLFromImageNames:imageNames].absoluteString;
     NSMutableString *imageRatingsString = [NSMutableString string];
     
-    for (int i = 0; i < [imageNames count]; i++) {
+    for (int i = 0; i < [ratings count]; i++) {
+        NSLog(@"when we loop thruuuu %i", i);
+        // put commas before each name, except for the first one
         
-        if (i != 0) {
-            [imageNamesString appendString:@"&"];
-        }
-        
-        [imageNamesString appendFormat:@"pictures[]=%@", imageNames[i]];
-        
-        if([ratings objectForKey:[NSString stringWithFormat:@"image%d", i]]) {
-            [imageRatingsString appendFormat:@"&image%d[]=%@", i, [[ratings objectForKey:[NSString stringWithFormat:@"image%d", i]] stringValue]];
-        } else {
-            [imageRatingsString appendFormat:@"&image%d[]=0", i];
+        NSString *key = [NSString stringWithFormat:@"image%i", i];
+        [imageRatingsString appendFormat:@"&ratings[%@]=%@", key, ratings[key]];
+    }
+
+    
+    // make the whole string,
+    NSString *wholeURL = [[preRatingsURLString stringByAppendingString:imageRatingsString] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+    NSLog(@"THE BASE = %@", wholeURL);
+    return [NSURL URLWithString:wholeURL];
+}
+
+
+
++ (NSDictionary *)handleNewURL:(NSURL *)URL {
+    NSString *query = URL.query.stringByRemovingPercentEncoding;
+    
+    NSMutableArray *keys = [NSMutableArray array];
+    NSMutableDictionary *ratings = [NSMutableDictionary dictionary];
+    
+    NSArray *imageNamesParsed = [query componentsSeparatedByString:@"&"];
+    for (NSString *parsedComponent in imageNamesParsed) {
+        NSArray *components = [parsedComponent componentsSeparatedByString:@"="];
+        if ([components[0] containsString:@"pictures"]) {
+            [keys addObject:components[1]];
+        } else if ([components[0] containsString:@"ratings"]) {
+            NSString *name = [[[components[0] stringByReplacingOccurrencesOfString:@"ratings" withString:@""] stringByReplacingOccurrencesOfString:@"[" withString:@""] stringByReplacingOccurrencesOfString:@"]" withString:@""];
+            [ratings setValue:components[1] forKey:name];
         }
     }
     
-    // make the whole string,
-    NSString *base = [[NSString stringWithFormat:@"http://picchoose.com/choice/info.php?%@%@", imageNamesString, imageRatingsString] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    if (keys) {
+        data[@"keys"] = keys;
+    }
     
-    return [NSURL URLWithString:base];
+    if (ratings) {
+        data[@"ratings"] = ratings;
+    }
+    return data;
 }
 
 + (NSArray *)imageNamesFromURL:(NSURL *)URL {
-    NSString *query = URL.query.stringByRemovingPercentEncoding;
-    
-    if([query containsString:@"&image"]) {
-        NSRange rangeToRatings = [query rangeOfString:@"&image" options:NSCaseInsensitiveSearch];
-        query = [query substringToIndex:rangeToRatings.location];
-    }
-    
-    NSString *imageNames = [query stringByReplacingOccurrencesOfString:@"pictures[]=" withString:@""];
-    NSArray *imageNamesParsed = [imageNames componentsSeparatedByString:@"&"];
-    return imageNamesParsed;
+    return [self handleNewURL:URL][@"keys"];
 }
 
 + (NSDictionary *)ratingsFromURL:(NSURL *)URL {
-    
-    NSString *query = URL.query.stringByRemovingPercentEncoding;
-    
-    if(![query containsString:@"&image"]) {
-        return nil;
-    }
-    // Get the range up to the first image rating
-    NSRange rangeToRatings = [query rangeOfString:@"&image" options:NSCaseInsensitiveSearch];
-    // Trim the picture keys since not needed for the ratings
-    query = [query substringWithRange:NSMakeRange(rangeToRatings.location+1, (query.length-rangeToRatings.location)-1)];
-    // Remove brackets before parsing into dictionary
-    query = [query stringByReplacingOccurrencesOfString:@"[]" withString:@""];
-    
-    return [self parsedQueryString:query];
-}
-
-+ (NSDictionary *)parsedQueryString:(NSString *)query {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:6];
-    NSArray *pairs = [query componentsSeparatedByString:@"&"];
-    
-    for (NSString *pair in pairs) {
-        NSArray *elements = [pair componentsSeparatedByString:@"="];
-        NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        [dict setObject:val forKey:key];
-    }
-    return dict;
+    return [self handleNewURL:URL][@"ratings"];
 }
 
 + (void)recentImageNumberFromRecent:(NSInteger)imageNumber completionBlock:(void (^)(UIImage *image))completionBlock {

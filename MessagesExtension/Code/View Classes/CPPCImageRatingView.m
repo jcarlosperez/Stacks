@@ -25,7 +25,7 @@ static NSString *DefaultEmptyRatingImage = @"emptyHeart";
 
 - (CPPCImageRatingView *)initWithFrame:(CGRect)frame fullImage:(UIImage *)fullImage emptyImage:(UIImage *)emptyImage {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self) { 
         self.opaque = NO;
         self.backgroundColor = [UIColor clearColor];
         
@@ -40,35 +40,22 @@ static NSString *DefaultEmptyRatingImage = @"emptyHeart";
 - (void)commonSetup {
     
     _padding = 4;
-    _ratingLimit = 4;
     self.editable = NO;
 }
 
 - (void)drawRect:(CGRect)rect {
-    
-    _origin = CGPointMake((self.bounds.size.width - _ratingLimit * _fullRatingImage.size.width - (_ratingLimit - 1) * _padding)/2, 0);
-    
-    float x = _origin.x;
-    for(int i = 0; i < _ratingLimit; i++) {
-        [_emptyRatingImage drawAtPoint:CGPointMake(x, _origin.y)];
-        x += _fullRatingImage.size.width + _padding;
-    }
-    
-    
-    float floor = floorf(_rate);
-    x = _origin.x;
-    for (int i = 0; i < floor; i++) {
-        [_fullRatingImage drawAtPoint:CGPointMake(x, _origin.y)];
-        x += _fullRatingImage.size.width + _padding;
-    }
-    
-    if (_ratingLimit - floor > 0.01) {
-        UIRectClip(CGRectMake(x, _origin.y, _fullRatingImage.size.width * (_rate - floor), _fullRatingImage.size.height));
-        [_fullRatingImage drawAtPoint:CGPointMake(x, _origin.y)];
+    _origin = CGPointMake(self.frame.size.width / 2 - ((1.75 * _emptyRatingImage.size.width) + (1.5 * _padding)), 0);
+    for (int i = 0; i < 4; i++) {
+        CGFloat x = _origin.x + (_emptyRatingImage.size.width + _padding) * i;
+        [_rate > i ? _fullRatingImage : _emptyRatingImage  drawAtPoint:CGPointMake(x, _origin.y)];
     }
 }
 
-- (void)setRate:(CGFloat)rate {
+- (void)setRate:(NSInteger)rate {
+    // getting very large values???
+    if (rate > 4) {
+        return;
+    }
     _rate = rate;
     [self setNeedsDisplay];
     [self notifyDelegate];
@@ -95,8 +82,9 @@ static NSString *DefaultEmptyRatingImage = @"emptyHeart";
 }
 
 - (void)handleTouchAtLocation:(CGPoint)location {
-    for(int i = _ratingLimit - 1; i > -1; i--) {
-        if (location.x > _origin.x + i * (_fullRatingImage.size.width + _padding) - _padding / 2.) {
+    NSLog(@"handle touch at location");
+    for(int i = 4 - 1; i > -1; i--) {
+        if (location.x > _origin.x + i * (_fullRatingImage.size.width + _padding) - _padding / 2) {
             self.rate = i + 1;
             return;
         }
@@ -119,7 +107,7 @@ static NSString *DefaultEmptyRatingImage = @"emptyHeart";
 - (void)notifyDelegate {
     if (self.delegate && [self.delegate respondsToSelector:@selector(rateView:changedToNewRate:)]) {
         [self.delegate performSelector:@selector(rateView:changedToNewRate:)
-                            withObject:self withObject:[NSNumber numberWithFloat:self.rate]];
+                            withObject:self withObject:[NSNumber numberWithInteger:self.rate]];
     }
 }
 

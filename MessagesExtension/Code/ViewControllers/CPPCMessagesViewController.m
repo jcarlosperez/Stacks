@@ -215,6 +215,7 @@
     messageLayout.subcaption = [NSString stringWithFormat:@"$%@ rated your image Stack!", self.activeConversation.localParticipantIdentifier];
     messageLayout.image = [CPPCStackManager sharedInstance].responseImage;
     
+    NSLog(@"WHAT WE ARE PASSING IT %@ %@", [CPPCStackManager sharedInstance].imageKeys, [CPPCStackManager sharedInstance].imageRatings);
     NSURL *url = [CPPCUtilities URLFromImageNames:[CPPCStackManager sharedInstance].imageKeys andRatings:[CPPCStackManager sharedInstance].imageRatings];
     
     NSLog(@"URL is: %@", url);

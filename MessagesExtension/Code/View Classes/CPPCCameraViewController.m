@@ -135,7 +135,7 @@
     if (CGRectContainsPoint(_previewsViewController.view.frame, tappedPoint)) {
         NSInteger correctIndex = [_previewsViewController indexForTappedPoint:tappedPoint] - 1;
         
-        [CPPCUtilities recentImageNumberFromRecent:correctIndex completionBlock:^(UIImage *image) {
+        [CPPCUtilities recentImageNumberFromRecent:_previewsViewController.nextImageIndex-1 completionBlock:^(UIImage *image) {
             _imageCaptured(image);
         }];
         

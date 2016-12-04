@@ -10,9 +10,7 @@
 #import "CompactConstraint.h"
 #import "CPPCUtilities.h"
 
-@interface CPPCCameraImagePreviewsViewController () <UIGestureRecognizerDelegate> {
-    int nextImageIndex;
-}
+@interface CPPCCameraImagePreviewsViewController () <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIImageView *imageView1, *imageView2, *imageView3;
 
@@ -47,7 +45,7 @@
     _imageView3.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:_imageView3];
     
-    nextImageIndex = 3;
+    _nextImageIndex = 3;
     
     [self loadInImages];
 }
@@ -74,22 +72,22 @@
                                        @"view": self.view}];
 }
 
-- (void)updateImageAtIndexWithNextAvailableImage:(int)index {
+- (void)updateImageAtIndexWithNextAvailableImage:(NSInteger)index {
     
-    if(index == 1) {
-        [self loadInImageForIndex:nextImageIndex forImageView:_imageView1];
-    } else if(index == 2) {
-        [self loadInImageForIndex:nextImageIndex forImageView:_imageView2];
-    } else if(index == 3) {
-        [self loadInImageForIndex:nextImageIndex forImageView:_imageView3];
+    if (index == 1) {
+        [self loadInImageForIndex:_nextImageIndex forImageView:_imageView1];
+    } else if (index == 2) {
+        [self loadInImageForIndex:_nextImageIndex forImageView:_imageView2];
+    } else if (index == 3) {
+        [self loadInImageForIndex:_nextImageIndex forImageView:_imageView3];
     }
     
-    nextImageIndex ++;
+    _nextImageIndex ++;
 }
 
 #pragma mark - Loading methods for images
 
-- (void)loadInImageForIndex:(int)index forImageView:(UIImageView *)imageView {
+- (void)loadInImageForIndex:(NSInteger)index forImageView:(UIImageView *)imageView {
     
     [CPPCUtilities recentImageNumberFromRecent:index completionBlock:^(UIImage *image) {
         imageView.image = image;

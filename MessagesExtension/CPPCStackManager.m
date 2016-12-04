@@ -32,6 +32,9 @@
 - (instancetype)init {
     if (self = [super init]) {
         _images = [NSMutableArray array];
+        _imageKeys = [NSMutableArray array];
+        _imageRatings = [NSMutableDictionary dictionary];
+        NSLog(@"ok they are ok here %@", _imageRatings);
     }
     return self;
 }

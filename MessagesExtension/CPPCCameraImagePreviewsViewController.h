@@ -10,8 +10,10 @@
 
 @interface CPPCCameraImagePreviewsViewController : UIViewController
 
+@property (nonatomic, assign) NSInteger nextImageIndex;
+
 - (NSInteger)indexForTappedPoint:(CGPoint)point;
 
-- (void)updateImageAtIndexWithNextAvailableImage:(int)index;
+- (void)updateImageAtIndexWithNextAvailableImage:(NSInteger)index;
 
 @end

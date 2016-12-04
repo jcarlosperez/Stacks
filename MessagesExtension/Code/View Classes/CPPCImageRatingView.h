@@ -12,10 +12,9 @@
 
 @interface CPPCImageRatingView : UIView {
     CGPoint _origin;
-    NSInteger _ratingLimit;
 }
 
-@property(nonatomic, assign) CGFloat rate;
+@property(nonatomic, assign) NSInteger rate;
 @property(nonatomic, assign) CGFloat padding;
 @property(nonatomic, assign) BOOL editable;
 @property(nonatomic, retain) UIImage *emptyRatingImage;
@@ -24,7 +23,7 @@
 
 - (CPPCImageRatingView *)initWithFrame:(CGRect)frame;
 - (CPPCImageRatingView *)initWithFrame:(CGRect)rect fullImage:(UIImage *)fullImage emptyImage:(UIImage *)emptyImage;
-- (void)setRate:(CGFloat)rate;
+
 @end
 
 @protocol CPPCImageRatingDelegate

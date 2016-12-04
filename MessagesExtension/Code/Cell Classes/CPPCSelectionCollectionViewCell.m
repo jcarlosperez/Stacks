@@ -37,7 +37,7 @@
                                                   @"ratingView.top = choiceImageView.bottom+5",
                                                   @"ratingView.right = choiceImageView.right-5",
                                                   @"ratingView.height = 50",
-                                                  @"ratingView.width = 100"
+                                                  @"ratingView.width = choiceImageView.width"
                                                   ]
                                         metrics:nil
                                           views:@{@"choiceImageView": _choiceImageView,
