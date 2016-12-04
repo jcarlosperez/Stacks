@@ -28,6 +28,7 @@
     _imageView1.layer.cornerRadius = 10;
     _imageView1.layer.masksToBounds = YES;
     _imageView1.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView1.tag = 0;
     [self.view addSubview:_imageView1];
 
     _imageView2 = [[UIImageView alloc] init];
@@ -35,6 +36,7 @@
     _imageView2.layer.cornerRadius = 10;
     _imageView2.layer.masksToBounds = YES;
     _imageView2.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView2.tag = 1;
     [self.view addSubview:_imageView2];
 
     _imageView3 = [[UIImageView alloc] init];
@@ -43,6 +45,7 @@
     _imageView3.layer.masksToBounds = YES;
     _imageView3.userInteractionEnabled = YES;
     _imageView3.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView3.tag = 2;
     [self.view addSubview:_imageView3];
     
     _nextImageIndex = 3;
@@ -75,14 +78,12 @@
 - (void)updateImageAtIndexWithNextAvailableImage:(NSInteger)index {
     
     if (index == 1) {
-        [self loadInImageForIndex:_nextImageIndex forImageView:_imageView1];
+        [self loadInImageForIndex:_nextImageIndex-1 forImageView:_imageView1];
     } else if (index == 2) {
-        [self loadInImageForIndex:_nextImageIndex forImageView:_imageView2];
+        [self loadInImageForIndex:_nextImageIndex-1 forImageView:_imageView2];
     } else if (index == 3) {
-        [self loadInImageForIndex:_nextImageIndex forImageView:_imageView3];
+        [self loadInImageForIndex:_nextImageIndex-1 forImageView:_imageView3];
     }
-    
-    _nextImageIndex ++;
 }
 
 #pragma mark - Loading methods for images
@@ -148,18 +149,36 @@
 
 #pragma mark - Gesture recognition
 
-- (NSInteger)indexForTappedPoint:(CGPoint)point {
+- (CGPoint)indexPointsForTappedImageAtPoint:(CGPoint)point {
+    
     CGRect imageView1Frame = [self.view.superview convertRect:_imageView1.frame fromView:self.view];
     CGRect imageView2Frame = [self.view.superview convertRect:_imageView2.frame fromView:self.view];
     CGRect imageView3Frame = [self.view.superview convertRect:_imageView3.frame fromView:self.view];
+    
+    int selectedImageIndex;
+    int imageViewIndex;
+    
+    NSLog(@"ImageView1 Tag: %ld", (long)_imageView1.tag);
+    NSLog(@"ImageView2 Tag: %ld", (long)_imageView2.tag);
+    NSLog(@"ImageView3 Tag: %ld", (long)_imageView3.tag);
+    
     if (CGRectContainsPoint(imageView1Frame, point)) {
-        return 1;
+        selectedImageIndex = (int)_imageView1.tag;
+        imageViewIndex = 1;
+        _imageView1.tag = _nextImageIndex;
     } else if (CGRectContainsPoint(imageView2Frame, point)) {
-        return 2;
+        selectedImageIndex = (int)_imageView2.tag;
+        imageViewIndex = 2;
+        _imageView2.tag = _nextImageIndex;
     } else if (CGRectContainsPoint(imageView3Frame, point)) {
-        return 3;
+        selectedImageIndex = (int)_imageView3.tag;
+        imageViewIndex = 3;
+        _imageView3.tag = _nextImageIndex;
     }
-    return 0;
+    
+    _nextImageIndex ++;
+    
+    return CGPointMake(selectedImageIndex, imageViewIndex);
 }
 
 - (void)didReceiveMemoryWarning {

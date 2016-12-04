@@ -254,6 +254,11 @@
             _clickAddLabel.alpha = 1;
         }];
     });
+    
+    _createMessageButton.enabled = NO;
+    _createMessageButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
+    [_createMessageButton setTitle:@"Select New Images" forState:UIControlStateDisabled];
+    [_createMessageButton setTitle:@"Create Message Stack" forState:UIControlStateNormal];
 }
 
 - (void)didTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle {

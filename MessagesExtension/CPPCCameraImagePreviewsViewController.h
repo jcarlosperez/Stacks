@@ -12,7 +12,7 @@
 
 @property (nonatomic, assign) NSInteger nextImageIndex;
 
-- (NSInteger)indexForTappedPoint:(CGPoint)point;
+- (CGPoint)indexPointsForTappedImageAtPoint:(CGPoint)point;
 
 - (void)updateImageAtIndexWithNextAvailableImage:(NSInteger)index;
 

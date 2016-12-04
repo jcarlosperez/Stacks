@@ -133,13 +133,16 @@
 - (void)imageSelectionRecognizer:(UIGestureRecognizer *)recognizer {
     CGPoint tappedPoint = [recognizer locationInView:self.view];
     if (CGRectContainsPoint(_previewsViewController.view.frame, tappedPoint)) {
-        NSInteger correctIndex = [_previewsViewController indexForTappedPoint:tappedPoint] - 1;
         
-        [CPPCUtilities recentImageNumberFromRecent:_previewsViewController.nextImageIndex-1 completionBlock:^(UIImage *image) {
+        CGPoint imageIndexPoints = [_previewsViewController indexPointsForTappedImageAtPoint:tappedPoint];
+        
+        NSLog(@"Index Paths: %@", NSStringFromCGPoint(imageIndexPoints));
+        
+        [CPPCUtilities recentImageNumberFromRecent:imageIndexPoints.x completionBlock:^(UIImage *image) {
             _imageCaptured(image);
         }];
         
-        [_previewsViewController updateImageAtIndexWithNextAvailableImage:(int)correctIndex + 1];
+        [_previewsViewController updateImageAtIndexWithNextAvailableImage:imageIndexPoints.y];
     }
 }
 
