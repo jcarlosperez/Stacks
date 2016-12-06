@@ -28,6 +28,8 @@
 	<string>Stacks needs access to your photo library to be able to send the image you choose to your friends.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
