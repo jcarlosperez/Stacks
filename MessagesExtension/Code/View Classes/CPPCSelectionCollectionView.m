@@ -117,25 +117,26 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
  let offset = (layout.scrollDirection == .horizontal) ? scrollView.contentOffset.x : scrollView.contentOffset.y
  currentPage = Int(floor((offset - pageSide / 2) / pageSide) + 1)*/
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+/*- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 { // for custom paging
     CGFloat movingX = velocity.x * scrollView.frame.size.width;
     CGFloat newOffsetX = scrollView.contentOffset.x + movingX;
     
     int page = floor((newOffsetX - cellSize.width / 2) / cellSize.width) + 1;
     
-    if(page <= 0){
-        newOffsetX = 0;
-    } else if(page == 1) {
-        newOffsetX = cellSize.width-30;
-    } else if(page == 2) {
-        newOffsetX = cellSize.width*2;
-    } else if(page == 3) {
-        newOffsetX = cellSize.width*3+30;
-    }
+    newOffsetX = page * cellSize.width;
+    
+    NSLog(@"New Offset: %f", newOffsetX);
     
     targetContentOffset->x = newOffsetX;
-}
+}*/
+
+/*- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CPPCCarouselFlowLayout *layout = _flowLayout;
+    CGFloat pageSize = layout.itemSize.width + layout.minimumLineSpacing;
+    CGFloat offset = scrollView.contentOffset.x;
+    
+}*/
 
 - (void)layoutSubviews {
     
