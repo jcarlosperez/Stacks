@@ -199,7 +199,7 @@
         MSMessage *message = [[MSMessage alloc] initWithSession:session];
         message.layout = messageLayout;
         message.URL = url;
-        message.summaryText = @"Choose an option";
+        message.summaryText = @"Help choose the best option";
         [self.activeConversation insertMessage:message completionHandler:nil];
         
         return nil;

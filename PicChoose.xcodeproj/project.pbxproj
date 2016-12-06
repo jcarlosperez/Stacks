@@ -234,6 +234,7 @@
 				C14C41A31DAA09F8001D2D35 /* Embed App Extensions */,
 				18E54F1CCBA1FBE64377BEF0 /* Frameworks */,
 				21B042EE7F42F288F9D06185 /* [CP] Copy Pods Resources */,
+				C142FF621DF74D4900C233C5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -254,6 +255,7 @@
 				C14C418A1DAA09F8001D2D35 /* Frameworks */,
 				C14C418B1DAA09F8001D2D35 /* Resources */,
 				C0BF4C4C62C353E4381E916C /* [CP] Copy Pods Resources */,
+				C142FF611DF74D2100C233C5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -383,6 +385,32 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C142FF611DF74D2100C233C5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		C142FF621DF74D4900C233C5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
