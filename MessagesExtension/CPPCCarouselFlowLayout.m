@@ -132,8 +132,6 @@
         NSArray *sortedArray = [layoutAttributes sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
             NSNumber *first = [NSNumber numberWithDouble:fabs(((UICollectionViewLayoutAttributes *)obj1).center.x - proposedContentOffsetCenterOrigin)];
             NSNumber *second = [NSNumber numberWithDouble:fabs(((UICollectionViewLayoutAttributes *)obj2).center.x - proposedContentOffsetCenterOrigin)];
-            
-            NSLog(@"Returning here");
             return [first compare:second];
         }];
         
@@ -142,16 +140,14 @@
     } else {
         
         NSArray *sortedArray = [layoutAttributes sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-            NSNumber *first = [NSNumber numberWithDouble:((UICollectionViewLayoutAttributes *)obj1).center.y - proposedContentOffsetCenterOrigin];
-            NSNumber *second = [NSNumber numberWithDouble:((UICollectionViewLayoutAttributes *)obj2).center.y - proposedContentOffsetCenterOrigin];
-             NSLog(@"Returning here 2");
+            NSNumber *first = [NSNumber numberWithDouble:fabs(((UICollectionViewLayoutAttributes *)obj1).center.y - proposedContentOffsetCenterOrigin)];
+            NSNumber *second = [NSNumber numberWithDouble:fabs(((UICollectionViewLayoutAttributes *)obj2).center.y - proposedContentOffsetCenterOrigin)];
             return [first compare:second];
         }];
         
         UICollectionViewLayoutAttributes *closest = sortedArray[0];
         targetContentOffset = CGPointMake(proposedContentOffset.x, floor(closest.center.y - midSide));
     }
-    NSLog(@"Do I get here");
     return targetContentOffset;
 }
 

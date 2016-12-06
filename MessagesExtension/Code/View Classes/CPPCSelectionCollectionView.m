@@ -112,6 +112,9 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
 }
 
 #pragma mark - scrollview delegate
+
+// Ultimately this piece of code isn't even required.
+
 /*        let layout = self.collectionView.collectionViewLayout as! UPCarouselFlowLayout
  let pageSide = (layout.scrollDirection == .horizontal) ? self.pageSize.width : self.pageSize.height
  let offset = (layout.scrollDirection == .horizontal) ? scrollView.contentOffset.x : scrollView.contentOffset.y
@@ -129,13 +132,6 @@ static NSString *const kPCChoiceSelectionCell = @"CPPCChoiceSeletionCell";
     NSLog(@"New Offset: %f", newOffsetX);
     
     targetContentOffset->x = newOffsetX;
-}*/
-
-/*- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CPPCCarouselFlowLayout *layout = _flowLayout;
-    CGFloat pageSize = layout.itemSize.width + layout.minimumLineSpacing;
-    CGFloat offset = scrollView.contentOffset.x;
-    
 }*/
 
 - (void)layoutSubviews {
