@@ -1,0 +1,674 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0555CD0288DC48327374C124 /* libPods-Stacks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BB9A21F34737FF7C8DEA9D /* libPods-Stacks.a */; };
+		29F75BC8D71D4E60667C6B2A /* libPods-MessagesExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13DDF565571BD084325F3C1A /* libPods-MessagesExtension.a */; };
+		9000EE581DAD9D7C00CE17E5 /* STKSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 9000EE571DAD9D7C00CE17E5 /* STKSUtilities.m */; };
+		9005C3C41DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9005C3C31DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.m */; };
+		900FF1191DAB3B230028DA90 /* STKSServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF1181DAB3B230028DA90 /* STKSServerManager.m */; };
+		900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */; };
+		903658161DCBDF3600D63EC6 /* STKSStackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 903658151DCBDF3600D63EC6 /* STKSStackManager.m */; };
+		903658191DCD264500D63EC6 /* STKSCarouselFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 903658181DCD264500D63EC6 /* STKSCarouselFlowLayout.m */; };
+		A439E0FAFCD0A564132B3830 /* libPods-Stacks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D7BC64ED191C4F87ACA666 /* libPods-Stacks.a */; };
+		C13405901DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C134058F1DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.m */; };
+		C14C41871DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C41861DAA09F8001D2D35 /* Assets.xcassets */; };
+		C14C418E1DAA09F8001D2D35 /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14C41921DAA09F8001D2D35 /* Messages.framework */; };
+		C14C419C1DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C419B1DAA09F8001D2D35 /* Assets.xcassets */; };
+		C14C41A91DAA0CB3001D2D35 /* STKSMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14C41A81DAA0CB3001D2D35 /* STKSMessagesViewController.m */; };
+		C1AFDBC21DBE8A1600173444 /* STKSSelectionCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AFDBC11DBE8A1600173444 /* STKSSelectionCollectionView.m */; };
+		C1AFDBC51DBE8AB200173444 /* STKSSelectionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AFDBC41DBE8AB200173444 /* STKSSelectionCollectionViewCell.m */; };
+		C1C28EB71DAAC98B00695100 /* STKSChoicesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C28EB61DAAC98B00695100 /* STKSChoicesCollectionViewCell.m */; };
+		C1D68A011DBED25900C17B8A /* STKSImageRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D68A001DBED25900C17B8A /* STKSImageRatingView.m */; };
+		C1DE29C91DB28D16008BA251 /* STKSCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DE29C81DB28D16008BA251 /* STKSCameraViewController.m */; };
+		C1E146B71DAAC042001FC8A9 /* STKSChoicesCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E146B61DAAC042001FC8A9 /* STKSChoicesCollectionView.m */; };
+		FD0C179899E047AD4AF45EBD /* libPods-MessagesExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C14C418F1DAA09F8001D2D35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C14C417D1DAA09F7001D2D35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C14C418C1DAA09F8001D2D35;
+			remoteInfo = MessagesExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C14C41A31DAA09F8001D2D35 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C14C418E1DAA09F8001D2D35 /* MessagesExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		13DDF565571BD084325F3C1A /* libPods-MessagesExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MessagesExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		19BB9A21F34737FF7C8DEA9D /* libPods-Stacks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stacks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B7567C91F33986800C69B28 /* STKSUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKSUtilities.h; sourceTree = "<group>"; };
+		3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.release.xcconfig"; sourceTree = "<group>"; };
+		53D7BC64ED191C4F87ACA666 /* libPods-Stacks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stacks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C1ED7EF34CC00E9B645C90C /* Pods-Stacks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stacks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stacks/Pods-Stacks.debug.xcconfig"; sourceTree = "<group>"; };
+		74CCB977A60AFCB8F13A3CB9 /* Pods-Stacks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stacks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stacks/Pods-Stacks.release.xcconfig"; sourceTree = "<group>"; };
+		7C4A1DA07286603B171343EA /* Pods-Stacks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stacks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stacks/Pods-Stacks.release.xcconfig"; sourceTree = "<group>"; };
+		89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MessagesExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9000EE561DAD9D7C00CE17E5 /* STKSServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSServerManager.h; sourceTree = "<group>"; };
+		9000EE571DAD9D7C00CE17E5 /* STKSUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSUtilities.m; sourceTree = "<group>"; };
+		9005C3C21DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSCameraImagePreviewsViewController.h; sourceTree = "<group>"; };
+		9005C3C31DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSCameraImagePreviewsViewController.m; sourceTree = "<group>"; };
+		900FF1171DAB3B230028DA90 /* STKSServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSServerManager.h; sourceTree = "<group>"; };
+		900FF1181DAB3B230028DA90 /* STKSServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSServerManager.m; sourceTree = "<group>"; };
+		900FF11D1DAB3EE70028DA90 /* UIImage+Optimizations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Optimizations.h"; sourceTree = "<group>"; };
+		900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Optimizations.m"; sourceTree = "<group>"; };
+		903658141DCBDF3600D63EC6 /* STKSStackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSStackManager.h; sourceTree = "<group>"; };
+		903658151DCBDF3600D63EC6 /* STKSStackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSStackManager.m; sourceTree = "<group>"; };
+		903658171DCD264500D63EC6 /* STKSCarouselFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSCarouselFlowLayout.h; sourceTree = "<group>"; };
+		903658181DCD264500D63EC6 /* STKSCarouselFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSCarouselFlowLayout.m; sourceTree = "<group>"; };
+		A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		AAD9628BD66BE8E79C4D0DD9 /* Pods-Stacks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stacks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stacks/Pods-Stacks.debug.xcconfig"; sourceTree = "<group>"; };
+		C134058E1DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSCenterPagedCollectionViewLayout.h; path = "Code/Cell Classes/STKSCenterPagedCollectionViewLayout.h"; sourceTree = "<group>"; };
+		C134058F1DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSCenterPagedCollectionViewLayout.m; path = "Code/Cell Classes/STKSCenterPagedCollectionViewLayout.m"; sourceTree = "<group>"; };
+		C14C41831DAA09F8001D2D35 /* Stacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stacks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C14C41861DAA09F8001D2D35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C14C41881DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MessagesExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C14C41921DAA09F8001D2D35 /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
+		C14C419B1DAA09F8001D2D35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C14C419D1DAA09F8001D2D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C14C41A71DAA0CB3001D2D35 /* STKSMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSMessagesViewController.h; path = Code/ViewControllers/STKSMessagesViewController.h; sourceTree = "<group>"; };
+		C14C41A81DAA0CB3001D2D35 /* STKSMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSMessagesViewController.m; path = Code/ViewControllers/STKSMessagesViewController.m; sourceTree = "<group>"; };
+		C1AFDBC01DBE8A1600173444 /* STKSSelectionCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSSelectionCollectionView.h; path = "Code/View Classes/STKSSelectionCollectionView.h"; sourceTree = "<group>"; };
+		C1AFDBC11DBE8A1600173444 /* STKSSelectionCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSSelectionCollectionView.m; path = "Code/View Classes/STKSSelectionCollectionView.m"; sourceTree = "<group>"; };
+		C1AFDBC31DBE8AB200173444 /* STKSSelectionCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSSelectionCollectionViewCell.h; path = "Code/Cell Classes/STKSSelectionCollectionViewCell.h"; sourceTree = "<group>"; };
+		C1AFDBC41DBE8AB200173444 /* STKSSelectionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSSelectionCollectionViewCell.m; path = "Code/Cell Classes/STKSSelectionCollectionViewCell.m"; sourceTree = "<group>"; };
+		C1C28EB51DAAC98B00695100 /* STKSChoicesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSChoicesCollectionViewCell.h; path = "Code/Cell Classes/STKSChoicesCollectionViewCell.h"; sourceTree = "<group>"; };
+		C1C28EB61DAAC98B00695100 /* STKSChoicesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSChoicesCollectionViewCell.m; path = "Code/Cell Classes/STKSChoicesCollectionViewCell.m"; sourceTree = "<group>"; };
+		C1D689FF1DBED25900C17B8A /* STKSImageRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSImageRatingView.h; path = "Code/View Classes/STKSImageRatingView.h"; sourceTree = "<group>"; };
+		C1D68A001DBED25900C17B8A /* STKSImageRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSImageRatingView.m; path = "Code/View Classes/STKSImageRatingView.m"; sourceTree = "<group>"; };
+		C1DE29C71DB28D16008BA251 /* STKSCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSCameraViewController.h; path = "Code/View Classes/STKSCameraViewController.h"; sourceTree = "<group>"; };
+		C1DE29C81DB28D16008BA251 /* STKSCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSCameraViewController.m; path = "Code/View Classes/STKSCameraViewController.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		C1E146B51DAAC042001FC8A9 /* STKSChoicesCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSChoicesCollectionView.h; path = "Code/View Classes/STKSChoicesCollectionView.h"; sourceTree = "<group>"; };
+		C1E146B61DAAC042001FC8A9 /* STKSChoicesCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSChoicesCollectionView.m; path = "Code/View Classes/STKSChoicesCollectionView.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18E54F1CCBA1FBE64377BEF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0555CD0288DC48327374C124 /* libPods-Stacks.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C14C418A1DAA09F8001D2D35 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C14C41931DAA09F8001D2D35 /* Messages.framework in Frameworks */,
+				FD0C179899E047AD4AF45EBD /* libPods-MessagesExtension.a in Frameworks */,
+				29F75BC8D71D4E60667C6B2A /* libPods-MessagesExtension.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		947FD1F1A21E9CA7A7F9A403 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */,
+				3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */,
+				6C1ED7EF34CC00E9B645C90C /* Pods-Stacks.debug.xcconfig */,
+				7C4A1DA07286603B171343EA /* Pods-Stacks.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C14C417C1DAA09F7001D2D35 = {
+			isa = PBXGroup;
+			children = (
+				C14C41851DAA09F8001D2D35 /* Stacks */,
+				C14C41941DAA09F8001D2D35 /* MessagesExtension */,
+				C14C41841DAA09F8001D2D35 /* Products */,
+				947FD1F1A21E9CA7A7F9A403 /* Pods */,
+				E671C9486776AB76E9A5B2BF /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C14C41841DAA09F8001D2D35 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C14C41831DAA09F8001D2D35 /* Stacks.app */,
+				C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C14C41851DAA09F8001D2D35 /* Stacks */ = {
+			isa = PBXGroup;
+			children = (
+				C14C41861DAA09F8001D2D35 /* Assets.xcassets */,
+				C14C41881DAA09F8001D2D35 /* Info.plist */,
+			);
+			path = Stacks;
+			sourceTree = "<group>";
+		};
+		C14C41911DAA09F8001D2D35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C14C41921DAA09F8001D2D35 /* Messages.framework */,
+				89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */,
+			);
+			name = Frameworks;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		C14C41941DAA09F8001D2D35 /* MessagesExtension */ = {
+			isa = PBXGroup;
+			children = (
+				C1C28EB41DAAC92C00695100 /* Cell Classes */,
+				C1E146B41DAABF6A001FC8A9 /* View Classes */,
+				C14C41A71DAA0CB3001D2D35 /* STKSMessagesViewController.h */,
+				C14C41A81DAA0CB3001D2D35 /* STKSMessagesViewController.m */,
+				903658141DCBDF3600D63EC6 /* STKSStackManager.h */,
+				903658151DCBDF3600D63EC6 /* STKSStackManager.m */,
+				900FF11D1DAB3EE70028DA90 /* UIImage+Optimizations.h */,
+				900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */,
+				900FF1171DAB3B230028DA90 /* STKSServerManager.h */,
+				900FF1181DAB3B230028DA90 /* STKSServerManager.m */,
+				9000EE561DAD9D7C00CE17E5 /* STKSServerManager.h */,
+				2B7567C91F33986800C69B28 /* STKSUtilities.h */,
+				9000EE571DAD9D7C00CE17E5 /* STKSUtilities.m */,
+				C14C419B1DAA09F8001D2D35 /* Assets.xcassets */,
+				C14C41911DAA09F8001D2D35 /* Frameworks */,
+				C14C419D1DAA09F8001D2D35 /* Info.plist */,
+			);
+			path = MessagesExtension;
+			sourceTree = "<group>";
+		};
+		C1C28EB41DAAC92C00695100 /* Cell Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C134058E1DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.h */,
+				C134058F1DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.m */,
+				C1C28EB51DAAC98B00695100 /* STKSChoicesCollectionViewCell.h */,
+				C1C28EB61DAAC98B00695100 /* STKSChoicesCollectionViewCell.m */,
+				C1AFDBC31DBE8AB200173444 /* STKSSelectionCollectionViewCell.h */,
+				C1AFDBC41DBE8AB200173444 /* STKSSelectionCollectionViewCell.m */,
+			);
+			name = "Cell Classes";
+			sourceTree = "<group>";
+		};
+		C1E146B41DAABF6A001FC8A9 /* View Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C1DE29C71DB28D16008BA251 /* STKSCameraViewController.h */,
+				C1DE29C81DB28D16008BA251 /* STKSCameraViewController.m */,
+				9005C3C21DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.h */,
+				9005C3C31DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.m */,
+				C1E146B51DAAC042001FC8A9 /* STKSChoicesCollectionView.h */,
+				C1E146B61DAAC042001FC8A9 /* STKSChoicesCollectionView.m */,
+				C1D689FF1DBED25900C17B8A /* STKSImageRatingView.h */,
+				C1D68A001DBED25900C17B8A /* STKSImageRatingView.m */,
+				C1AFDBC01DBE8A1600173444 /* STKSSelectionCollectionView.h */,
+				C1AFDBC11DBE8A1600173444 /* STKSSelectionCollectionView.m */,
+				903658171DCD264500D63EC6 /* STKSCarouselFlowLayout.h */,
+				903658181DCD264500D63EC6 /* STKSCarouselFlowLayout.m */,
+			);
+			name = "View Classes";
+			sourceTree = "<group>";
+		};
+		E671C9486776AB76E9A5B2BF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13DDF565571BD084325F3C1A /* libPods-MessagesExtension.a */,
+				19BB9A21F34737FF7C8DEA9D /* libPods-Stacks.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C14C41821DAA09F8001D2D35 /* Stacks */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C14C41A41DAA09F8001D2D35 /* Build configuration list for PBXNativeTarget "Stacks" */;
+			buildPhases = (
+				30A3EA5C5E1C0BD8B82A8475 /* [CP] Check Pods Manifest.lock */,
+				C14C41811DAA09F8001D2D35 /* Resources */,
+				C14C41A31DAA09F8001D2D35 /* Embed App Extensions */,
+				18E54F1CCBA1FBE64377BEF0 /* Frameworks */,
+				21B042EE7F42F288F9D06185 /* [CP] Copy Pods Resources */,
+				C142FF621DF74D4900C233C5 /* ShellScript */,
+				09D6DDE03F5A36F82B81BE83 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C14C41901DAA09F8001D2D35 /* PBXTargetDependency */,
+			);
+			name = Stacks;
+			productName = Stacks;
+			productReference = C14C41831DAA09F8001D2D35 /* Stacks.app */;
+			productType = "com.apple.product-type.application.messages";
+		};
+		C14C418C1DAA09F8001D2D35 /* MessagesExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C14C41A01DAA09F8001D2D35 /* Build configuration list for PBXNativeTarget "MessagesExtension" */;
+			buildPhases = (
+				A4E48FE2619D8FE4549B5D0C /* [CP] Check Pods Manifest.lock */,
+				C14C41891DAA09F8001D2D35 /* Sources */,
+				C14C418A1DAA09F8001D2D35 /* Frameworks */,
+				C14C418B1DAA09F8001D2D35 /* Resources */,
+				C0BF4C4C62C353E4381E916C /* [CP] Copy Pods Resources */,
+				C142FF611DF74D2100C233C5 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MessagesExtension;
+			productName = MessagesExtension;
+			productReference = C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C14C417D1DAA09F7001D2D35 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "CP Digital Darkroom";
+				TargetAttributes = {
+					C14C41821DAA09F8001D2D35 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = Z3Q8LM67KV;
+						ProvisioningStyle = Automatic;
+					};
+					C14C418C1DAA09F8001D2D35 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = Z3Q8LM67KV;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C14C41801DAA09F7001D2D35 /* Build configuration list for PBXProject "Stacks" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C14C417C1DAA09F7001D2D35;
+			productRefGroup = C14C41841DAA09F8001D2D35 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C14C41821DAA09F8001D2D35 /* Stacks */,
+				C14C418C1DAA09F8001D2D35 /* MessagesExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C14C41811DAA09F8001D2D35 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C14C41871DAA09F8001D2D35 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C14C418B1DAA09F8001D2D35 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C14C419C1DAA09F8001D2D35 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		09D6DDE03F5A36F82B81BE83 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Stacks/Pods-Stacks-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		21B042EE7F42F288F9D06185 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Stacks/Pods-Stacks-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		30A3EA5C5E1C0BD8B82A8475 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Stacks-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4E48FE2619D8FE4549B5D0C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MessagesExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0BF4C4C62C353E4381E916C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension-resources.sh",
+				$PODS_CONFIGURATION_BUILD_DIR/CTAssetsPickerController/CTAssetsPickerController.bundle,
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C142FF611DF74D2100C233C5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		C142FF621DF74D4900C233C5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C14C41891DAA09F8001D2D35 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C13405901DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.m in Sources */,
+				C14C41A91DAA0CB3001D2D35 /* STKSMessagesViewController.m in Sources */,
+				C1AFDBC51DBE8AB200173444 /* STKSSelectionCollectionViewCell.m in Sources */,
+				C1C28EB71DAAC98B00695100 /* STKSChoicesCollectionViewCell.m in Sources */,
+				903658161DCBDF3600D63EC6 /* STKSStackManager.m in Sources */,
+				9000EE581DAD9D7C00CE17E5 /* STKSUtilities.m in Sources */,
+				C1AFDBC21DBE8A1600173444 /* STKSSelectionCollectionView.m in Sources */,
+				900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */,
+				C1DE29C91DB28D16008BA251 /* STKSCameraViewController.m in Sources */,
+				9005C3C41DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.m in Sources */,
+				C1D68A011DBED25900C17B8A /* STKSImageRatingView.m in Sources */,
+				903658191DCD264500D63EC6 /* STKSCarouselFlowLayout.m in Sources */,
+				900FF1191DAB3B230028DA90 /* STKSServerManager.m in Sources */,
+				C1E146B71DAAC042001FC8A9 /* STKSChoicesCollectionView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C14C41901DAA09F8001D2D35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C14C418C1DAA09F8001D2D35 /* MessagesExtension */;
+			targetProxy = C14C418F1DAA09F8001D2D35 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C14C419E1DAA09F8001D2D35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C14C419F1DAA09F8001D2D35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C14C41A11DAA09F8001D2D35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.Stacks.MessagesExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C14C41A21DAA09F8001D2D35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.Stacks.MessagesExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		C14C41A51DAA09F8001D2D35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C1ED7EF34CC00E9B645C90C /* Pods-Stacks.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				INFOPLIST_FILE = Stacks/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.Stacks;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C14C41A61DAA09F8001D2D35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C4A1DA07286603B171343EA /* Pods-Stacks.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				INFOPLIST_FILE = Stacks/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.Stacks;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C14C41801DAA09F7001D2D35 /* Build configuration list for PBXProject "Stacks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C14C419E1DAA09F8001D2D35 /* Debug */,
+				C14C419F1DAA09F8001D2D35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C14C41A01DAA09F8001D2D35 /* Build configuration list for PBXNativeTarget "MessagesExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C14C41A11DAA09F8001D2D35 /* Debug */,
+				C14C41A21DAA09F8001D2D35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C14C41A41DAA09F8001D2D35 /* Build configuration list for PBXNativeTarget "Stacks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C14C41A51DAA09F8001D2D35 /* Debug */,
+				C14C41A61DAA09F8001D2D35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C14C417D1DAA09F7001D2D35 /* Project object */;
+}

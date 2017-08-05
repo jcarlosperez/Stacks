@@ -1,9 +1,9 @@
 //
 //  UIImage+Optimizations.m
-//  PicChoose
+//  Stacks
 //
 //  Created by Ben Rosen on 10/9/16.
-//  Copyright © 2016 CP Digital Darkroom. All rights reserved.
+//  Copyright © 2016 Juan Carlos Perez & Ben Rosen. All rights reserved.
 //
 
 #import "UIImage+Optimizations.h"
