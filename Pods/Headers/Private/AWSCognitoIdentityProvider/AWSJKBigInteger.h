@@ -1,1 +1,0 @@
-../../../AWSCognitoIdentityProvider/AWSCognitoIdentityProvider/Internal/JKBigInteger/AWSJKBigInteger.h

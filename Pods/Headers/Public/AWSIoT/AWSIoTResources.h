@@ -1,1 +1,0 @@
-../../../AWSIoT/AWSIoT/AWSIoTResources.h

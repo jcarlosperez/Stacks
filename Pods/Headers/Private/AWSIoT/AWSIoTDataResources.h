@@ -1,1 +1,0 @@
-../../../AWSIoT/AWSIoT/AWSIoTDataResources.h

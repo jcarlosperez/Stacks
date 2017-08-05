@@ -1,1 +1,0 @@
-../../../AWSCognitoIdentityProvider/AWSCognitoIdentityProvider/CognitoIdentityProvider/AWSCognitoIdentityProviderService.h
