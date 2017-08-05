@@ -18,7 +18,7 @@ Once you have done this, you are ready to go. Build the project with Xcode and i
 ## Screenshots
 | Send a stack of images | View it in the message thread | Rate the images | Reply back with your feedback | 
 |-------------------------------------------------------------------------	|-------------------------------------------------------------------------	| -------------------------------------------------------------------------	| ---------------------------------------------------------------------------------------------	|
-| ![](https://raw.githubusercontent.com/jcarlosperez/Stacks/master/Screenshots/send.png?token=AHpReOhIk1eYQlHHlFgNxBB1cm_vismHks5ZjyOGwA%3D%3D) | ![](https://raw.githubusercontent.com/jcarlosperez/Stacks/master/Screenshots/threads.png?token=AHpReDu4thIfoZyfjRIglauFVCalmblpks5ZjyO3wA%3D%3D) | ![](https://raw.githubusercontent.com/jcarlosperez/Stacks/master/Screenshots/rate.png?token=AHpReGAFbHeoRNEqGonPK94qGKwTxtPSks5ZjyMdwA%3D%3D) |![](https://raw.githubusercontent.com/jcarlosperez/Stacks/master/Screenshots/reply.png?token=AHpReOC-ty0cvHXnnxe1OdjS364gSf2dks5ZjyNqwA%3D%3D)|
+| ![](https://raw.githubusercontent.com/jcarlosperez/Stacks/master/Screenshots/send.png) | ![](https://raw.githubusercontent.com/jcarlosperez/Stacks/master/Screenshots/threads.png) | ![](https://raw.githubusercontent.com/jcarlosperez/Stacks/master/Screenshots/rate.png) |![](https://raw.githubusercontent.com/jcarlosperez/Stacks/master/Screenshots/reply.png)|
 
 ## Built With
 
