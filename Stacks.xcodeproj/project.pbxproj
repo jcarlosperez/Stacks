@@ -15,7 +15,6 @@
 		900FF11F1DAB3EE70028DA90 /* UIImage+Optimizations.m in Sources */ = {isa = PBXBuildFile; fileRef = 900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */; };
 		903658161DCBDF3600D63EC6 /* STKSStackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 903658151DCBDF3600D63EC6 /* STKSStackManager.m */; };
 		903658191DCD264500D63EC6 /* STKSCarouselFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 903658181DCD264500D63EC6 /* STKSCarouselFlowLayout.m */; };
-		A439E0FAFCD0A564132B3830 /* libPods-Stacks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D7BC64ED191C4F87ACA666 /* libPods-Stacks.a */; };
 		C13405901DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C134058F1DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.m */; };
 		C14C41871DAA09F8001D2D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14C41861DAA09F8001D2D35 /* Assets.xcassets */; };
 		C14C418E1DAA09F8001D2D35 /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C14C418D1DAA09F8001D2D35 /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -60,16 +59,12 @@
 		19BB9A21F34737FF7C8DEA9D /* libPods-Stacks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stacks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B7567C91F33986800C69B28 /* STKSUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKSUtilities.h; sourceTree = "<group>"; };
 		3B167D77EEA1B37339CC7810 /* Pods-MessagesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.release.xcconfig"; sourceTree = "<group>"; };
-		53D7BC64ED191C4F87ACA666 /* libPods-Stacks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stacks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C1ED7EF34CC00E9B645C90C /* Pods-Stacks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stacks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stacks/Pods-Stacks.debug.xcconfig"; sourceTree = "<group>"; };
-		74CCB977A60AFCB8F13A3CB9 /* Pods-Stacks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stacks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stacks/Pods-Stacks.release.xcconfig"; sourceTree = "<group>"; };
 		7C4A1DA07286603B171343EA /* Pods-Stacks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stacks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stacks/Pods-Stacks.release.xcconfig"; sourceTree = "<group>"; };
 		89F5F3B0A5AF98AA78187A66 /* libPods-MessagesExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MessagesExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9000EE561DAD9D7C00CE17E5 /* STKSServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSServerManager.h; sourceTree = "<group>"; };
 		9000EE571DAD9D7C00CE17E5 /* STKSUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSUtilities.m; sourceTree = "<group>"; };
 		9005C3C21DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSCameraImagePreviewsViewController.h; sourceTree = "<group>"; };
 		9005C3C31DC93E4200CA6945 /* STKSCameraImagePreviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSCameraImagePreviewsViewController.m; sourceTree = "<group>"; };
-		900FF1171DAB3B230028DA90 /* STKSServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSServerManager.h; sourceTree = "<group>"; };
 		900FF1181DAB3B230028DA90 /* STKSServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSServerManager.m; sourceTree = "<group>"; };
 		900FF11D1DAB3EE70028DA90 /* UIImage+Optimizations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Optimizations.h"; sourceTree = "<group>"; };
 		900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Optimizations.m"; sourceTree = "<group>"; };
@@ -78,7 +73,7 @@
 		903658171DCD264500D63EC6 /* STKSCarouselFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKSCarouselFlowLayout.h; sourceTree = "<group>"; };
 		903658181DCD264500D63EC6 /* STKSCarouselFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKSCarouselFlowLayout.m; sourceTree = "<group>"; };
 		A2317DEA01C906EBAE544B3E /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		AAD9628BD66BE8E79C4D0DD9 /* Pods-Stacks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stacks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stacks/Pods-Stacks.debug.xcconfig"; sourceTree = "<group>"; };
+		B5915E241F3607CE00E3F029 /* STKSServerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKSServerManager.h; sourceTree = "<group>"; };
 		C134058E1DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKSCenterPagedCollectionViewLayout.h; path = "Code/Cell Classes/STKSCenterPagedCollectionViewLayout.h"; sourceTree = "<group>"; };
 		C134058F1DC122A80080A082 /* STKSCenterPagedCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKSCenterPagedCollectionViewLayout.m; path = "Code/Cell Classes/STKSCenterPagedCollectionViewLayout.m"; sourceTree = "<group>"; };
 		C14C41831DAA09F8001D2D35 /* Stacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stacks.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,9 +182,8 @@
 				903658151DCBDF3600D63EC6 /* STKSStackManager.m */,
 				900FF11D1DAB3EE70028DA90 /* UIImage+Optimizations.h */,
 				900FF11E1DAB3EE70028DA90 /* UIImage+Optimizations.m */,
-				900FF1171DAB3B230028DA90 /* STKSServerManager.h */,
+				B5915E241F3607CE00E3F029 /* STKSServerManager.h */,
 				900FF1181DAB3B230028DA90 /* STKSServerManager.m */,
-				9000EE561DAD9D7C00CE17E5 /* STKSServerManager.h */,
 				2B7567C91F33986800C69B28 /* STKSUtilities.h */,
 				9000EE571DAD9D7C00CE17E5 /* STKSUtilities.m */,
 				C14C419B1DAA09F8001D2D35 /* Assets.xcassets */,
@@ -296,7 +290,7 @@
 				TargetAttributes = {
 					C14C41821DAA09F8001D2D35 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = Z3Q8LM67KV;
+						DevelopmentTeam = 8V5J4G27BG;
 						ProvisioningStyle = Automatic;
 					};
 					C14C418C1DAA09F8001D2D35 = {
@@ -615,7 +609,7 @@
 			baseConfigurationReference = 6C1ED7EF34CC00E9B645C90C /* Pods-Stacks.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = Stacks/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.Stacks;
@@ -629,7 +623,7 @@
 			baseConfigurationReference = 7C4A1DA07286603B171343EA /* Pods-Stacks.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Z3Q8LM67KV;
+				DEVELOPMENT_TEAM = 8V5J4G27BG;
 				INFOPLIST_FILE = Stacks/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cpdigitaldarkroom.Stacks;

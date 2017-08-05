@@ -28,7 +28,7 @@
     }
 
     // make the whole string,
-    NSString *base = [[NSString stringWithFormat:@"http://picchoose.com/choice/info.php?%@", imageNamesString] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+    NSString *base = [[NSString stringWithFormat:@"http://getstacksapp.com/choice/info.php?%@", imageNamesString] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
 
     return [NSURL URLWithString:base];
 }
@@ -39,7 +39,6 @@
     NSMutableString *imageRatingsString = [NSMutableString string];
     
     for (int i = 0; i < [ratings count]; i++) {
-        NSLog(@"when we loop thruuuu %i", i);
         // put commas before each name, except for the first one
         
         NSString *key = [NSString stringWithFormat:@"image%i", i];
